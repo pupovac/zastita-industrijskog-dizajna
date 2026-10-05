@@ -1,0 +1,551 @@
+// Persistent project context for the industrial design application wizard.
+//
+// Portability notes (SQLite now, PostgreSQL later):
+// - Only portable scalar types are used (String, Int, Float, Boolean, DateTime).
+// - No @db.* native type attributes, no raw SQL, no SQLite-specific defaults.
+// - Enums are Prisma enums: stored as TEXT on SQLite, native enums on PostgreSQL.
+// - Structured metadata is stored as JSON text (`...Json String`) so the column
+//   can later be switched to `Json` without changing application semantics.
+// Switching providers = change `provider` below and regenerate migrations.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+/// Where a piece of information came from.
+enum SourceType {
+  USER
+  DOCUMENT
+  ZIS
+  WIPO
+  EUIPO
+  AGENT_INFERENCE
+}
+
+/// Epistemic kind of a piece of information. Only FACT can carry the
+/// "confirmed user fact" status, and only via explicit user confirmation.
+enum InformationKind {
+  FACT
+  USER_STATEMENT
+  LEGAL_REQUIREMENT
+  AI_INFERENCE
+  RECOMMENDATION
+}
+
+enum ActorType {
+  USER
+  AGENT
+  SYSTEM
+}
+
+enum StepStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  WAITING_FOR_USER
+  BLOCKED
+  READY_FOR_REVIEW
+  APPROVED
+}
+
+enum FactCategory {
+  PRODUCT
+  VISUAL
+  APPLICANT
+  DESIGNER
+  APPLICATION_FIELD
+  OTHER
+}
+
+enum FileRole {
+  PHOTO
+  TECHNICAL_DRAWING
+  RENDER
+  CAD_EXPORT
+  DOCUMENT
+  OTHER
+}
+
+enum ExtractionStatus {
+  PENDING
+  EXTRACTED
+  NOT_SUPPORTED
+  FAILED
+}
+
+enum ReviewIssueType {
+  CONFLICT
+  RISK
+  FINDING
+}
+
+enum ReviewIssueStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
+enum Severity {
+  BLOCKER
+  HIGH
+  MEDIUM
+  LOW
+}
+
+/// Classification of how strongly a feature's shape is dictated by technical function.
+enum FunctionalityRisk {
+  LOW_RISK
+  NEEDS_FURTHER_REVIEW
+  HIGH_FUNCTIONAL_DEPENDENCE
+}
+
+enum OpenQuestionStatus {
+  OPEN
+  ANSWERED
+  CLOSED
+}
+
+enum AgentTaskStatus {
+  QUEUED
+  RUNNING
+  DONE
+  FAILED
+}
+
+// ---------------------------------------------------------------------------
+// Project and wizard progress
+// ---------------------------------------------------------------------------
+
+model Project {
+  id                 String   @id @default(uuid())
+  name               String
+  productName        String   @default("")
+  productSummary     String   @default("")
+  applicantName      String   @default("")
+  applicantAddress   String   @default("")
+  designerName       String   @default("")
+  representativeName String   @default("")
+  /// Last step the user had open, so the wizard resumes where they left off.
+  currentStepKey     String   @default("PROJECT_SETUP")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  steps              ProjectStep[]
+  questions          Question[]
+  answers            UserAnswer[]
+  facts              Fact[]
+  designFeatures     DesignFeature[]
+  designVariants     DesignVariant[]
+  sources            Source[]
+  sourceRequirements SourceRequirement[]
+  uploadedFiles      UploadedFile[]
+  representations    Representation[]
+  researchFindings   ResearchFinding[]
+  priorDesigns       PriorDesign[]
+  applicationSections ApplicationSection[]
+  agentTasks         AgentTask[]
+  reviewIssues       ReviewIssue[]
+  decisions          Decision[]
+  openQuestions      OpenQuestion[]
+}
+
+model ProjectStep {
+  id            String     @id @default(uuid())
+  projectId     String
+  stepKey       String
+  position      Int
+  status        StepStatus @default(NOT_STARTED)
+  blockedReason String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  project Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  events  StepStatusEvent[]
+
+  @@unique([projectId, stepKey])
+  @@index([projectId, position])
+}
+
+/// Audit trail of every step status change.
+model StepStatusEvent {
+  id            String     @id @default(uuid())
+  projectStepId String
+  fromStatus    StepStatus
+  toStatus      StepStatus
+  actorType     ActorType
+  reason        String?
+  createdAt     DateTime   @default(now())
+
+  projectStep ProjectStep @relation(fields: [projectStepId], references: [id], onDelete: Cascade)
+
+  @@index([projectStepId])
+}
+
+// ---------------------------------------------------------------------------
+// Interview
+// ---------------------------------------------------------------------------
+
+model Question {
+  id               String   @id @default(uuid())
+  projectId        String
+  stepKey          String
+  position         Int
+  text             String
+  whyNeeded        String   @default("")
+  exampleAnswer    String   @default("")
+  required         Boolean  @default(false)
+  allowsAttachment Boolean  @default(true)
+  createdByActor   ActorType @default(SYSTEM)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  project Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  answers UserAnswer[]
+
+  @@index([projectId, stepKey, position])
+}
+
+model UserAnswer {
+  id               String   @id @default(uuid())
+  projectId        String
+  questionId       String
+  value            String   @default("")
+  attachmentFileId String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  project    Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  question   Question      @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  attachment UploadedFile? @relation(fields: [attachmentFileId], references: [id], onDelete: SetNull)
+  facts      Fact[]
+
+  @@unique([projectId, questionId])
+}
+
+// ---------------------------------------------------------------------------
+// Knowledge with provenance
+// ---------------------------------------------------------------------------
+
+model Fact {
+  id               String          @id @default(uuid())
+  projectId        String
+  category         FactCategory    @default(PRODUCT)
+  /// Current kind. Becomes FACT only through explicit user confirmation.
+  kind             InformationKind
+  /// Kind at creation time; preserved for traceability after promotion.
+  originKind       InformationKind
+  statement        String
+  value            String          @default("")
+  sourceType       SourceType
+  sourceReference  String?
+  sourceDocumentId String?
+  uploadedFileId   String?
+  userAnswerId     String?
+  confidence       Float?
+  verified         Boolean         @default(false)
+  confirmedAt      DateTime?
+  confirmedBy      ActorType?
+  createdByActor   ActorType
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceDocument SourceDocument? @relation(fields: [sourceDocumentId], references: [id], onDelete: SetNull)
+  uploadedFile   UploadedFile?   @relation(fields: [uploadedFileId], references: [id], onDelete: SetNull)
+  userAnswer     UserAnswer?     @relation(fields: [userAnswerId], references: [id], onDelete: SetNull)
+
+  @@index([projectId, category])
+}
+
+model DesignVariant {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String
+  description String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project  Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  features DesignFeature[]
+}
+
+model DesignFeature {
+  id                String             @id @default(uuid())
+  projectId         String
+  variantId         String?
+  name              String
+  description       String             @default("")
+  functionalityRisk FunctionalityRisk?
+  kind              InformationKind    @default(AI_INFERENCE)
+  sourceType        SourceType
+  sourceReference   String?
+  confidence        Float?
+  verified          Boolean            @default(false)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  project Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  variant DesignVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+}
+
+/// An external source (e.g. official ZIS website section, a law, WIPO page).
+model Source {
+  id              String     @id @default(uuid())
+  projectId       String
+  name            String
+  url             String
+  sourceType      SourceType
+  /// 1 = ZIS, 2 = laws/bylaws, 3 = WIPO, 4 = EUIPO/DesignView, 5 = other.
+  priority        Int        @default(5)
+  accessedAt      DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  documents SourceDocument[]
+}
+
+model SourceDocument {
+  id            String    @id @default(uuid())
+  sourceId      String
+  title         String
+  url           String?
+  section       String?
+  localCopyPath String?
+  accessedAt    DateTime?
+  notes         String    @default("")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  source           Source              @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  requirements     SourceRequirement[]
+  researchFindings ResearchFinding[]
+  facts            Fact[]
+}
+
+/// One row of the "ZIS requirements matrix".
+model SourceRequirement {
+  id                  String     @id @default(uuid())
+  projectId           String
+  sourceDocumentId    String
+  requirementText     String
+  section             String     @default("")
+  impactOnApplication String     @default("")
+  kind                InformationKind @default(LEGAL_REQUIREMENT)
+  sourceType          SourceType
+  sourceReference     String
+  confidence          Float?
+  verified            Boolean    @default(false)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  project        Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceDocument SourceDocument @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+}
+
+model ResearchFinding {
+  id               String          @id @default(uuid())
+  projectId        String
+  sourceDocumentId String?
+  summary          String
+  details          String          @default("")
+  kind             InformationKind
+  sourceType       SourceType
+  sourceReference  String?
+  confidence       Float?
+  verified         Boolean         @default(false)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceDocument SourceDocument? @relation(fields: [sourceDocumentId], references: [id], onDelete: SetNull)
+}
+
+model PriorDesign {
+  id                 String     @id @default(uuid())
+  projectId          String
+  title              String
+  registrationNumber String?
+  holder             String?
+  url                String?
+  similarityNotes    String     @default("")
+  kind               InformationKind @default(AI_INFERENCE)
+  sourceType         SourceType
+  sourceReference    String?
+  confidence         Float?
+  verified           Boolean    @default(false)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Documents and representations
+// ---------------------------------------------------------------------------
+
+model UploadedFile {
+  id               String           @id @default(uuid())
+  projectId        String
+  originalName     String
+  storedPath       String
+  mimeType         String
+  sizeBytes        Int
+  sha256           String
+  role             FileRole         @default(OTHER)
+  extractionStatus ExtractionStatus @default(PENDING)
+  extractedText    String?
+  /// JSON text: page count, pixel dimensions, document properties, ...
+  metadataJson     String           @default("{}")
+  summary          String           @default("")
+  extractionError  String?
+  uploadedByActor  ActorType
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  project          Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  answers          UserAnswer[]
+  facts            Fact[]
+  representations  Representation[]
+  conflictsAsFirst  ReviewIssue[]   @relation("ConflictFileA")
+  conflictsAsSecond ReviewIssue[]   @relation("ConflictFileB")
+  chosenInConflicts ReviewIssue[]   @relation("ConflictChosenFile")
+}
+
+model Representation {
+  id             String   @id @default(uuid())
+  projectId      String
+  uploadedFileId String?
+  position       Int
+  viewName       String
+  notes          String   @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  uploadedFile UploadedFile? @relation(fields: [uploadedFileId], references: [id], onDelete: SetNull)
+}
+
+// ---------------------------------------------------------------------------
+// Application drafting
+// ---------------------------------------------------------------------------
+
+model ApplicationSection {
+  id        String   @id @default(uuid())
+  projectId String
+  key       String
+  title     String
+  required  Boolean  @default(true)
+  confirmed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project  Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  versions DraftVersion[]
+
+  @@unique([projectId, key])
+}
+
+model DraftVersion {
+  id                   String    @id @default(uuid())
+  applicationSectionId String
+  versionNumber        Int
+  content              String
+  createdByActor       ActorType
+  createdAt            DateTime  @default(now())
+
+  section ApplicationSection @relation(fields: [applicationSectionId], references: [id], onDelete: Cascade)
+
+  @@unique([applicationSectionId, versionNumber])
+}
+
+// ---------------------------------------------------------------------------
+// Work tracking, review, decisions
+// ---------------------------------------------------------------------------
+
+model AgentTask {
+  id            String          @id @default(uuid())
+  projectId     String
+  stepKey       String?
+  agentName     String
+  title         String
+  status        AgentTaskStatus @default(QUEUED)
+  resultSummary String          @default("")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ReviewIssue {
+  id                String            @id @default(uuid())
+  projectId         String
+  stepKey           String?
+  type              ReviewIssueType
+  severity          Severity          @default(MEDIUM)
+  status            ReviewIssueStatus @default(OPEN)
+  title             String
+  description       String            @default("")
+  /// For CONFLICT issues: the visual attribute that differs (e.g. "profil ivice").
+  conflictAttribute String?
+  fileAId           String?
+  fileBId           String?
+  chosenFileId      String?
+  resolutionNote    String?
+  resolvedBy        ActorType?
+  resolvedAt        DateTime?
+  createdByActor    ActorType
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  project    Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fileA      UploadedFile? @relation("ConflictFileA", fields: [fileAId], references: [id], onDelete: SetNull)
+  fileB      UploadedFile? @relation("ConflictFileB", fields: [fileBId], references: [id], onDelete: SetNull)
+  chosenFile UploadedFile? @relation("ConflictChosenFile", fields: [chosenFileId], references: [id], onDelete: SetNull)
+  decisions  Decision[]
+
+  @@index([projectId, status])
+}
+
+model Decision {
+  id              String    @id @default(uuid())
+  projectId       String
+  stepKey         String?
+  title           String
+  rationale       String    @default("")
+  decidedBy       ActorType
+  reviewIssueId   String?
+  sourceReference String?
+  createdAt       DateTime  @default(now())
+
+  project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  reviewIssue ReviewIssue? @relation(fields: [reviewIssueId], references: [id], onDelete: SetNull)
+}
+
+model OpenQuestion {
+  id         String             @id @default(uuid())
+  projectId  String
+  stepKey    String?
+  text       String
+  whyNeeded  String             @default("")
+  /// A blocking open question prevents its step from moving to review.
+  blocking   Boolean            @default(false)
+  status     OpenQuestionStatus @default(OPEN)
+  answer     String?
+  createdBy  ActorType
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  resolvedAt DateTime?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, status])
+}

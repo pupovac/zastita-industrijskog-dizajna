@@ -1,0 +1,62 @@
+import { Injectable } from '@nestjs/common';
+import { ActorType } from '@prisma/client';
+import { orNotFound } from '../common/not-found';
+import { DomainError } from '../domain/domain-error';
+import { PrismaService } from '../prisma/prisma.service';
+import { ProjectsService } from '../projects/projects.service';
+import { CreateQuestionDto, SaveAnswerDto } from './questions.dto';
+
+@Injectable()
+export class QuestionsService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly projects: ProjectsService,
+  ) {}
+
+  async list(projectId: string, stepKey?: string) {
+    await this.projects.assertExists(projectId);
+    const questions = await this.prisma.question.findMany({
+      where: { projectId, ...(stepKey ? { stepKey } : {}) },
+      orderBy: [{ stepKey: 'asc' }, { position: 'asc' }],
+      include: { answers: { where: { projectId }, include: { attachment: true } } },
+    });
+    return questions.map(({ answers, ...q }) => ({ ...q, answer: answers[0] ?? null }));
+  }
+
+  async create(projectId: string, dto: CreateQuestionDto, actor: ActorType) {
+    await this.projects.assertExists(projectId);
+    const last = await this.prisma.question.findFirst({
+      where: { projectId, stepKey: dto.stepKey },
+      orderBy: { position: 'desc' },
+    });
+    return this.prisma.question.create({
+      data: { ...dto, projectId, position: (last?.position ?? 0) + 1, createdByActor: actor },
+    });
+  }
+
+  /** Autosave: called on every change, persisted immediately. Only the user answers. */
+  async saveAnswer(projectId: string, questionId: string, dto: SaveAnswerDto, actor: ActorType) {
+    if (actor !== 'USER') {
+      throw new DomainError('ANSWER_REQUIRES_USER', 'Odgovor na pitanje može upisati samo korisnik.', 'FORBIDDEN');
+    }
+    const question = orNotFound(
+      await this.prisma.question.findFirst({ where: { id: questionId, projectId } }),
+      'Pitanje',
+    );
+    if (dto.attachmentFileId) {
+      orNotFound(
+        await this.prisma.uploadedFile.findFirst({ where: { id: dto.attachmentFileId, projectId } }),
+        'Prilog',
+      );
+    }
+    return this.prisma.userAnswer.upsert({
+      where: { projectId_questionId: { projectId, questionId: question.id } },
+      create: { projectId, questionId: question.id, value: dto.value, attachmentFileId: dto.attachmentFileId ?? null },
+      update: {
+        value: dto.value,
+        ...(dto.attachmentFileId !== undefined ? { attachmentFileId: dto.attachmentFileId } : {}),
+      },
+      include: { attachment: true },
+    });
+  }
+}
