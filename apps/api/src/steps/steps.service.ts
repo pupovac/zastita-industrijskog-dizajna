@@ -1,0 +1,94 @@
+import { Injectable } from '@nestjs/common';
+import { ActorType } from '@prisma/client';
+import { DomainError } from '../domain/domain-error';
+import { planStepTransition } from '../domain/step-status';
+import { isStepKey, StepKey, stepTitle } from '../domain/steps';
+import { PrismaService } from '../prisma/prisma.service';
+import { ProjectsService } from '../projects/projects.service';
+import { TransitionStepDto } from './steps.dto';
+
+@Injectable()
+export class StepsService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly projects: ProjectsService,
+  ) {}
+
+  async list(projectId: string) {
+    await this.projects.assertExists(projectId);
+    const steps = await this.prisma.projectStep.findMany({ where: { projectId }, orderBy: { position: 'asc' } });
+    const blocking = await this.blockingItemsByStep(projectId);
+    return steps.map((s) => ({
+      ...s,
+      title: isStepKey(s.stepKey) ? stepTitle(s.stepKey) : s.stepKey,
+      openBlockingItems: blocking.get(s.stepKey) ?? 0,
+    }));
+  }
+
+  async history(projectId: string, stepKey: string) {
+    const step = await this.prisma.projectStep.findUnique({ where: { projectId_stepKey: { projectId, stepKey } } });
+    if (!step) throw new DomainError('STEP_NOT_FOUND', 'Korak ne postoji u ovom projektu.', 'NOT_FOUND');
+    return this.prisma.stepStatusEvent.findMany({ where: { projectStepId: step.id }, orderBy: { createdAt: 'desc' } });
+  }
+
+  async transition(projectId: string, stepKey: string, dto: TransitionStepDto, actor: ActorType) {
+    if (!isStepKey(stepKey)) throw new DomainError('STEP_NOT_FOUND', 'Nepoznat korak.', 'NOT_FOUND');
+    await this.projects.assertExists(projectId);
+
+    await this.prisma.$transaction(async (tx) => {
+      const steps = await tx.projectStep.findMany({ where: { projectId } });
+      const blocking = await this.blockingItemsByStep(projectId, tx);
+      const changes = planStepTransition({
+        steps: steps.filter((s) => isStepKey(s.stepKey)).map((s) => ({ ...s, stepKey: s.stepKey as StepKey })),
+        stepKey,
+        to: dto.to,
+        actor,
+        reason: dto.reason,
+        openBlockingItems: blocking.get(stepKey) ?? 0,
+      });
+      for (const change of changes) {
+        const step = steps.find((s) => s.stepKey === change.stepKey)!;
+        await tx.projectStep.update({
+          where: { id: step.id },
+          data: { status: change.to, blockedReason: change.to === 'BLOCKED' ? change.reason : null },
+        });
+        await tx.stepStatusEvent.create({
+          data: {
+            projectStepId: step.id,
+            fromStatus: change.from,
+            toStatus: change.to,
+            actorType: change.stepKey === stepKey ? actor : 'SYSTEM',
+            reason: change.reason,
+          },
+        });
+      }
+    });
+
+    return this.list(projectId);
+  }
+
+  /** Open blocking questions and open conflicts, grouped by step. */
+  private async blockingItemsByStep(
+    projectId: string,
+    db: Pick<PrismaService, 'openQuestion' | 'reviewIssue'> = this.prisma,
+  ): Promise<Map<string, number>> {
+    const [questions, conflicts] = await Promise.all([
+      db.openQuestion.groupBy({
+        by: ['stepKey'],
+        where: { projectId, status: 'OPEN', blocking: true },
+        _count: { _all: true },
+      }),
+      db.reviewIssue.groupBy({
+        by: ['stepKey'],
+        where: { projectId, status: 'OPEN', OR: [{ type: 'CONFLICT' }, { severity: 'BLOCKER' }] },
+        _count: { _all: true },
+      }),
+    ]);
+    const counts = new Map<string, number>();
+    for (const row of [...questions, ...conflicts]) {
+      if (!row.stepKey) continue;
+      counts.set(row.stepKey, (counts.get(row.stepKey) ?? 0) + row._count._all);
+    }
+    return counts;
+  }
+}
