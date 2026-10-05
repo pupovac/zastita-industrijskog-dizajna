@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { DomainError } from '../domain/domain-error';
+import { gatingStepKey } from '../domain/filing-deferral';
 import { planStepTransition } from '../domain/step-status';
-import { isStepKey, StepKey, stepTitle } from '../domain/steps';
+import { isStepKey, StepKey, stepPhase, stepTitle } from '../domain/steps';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { TransitionStepDto } from './steps.dto';
@@ -21,6 +22,7 @@ export class StepsService {
     return steps.map((s) => ({
       ...s,
       title: isStepKey(s.stepKey) ? stepTitle(s.stepKey) : s.stepKey,
+      phase: isStepKey(s.stepKey) ? stepPhase(s.stepKey) : 'DRAFTING',
       openBlockingItems: blocking.get(s.stepKey) ?? 0,
     }));
   }
@@ -67,14 +69,17 @@ export class StepsService {
     return this.list(projectId);
   }
 
-  /** Open blocking questions and open conflicts, grouped by step. */
+  /**
+   * Open blocking questions and open conflicts, grouped by step. Questions deferred
+   * to filing are counted against the first filing step, never a drafting step.
+   */
   private async blockingItemsByStep(
     projectId: string,
     db: Pick<PrismaService, 'openQuestion' | 'reviewIssue'> = this.prisma,
   ): Promise<Map<string, number>> {
     const [questions, conflicts] = await Promise.all([
       db.openQuestion.groupBy({
-        by: ['stepKey'],
+        by: ['stepKey', 'deferredToFiling'],
         where: { projectId, status: 'OPEN', blocking: true },
         _count: { _all: true },
       }),
@@ -85,9 +90,13 @@ export class StepsService {
       }),
     ]);
     const counts = new Map<string, number>();
-    for (const row of [...questions, ...conflicts]) {
-      if (!row.stepKey) continue;
-      counts.set(row.stepKey, (counts.get(row.stepKey) ?? 0) + row._count._all);
+    const rows = [
+      ...questions.map((row) => ({ stepKey: gatingStepKey(row), count: row._count._all })),
+      ...conflicts.map((row) => ({ stepKey: row.stepKey, count: row._count._all })),
+    ];
+    for (const { stepKey, count } of rows) {
+      if (!stepKey) continue;
+      counts.set(stepKey, (counts.get(stepKey) ?? 0) + count);
     }
     return counts;
   }

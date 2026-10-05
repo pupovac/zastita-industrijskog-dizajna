@@ -43,6 +43,29 @@ describe('planStepTransition', () => {
     );
   });
 
+  it('starts the independent review right after the description, without D-1 data', () => {
+    const changes = planStepTransition({
+      ...base,
+      steps: steps({ DESCRIPTION_DRAFTING: 'APPROVED', D1_FORM_DATA: 'NOT_STARTED' }),
+      stepKey: 'INDEPENDENT_REVIEW',
+      to: 'IN_PROGRESS',
+    });
+    expect(changes).toEqual([{ stepKey: 'INDEPENDENT_REVIEW', from: 'NOT_STARTED', to: 'IN_PROGRESS', reason: null }]);
+  });
+
+  it('opens filing only after the reviewed document is approved', () => {
+    expectError(
+      () =>
+        planStepTransition({
+          ...base,
+          steps: steps({ DESCRIPTION_DRAFTING: 'APPROVED', INDEPENDENT_REVIEW: 'READY_FOR_REVIEW' }),
+          stepKey: 'D1_FORM_DATA',
+          to: 'IN_PROGRESS',
+        }),
+      'PREVIOUS_STEP_NOT_APPROVED',
+    );
+  });
+
   it('starts a step once the previous one is approved', () => {
     const changes = planStepTransition({
       ...base,
