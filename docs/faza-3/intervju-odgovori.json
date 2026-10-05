@@ -1,0 +1,23 @@
+{
+  "phase": 3,
+  "issue": "FUZZ-128",
+  "status": "IN_PROGRESS",
+  "started_at": "2026-10-06",
+  "status_values": ["NOT_ASKED", "ASKED", "ANSWERED", "CONFIRMED", "DEFERRED_TO_FILING"],
+  "deferred_to_filing": [
+    { "id": "A1-tax", "reason": "Iznos takse i pečat — samo podnošenje (odluka 2026-10-06)" },
+    { "id": "A4", "reason": "Obaveza zastupnika za strana lica — samo podnošenje" },
+    { "id": "A6", "reason": "Punomoćnik/zastupnik — samo podnošenje" },
+    { "id": "A7", "reason": "Kvalifikovani sertifikat za e-Prijavu — samo podnošenje" },
+    { "id": "F8", "reason": "Odloženo objavljivanje — zahtev uz podnošenje" },
+    { "id": "F9", "reason": "Zaštita van Srbije — posle podnošenja" },
+    { "id": "G2-priority", "reason": "Konvencijsko pravo prvenstva — samo podnošenje" },
+    { "id": "G3", "reason": "Sajamsko pravo prvenstva — samo podnošenje; izlaganje kao objava pokriva G1" }
+  ],
+  "answers": [
+    { "id": "A1", "group": "A", "question": "Vrsta podnosioca: fizičko lice, preduzetnik ili privredno društvo", "matrix": ["MZ-146"], "status": "ASKED", "asked_at": "2026-10-06", "original_answer": null, "interpretation": null, "confirmation_quote": null, "source_type": "USER" },
+    { "id": "A2", "group": "A", "question": "Tačno ime/poslovno ime, adresa/sedište, telefon, e-mail", "matrix": ["MZ-003", "MZ-146"], "status": "ASKED", "asked_at": "2026-10-06", "original_answer": null, "interpretation": null, "confirmation_quote": null, "source_type": "USER" },
+    { "id": "A3", "group": "A", "question": "Ako je firma: da li je osnovana; ako nije, ko podnosi prijavu", "matrix": ["MZ-140", "MZ-141"], "status": "ASKED", "asked_at": "2026-10-06", "original_answer": null, "interpretation": null, "confirmation_quote": null, "source_type": "USER" },
+    { "id": "A5", "group": "A", "question": "Više podnosilaca i zajednički predstavnik", "matrix": ["MZ-145"], "status": "ASKED", "asked_at": "2026-10-06", "original_answer": null, "interpretation": null, "confirmation_quote": null, "source_type": "USER" }
+  ]
+}
