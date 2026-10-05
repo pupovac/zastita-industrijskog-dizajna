@@ -26,7 +26,7 @@ Ne pita se (sekcija M, „Šta ne treba pitati"): Lokarnska klasa, iznosi taksi,
 
 Po odluci podnosioca od 2026-10-06 ova pitanja se sada ne postavljaju. Ne utiču na sadržaj opisa i prikaza.
 
-| # | Pitanje | Zašto je odloženo |
+| # (sekcija M) | Pitanje | Zašto je odloženo |
 |---|---|---|
 | A1 (deo) | Da li su svi podnosioci fizička lica — radi iznosa takse; pečat | Taksa i potpis/pečat — samo podnošenje |
 | A4 | Prebivalište/sedište podnosioca u Srbiji | Određuje obavezu zastupnika — samo podnošenje |
