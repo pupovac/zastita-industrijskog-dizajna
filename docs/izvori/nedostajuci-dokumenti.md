@@ -27,3 +27,18 @@ Stanje na dan 2026-10-06. Delovi procesa koji zavise od ovih dokumenata NISU nas
 | P-05 | Da li su senčeni ortogonalni pogledi (spreda, bočno, odozgo) prihvatljivi kao nacrt, pored perspektive | Z-05 (primer BOCE), Z-07 čl. 13, Z-08 str. 33 | ZIS ili registrovani zastupnik |
 
 Svaka od ovih tačaka: `NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.`
+
+## Dopuna iz faze 2 (2026-10-06)
+
+Nova pitanja za ZIS ili registrovanog zastupnika, otvorena pri izradi matrice zahteva (`docs/faza-2/matrica-zahteva-zis.md`). Svako od njih: `NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.`
+
+| # | Pitanje | Izvor koji smo analizirali | Red matrice |
+|---|---------|----------------------------|-------------|
+| P-06 | Kako opisati vidljivi izgled završnog sloja (tekstura, boja), kad Uputstvo kaže da se materijal ne navodi, a Zakon čl. 2 navodi materijale kao vizuelnu karakteristiku | Z-05 str. 6; Z-06 čl. 2, 20 | NS-06 |
+| P-07 | Da li se za odloženo objavljivanje plaća posebna taksa | Z-09; Z-08 | MZ-132 |
+| P-08 | Koja pravila zakona o patentima važe za dizajn stvoren u radnom odnosu (Zakon čl. 47) | Z-06 čl. 47 | MZ-144 |
+| P-09 | Da li je za konvencijsko prvenstvo potreban i overen prevod prve prijave (traži ga samo Uputstvo) | Z-05 str. 3; Z-06 čl. 25 | NS-11 |
+| P-10 | Kako ZIS tretira stepenaste/profilisane spojne ivice: čl. 8 st. 2 (must-fit) ili st. 3 (modularni izuzetak) | Z-06 čl. 8; Z-08 str. 7, 48–49 | MZ-192, MZ-197 |
+| P-11 | Da li je fasada od panela „složeni proizvod" (čl. 2 st. 3, čl. 6) i kako se ocenjuju ivice skrivene posle ugradnje | Z-06 čl. 2, 6; Z-08 str. 6, 46–47 | MZ-193 |
+
+Dokumenti koje dostavlja podnosilac (N-01 i N-02 iz faze 1, kao i N-03 do N-09 iz faze 2) objedinjeni su u sekciji N dokumenta `docs/faza-2/rezultati-inicijalnog-istrazivanja.md`.
