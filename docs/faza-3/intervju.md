@@ -43,7 +43,7 @@ Dokumenti N-01, N-02, N-03, N-06, N-08, N-09 nisu uslov za intervju. N-04 (slike
 
 | Grupa | Pitanja | Postavljeno | Odgovoreno | Potvrđeno |
 |---|---|---|---|---|
-| A — Podnosilac | A1, A2, A3, A5 | 2026-10-06 | — | — |
+| A — Podnosilac | A1 (M: A1+A3), A2, A3 (M: A5), A4 (M: B2 — odnos podnosioca i autora) | 2026-10-06 | — | — |
 | B — Autor / dizajner | B1–B5 | — | — | — |
 | C — Proizvod | C1–C6 | — | — | — |
 | D — Vizuelne karakteristike | D1–D6 (ivice odvojeno) | — | — | — |
