@@ -1,0 +1,770 @@
+Locarno Classification
+LOCARNO HOME PAGE
+DOWNLOAD
+EDITION
+----
+LOC (16)
+LOC (15)
+LOC (14)
+LOC (13)
+LOC (12)
+LOC (11)
+LOC (10)
+LOC (09)
+OTHERS
+----
+Previous editions
+CLASS INDEX
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+LANGUAGE
+English
+French
+English/French
+French/English
+LINKS TO DESIGN OFFICES
+VIEW MODE
+LOC
+SHOW
+Note(s)
+ID No.
+LOCPUB
+v4.0.2
+Last modified:
+2026.08.06
+Classes
+Alphabetical
+Class And Subclass Headings
+General Remarks
+Recommendations
+Modifications
+Search
+Class 25
+Building units and construction elements
+25-01
+BUILDING MATERIALS
+Note(s)
+Including bricks, beams, pre-shaped strips, tiles, slates and panels.
+103985
+Acoustic
+building elements
+103995
+Anchoring
+components [building]
+103957
+Angle
+irons
+103986
+Angle
+irons [L-shaped sections]
+103992
+Anti
+-noise screens [building materials]
+103981
+Architectural
+mouldings
+Architectural
+moldings
+103958
+Battens
+[carpentry]
+104820
+Blocks
+for breakwaters
+103978
+Blocks
+for construction
+103953
+Boundary
+stones
+103965
+Brackets
+[woodwork]
+103954
+Bricks
+103956
+Building
+materials
+103987
+Building
+stones
+105279
+Ceiling
+panels
+103984
+Ceramic
+tiles for building
+103983
+Conduits
+for cables
+103975
+Construction
+elements [angles]
+103964
+Cork
+sheets [construction]
+103952
+Curbs
+for sidewalks
+Kerbs
+for pavements
+103994
+Decorative
+panels for building
+103991
+Edgings
+for lawns and flower beds
+103988
+Fence
+pickets
+Posts
+for fences
+103949
+Fish
+plates [rail]
+105280
+Floor
+panels
+103974
+Girders
+Beams
+[construction]
+105281
+Glass
+panels
+105282
+Insulating
+materials for building
+103961
+Joists
+103963
+Laths
+103976
+Linings
+for building
+Cladding
+for building
+103966
+Longitudinal
+girders
+103962
+Panelling
+103968
+Panelling
+[building]
+103993
+Panels
+for electric conductors
+103969
+Paving
+stones
+103970
+Piles
+[stakes]
+103971
+Plates
+[building]
+Slabs
+[building]
+103973
+Plinths
+103982
+Railway
+rails
+103980
+Railway
+sleepers
+Railroad
+ties
+103955
+Refractory
+materials
+103990
+Reinforced
+glass
+103979
+Rods
+for reinforcing concrete
+103972
+Roofing
+plates
+103996
+Scantlings
+[carpentry]
+104657
+Sections
+[building materials]
+103967
+Sheeting
+piles
+103951
+Shingle
+boards
+Clapboards
+103950
+Slates
+for building
+103960
+Supports
+[props]
+103977
+Tiles
+103989
+Tufa
+stones
+105283
+Wall
+panels
+25-02
+PREFABRICATED OR PRE-ASSEMBLED BUILDING PARTS
+Note(s)
+a.
+Including windows, doors, outdoor shutters, partition walls and gratings.
+b.
+Not including staircases (
+Cl. 25-04
+).
+104021
+Abutments
+for bridges
+104570
+Artificial
+grass tiles
+104000
+Awnings
+104915
+Balconies
+104001
+Balustrades
+Banisters
+104002
+Balustrading
+104003
+Barriers
+104043
+Blinds
+[outdoor]
+104824
+Bollards
+104068
+Bowls
+[masonry]
+104034
+Canopies
+for doors
+104020
+Casement
+windows
+104038
+Ceilings
+[pre-assembled]
+104008
+Chimney
+caps
+103998
+Chimney
+cowls
+104053
+Chimney
+pots
+104012
+Chimneys
+for buildings
+104016
+Columns
+[building]
+104597
+Corbels
+104019
+Cornices
+[building]
+104004
+Crash
+barriers for roads
+Highway
+line guards
+104029
+Devices
+for adjusting slats for blinds
+104030
+Dome
+lanterns
+Skylights
+104023
+Domes
+104055
+Door
+casings
+Door
+frames
+104056
+Door
+panels
+104041
+Doors
+104032
+Dormer
+windows
+104057
+Elevator
+doors
+Lift
+doors
+104054
+False
+ceilings
+104051
+Fanlights
+Transoms
+104015
+Fences
+104039
+Floors
+[pre-assembled]
+104061
+Flower
+boxes [outdoor]
+104067
+Flower
+stands [masonry]
+104607
+Folding
+doors
+104010
+Forcing
+frames [horticulture]
+104009
+Framework
+[building]
+104069
+French
+windows
+104071
+Gabions
+104611
+Garage
+doors
+104040
+Gates
+104026
+Gratings
+[parts of buildings]
+104033
+Handrails
+104823
+Insulated
+building panels
+104046
+Latticework
+104072
+Lawn
+grid plates
+104005
+Level
+-crossing gates
+Grade
+-crossing gates
+104031
+Lintels
+104052
+Lock
+gates
+103997
+Manhole
+covers
+104049
+Mine
+props
+Pitprops
+[mining]
+104035
+Palisades
+104025
+Parapets
+104037
+Parquets
+104036
+Partition
+walls
+104014
+Partitions
+[building]
+104022
+Pavings
+104017
+Prefabricated
+or pre-assembled building parts
+104821
+Removable
+floor tiles for outdoor use
+104073
+Rest
+barriers [outdoor]
+104044
+Roofs
+104013
+Screens
+for hothouses
+104822
+Sewer
+manholes
+104058
+Shop
+shutters
+104048
+Shutters
+[venetian]
+104028
+Slats
+for blinds
+104063
+Snow
+fences [for roofs]
+104059
+Sockets
+for posts
+Bases
+for posts
+105023
+Speed
+bumps
+104047
+Stained
+-glass windows
+104064
+Stone
+windows
+Openwork
+partition
+104018
+Storm
+windows
+104042
+Thresholds
+104065
+Tiling
+[pre-assembled]
+104066
+Tree
+protectors
+104045
+Turnstiles
+104007
+Vault
+safes
+104027
+Venetian
+shutters [outdoor]
+104060
+Ventilation
+shutters
+104050
+Waste
+disposal chutes
+104685
+Windbreaks
+[building]
+104011
+Window
+frames
+104024
+Windows
+103999
+Windowsills
+Sills
+[windowsills]
+25-03
+HOUSES, GARAGES AND OTHER BUILDINGS
+104827
+Artificial
+reefs
+104094
+Barns
+104083
+Beach
+huts
+104115
+Boathouses
+104074
+Bomb
+shelters
+104104
+Bridge
+piers
+104106
+Bridges
+[civil engineering]
+104080
+Buildings
+104089
+Buildings
+[transportable]
+104081
+Bungalows
+104087
+Burial
+vaults
+104078
+Carports
+104084
+Changing
+cubicles
+104131
+Children's
+play-houses
+104128
+Columbaria
+104090
+Crypts
+104601
+Dolphins
+[structures]
+104125
+Dustbin
+shelters
+104121
+Floating
+bridges
+104123
+Footbridges
+105024
+Fountains
+[construction]
+104092
+Garages
+104093
+Gasometers
+104109
+Greenhouses
+104095
+Hangars
+Sheds
+104107
+Hen
+houses
+104137
+Horticultural
+cloches
+104096
+Houses
+104116
+Inflatable
+marquees
+104124
+Kiosks
+104136
+Letter
+boxes
+104091
+Locks
+[canal]
+104077
+Market
+shelters
+104098
+Mausoleums
+104130
+Miniature
+buildings [except toys]
+104134
+Modular
+shelters
+104099
+Monuments
+104120
+Mooring
+booms
+104138
+Newspaper
+boxes
+104082
+Paint
+spray booths
+104126
+Passenger
+shelters
+104103
+Pavilions
+[building]
+104133
+Pergolas
+104117
+Posts
+for electricity mains cables
+104135
+Power
+stations [civil engineering]
+104129
+Protective
+shelters for building materials
+104108
+Pylons
+104101
+Recesses
+for telephones
+104825
+Rooftop
+wind turbines
+104114
+Sarcophagi
+104122
+Sentry
+boxes [cabins]
+104118
+Service
+stations
+Filling
+stations
+104079
+Sheds
+[building]
+104075
+Sheds
+for animals
+104076
+Sheds
+for bicycles
+104132
+Shelters
+for service stations
+104110
+Silos
+104102
+Skating
+rinks [structure]
+104111
+Solariums
+[construction]
+104086
+Supports
+for carrying cables
+104826
+Supports
+for rooftop wind turbines
+104105
+Swimming
+pools [non-transportable]
+104085
+Telephone
+boxes
+Telephone
+booths
+104112
+Terraces
+104119
+Theatre
+stages
+104127
+Toll
+houses
+104113
+Tombstones
+104097
+Transmitter
+masts
+105131
+Tree
+houses
+104088
+Water
+towers
+104684
+Wind
+turbines [construction]
+104100
+Windmills
+[construction]
+104687
+Yurts
+25-04
+STEPS, LADDERS AND SCAFFOLDS
+104144
+Feet
+of ladders
+104140
+Ladders
+104147
+Portable
+observation ladders
+104143
+Scaffoldings
+and their components
+104142
+Stair
+banisters
+104145
+Staircase
+steps
+104141
+Staircases
+104139
+Step
+stools
+104146
+Tubes
+for scaffolding
+25-99
+MISCELLANEOUS
+104155
+Airtight
+and watertight padding [construction]
+104152
+Buffers
+for railway terminals
+104153
+Canopies
+for thrones, chairs of state or altars
+104148
+Draft
+excluder strips
+Draught
+excluder strips
+104149
+Garden
+pools
+104156
+Packing
+for doors and windows to prevent draft
+104154
+Slipways
+for ships
+104157
+Trestles
+for painters
+104150
+Weather
+strips
+104151
+Windbreaks
+[for protecting plants]
+In Progress...
