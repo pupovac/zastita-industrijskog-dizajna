@@ -1,0 +1,22 @@
+{
+  "name": "zastita-industrijskog-dizajna",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace apps/api & npm run dev --workspace apps/web",
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "build": "npm run build --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "test": "npm run test --workspaces",
+    "db:migrate": "npm run db:migrate --workspace apps/api",
+    "db:reset": "npm run db:reset --workspace apps/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
