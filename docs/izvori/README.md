@@ -9,7 +9,7 @@ Evidencija zvaničnih izvora za prijavu za priznanje prava na industrijski dizaj
 | `zapisi-izvora.md` | Zapis za svaki izvor (Z-01 … Z-15) u propisanom formatu |
 | `metodologija-izvod.md` | Izvod iz Metodologije ZIS-a za dizajn (2012) i CP10, sa brojevima strana |
 | `nedostajuci-dokumenti.md` | Dokumenti koji nisu dostupni (N-01, N-02) i otvorene provere (P-01 … P-05) |
-| `dokumenti/` | Originalni PDF/DOCX sa ZIS sajta + prikazi strana; `SHA256SUMS.txt` |
+| `dokumenti/` | Originalni PDF/DOCX sa ZIS sajta + prikazi strana; `SHA256SUMS.txt` (provera: iz `docs/izvori/` pokrenuti `shasum -a 256 -c dokumenti/SHA256SUMS.txt`) |
 | `web-snimci/` | HTML snimci analiziranih stranica (ZIS, Paragraf, PIS, WIPO) |
 | `tekst/` | Izvučen tekst dokumenata (za pretragu i proveru citata) |
 

@@ -1,0 +1,4698 @@
+{
+  "title": "Matrica zahteva ZIS-a — prijava za priznanje prava na industrijski dizajn (EPS fasadni panel)",
+  "version": "1.0",
+  "phase": 2,
+  "generated": "2026-10-06",
+  "access_date_default": "2026-10-06",
+  "status_values": [
+    "POTVRĐENO",
+    "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom."
+  ],
+  "classification_values": [
+    "PRAVNI ZAHTEV",
+    "ČINJENICA",
+    "AI ZAKLJUČAK",
+    "PREPORUKA"
+  ],
+  "source_type_values": [
+    "ZIS",
+    "DOCUMENT",
+    "WIPO",
+    "AGENT_INFERENCE"
+  ],
+  "areas": [
+    {
+      "code": "mandatory_documents",
+      "label": "obavezna dokumentacija"
+    },
+    {
+      "code": "filing_method",
+      "label": "način podnošenja"
+    },
+    {
+      "code": "representations",
+      "label": "prikazi"
+    },
+    {
+      "code": "description",
+      "label": "opis"
+    },
+    {
+      "code": "form_d1",
+      "label": "D-1"
+    },
+    {
+      "code": "attachments",
+      "label": "prilozi"
+    },
+    {
+      "code": "fees",
+      "label": "takse"
+    },
+    {
+      "code": "deadlines",
+      "label": "rokovi"
+    },
+    {
+      "code": "single_multiple",
+      "label": "pojedinačna/višestruka prijava"
+    },
+    {
+      "code": "deferred_publication",
+      "label": "odloženo objavljivanje"
+    },
+    {
+      "code": "author_applicant",
+      "label": "autor i podnosilac"
+    },
+    {
+      "code": "representation_agent",
+      "label": "zastupanje"
+    },
+    {
+      "code": "priority",
+      "label": "pravo prvenstva"
+    },
+    {
+      "code": "novelty_individual_character",
+      "label": "novost i individualni karakter"
+    },
+    {
+      "code": "exclusions",
+      "label": "isključenja (tehnička funkcija, must-fit, vidljivost)"
+    },
+    {
+      "code": "locarno",
+      "label": "Lokarnska klasifikacija"
+    }
+  ],
+  "phases": [
+    {
+      "number": 3,
+      "name": "Faza 3 — Intervju"
+    },
+    {
+      "number": 4,
+      "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+    },
+    {
+      "number": 5,
+      "name": "Faza 5 — Pretraga postojećih dizajna"
+    },
+    {
+      "number": 6,
+      "name": "Faza 6 — Strategija zaštite"
+    },
+    {
+      "number": 7,
+      "name": "Faza 7 — Plan prikaza"
+    },
+    {
+      "number": 8,
+      "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+    },
+    {
+      "number": 9,
+      "name": "Faza 9 — Nezavisna provera"
+    },
+    {
+      "number": 10,
+      "name": "Faza 10 — Finalni paket"
+    }
+  ],
+  "sources": [
+    {
+      "id": "Z-01",
+      "document": "ZIS — Industrijski dizajn (web stranica)",
+      "url": "https://www.zis.gov.rs/prava/dizajn/",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-02",
+      "document": "ZIS — Obrasci i uputstva, kategorija Dizajn",
+      "url": "https://www.zis.gov.rs/uputstva-i-obrasci/?cat=dizajn",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-03",
+      "document": "ZIS — Registar zastupnika",
+      "url": "https://www.zis.gov.rs/podrska/registar-zastupnika/",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-04",
+      "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-05",
+      "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-06",
+      "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+      "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-07",
+      "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+      "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-08",
+      "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-08/CP10",
+      "document": "Izveštaj o praksi CP10 — objavljivanje dizajna na internetu (Aneks I Metodologije)",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/CP10-Disclosure-of-Designs-on-the-Internet_SR-IPORS-comments-EUIPO-min.pdf",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-09",
+      "document": "ZIS — Takse, odeljak Industrijski dizajn",
+      "url": "https://www.zis.gov.rs/prava/takse/",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-10",
+      "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+      "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-11",
+      "document": "WIPO — Lokarnska klasifikacija, klasa 25 (LOC 15 / LOC 16)",
+      "url": "https://locpub.wipo.int/enfr/?class_number=25&lang=en&menulang=en&mode=flat&version=20250101",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-12",
+      "document": "ZIS — Baze podataka: Dizajn",
+      "url": "https://www.zis.gov.rs/baze-podataka/dizajn/",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-13",
+      "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+      "url": "https://www.zis.gov.rs/e-prijava/",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-14",
+      "document": "ZIS — Primer zahteva za rešerš dizajna na osnovu prikaza (02-2025)",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/primer-resersa-dizajna-po-prikazu-proizvoda-02-2025.pdf",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-15",
+      "document": "ZIS — Obrazac D-2 (razdvajanje višestruke prijave)",
+      "url": "https://www.zis.gov.rs/wp-content/uploads/D2-Zahtev-za-razdvajanje-visestruke-prijave-industrijskog-dizajna.pdf",
+      "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "MZ-001",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Prijava mora da sadrži: 1) zahtev za priznanje prava na industrijski dizajn; 2) opis industrijskog dizajna; 3) dvodimenzionalni prikaz industrijskog dizajna.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Tri bitna dela prijave panela; nijedan se ne može izostaviti.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-002",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Prijava je uredna ako sadrži sve elemente iz čl. 19, 20 i 21 Zakona, dokaz o uplati takse za prijavu i druge propisane delove (čl. 8–13 Uredbe).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 29 st. 1"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 20–21"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Kontrolna lista urednosti za finalni paket; neuredna prijava se poziva na uređenje, a neuređena odbacuje.",
+      "phases": [
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-003",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Datum podnošenja priznaje se ako prijava sadrži: 1) naznačenje da se traži priznanje prava na industrijski dizajn; 2) ime i prezime, odnosno naziv i adresu podnosioca; 3) prikaz.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 23 st. 1"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Postupak zaštite\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Minimum za obezbeđivanje datuma podnošenja (od njega zavise pravo prvenstva i računanje 12-mesečnog perioda iz čl. 7 st. 3).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-004",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Za priznanje datuma podnošenja dovoljno je da je priložen prikaz; formalni zahtevi za prikaz proveravaju se tek u ispitivanju urednosti.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 20"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ako se prijava mora hitno podneti (npr. zbog roka prvenstva), datum se može obezbediti i pre konačnog usklađivanja prikaza — ali prikaz se kasnije ne sme bitno menjati (MZ-031).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-005",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Uredna prijava sadrži: zahtev, opis, prikaz, punomoćje (ako postoji punomoćnik) i dokaz o uplati takse; po potrebi i prioritetno uverenje, potvrdu o izlaganju i dokaz o pravnom osnovu ako autor nije podnosilac.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Podnošenje prijave\" / „Koji su delovi prijave\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Spisak delova finalnog paketa prijave panela.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-006",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "Zahtev se podnosi na obrascu D-1, u dva primerka.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 3"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 2, tač. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Finalni paket u papirnoj varijanti sadrži dva odštampana i potpisana D-1.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-01",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "NEUSKLAĐENOST — minimalni elementi za upis u registar prijava. Uputstvo (2016) traži: 2 primerka zahteva, najmanje 1 prikaz, 1 primerak opisa, potpis i pečat. Zakon čl. 23 traži samo: naznačenje da se traži pravo, podatke o podnosiocu i prikaz (isto i ZIS web stranica).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 9–10, „Važne napomene\""
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 23 st. 1"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Postupak zaštite\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Za datum podnošenja merodavan je Zakon. Ipak, prijavu panela treba podneti kompletnu (PREPORUKA), pa razlika praktično ne utiče na paket.",
+      "phases": [
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "Zakon (viši pravni akt i noviji od Uputstva iz 2016); ZIS web stranica je usklađena sa Zakonom."
+    },
+    {
+      "id": "NS-02",
+      "area": "obavezna dokumentacija",
+      "area_code": "mandatory_documents",
+      "requirement": "NEUSKLAĐENOST — verzije izvora. Uputstvo (2016) ne pominje izmenu Zakona 44/2018; Metodologija (2012) prethodi izmenama iz 2015. i 2018. Da li postoje izmene Zakona posle 44/2018 nije potvrđeno u zvaničnom PIS-u.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "metapodaci PDF, str. 2"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 2"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "zaglavlje propisa"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Svaki zahtev iz Uputstva i Metodologije proverava se prema važećem Zakonu i Uredbi; pre podnošenja potvrditi da nema novijih izmena (P-01).",
+      "phases": [
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "P-01"
+      ],
+      "precedence": "Važeći tekst Zakona i Uredbe ispred Uputstva i Metodologije."
+    },
+    {
+      "id": "MZ-010",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "Prijava se podnosi nadležnom organu u pisanom obliku, neposredno ili poštom.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Papirni kanal je zakonski osnovni način podnošenja.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-011",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "Prijava se može podneti poštom, elektronski ili neposredno u pisarnici ZIS-a; ne može se podneti faksom. Uređenoj prijavi dodeljuje se D-broj i datum podnošenja.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Podnošenje prijave\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podnosilac bira između papirnog i elektronskog kanala; faks i e-mail nisu dozvoljeni.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-012",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "Elektronski podneta prijava ima isto dejstvo kao prijava podneta u papirnoj formi. Za e-Prijavu je potreban kvalifikovani elektronski sertifikat (npr. lična karta MUP, JP Pošta, PKS, Halcom, E-Smart).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-13",
+          "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+          "url": "https://www.zis.gov.rs/e-prijava/",
+          "location": "stranica e-Prijava; Korisničko uputstvo 2018, tehnički preduslovi"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ako se bira e-Prijava, podnosilac ili zastupnik mora imati kvalifikovani sertifikat (pitanje za intervju).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-013",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "e-Prijava podneta radnim danom do 15:30 smatra se podnetom istog dana; posle 15:30 ili neradnim danom — prvog narednog radnog dana.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-13",
+          "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+          "url": "https://www.zis.gov.rs/e-prijava/",
+          "location": "„Kada je prijava podneta Zavodu\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Važno za poslednji dan roka prvenstva ili 12-mesečnog perioda (MZ-161, MZ-162, MZ-174).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-014",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "Adresa za podnošenje: Zavod za intelektualnu svojinu, Kneginje Ljubice 5, 11000 Beograd. Obrazac D-1 popunjava se na računaru.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "zaglavlje obrasca"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podaci za checklistu papirnog podnošenja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-015",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "e-Prijava je „sanduče\" za predaju; ne služi za praćenje toka predmeta (za to služi „Status predmeta\"). Posle podnošenja status se menja iz „podneto\" u „zavedeno\" i stiže e-mail potvrda.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-13",
+          "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+          "url": "https://www.zis.gov.rs/e-prijava/",
+          "location": "„Kako da znam da li je moja elektronska prijava primljena\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Uputstvo podnosiocu za praćenje posle podnošenja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-03",
+      "area": "način podnošenja",
+      "area_code": "filing_method",
+      "requirement": "NEUSKLAĐENOST — papirno i elektronsko podnošenje. Zakon (čl. 18), Uredba (čl. 11–13), Uputstvo (2016) i Metodologija (str. 14, 19) opisuju samo papirno podnošenje („neposredno ili poštom\", lepljenje prikaza na A4; Metodologija: „za sada ne postoji pravni osnov za podnošenje podnesaka preko e-maila\"). ZIS danas zvanično prima e-Prijavu i daje umanjenje takse od 25%.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 2"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 14, 19"
+        },
+        {
+          "id": "Z-13",
+          "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+          "url": "https://www.zis.gov.rs/e-prijava/",
+          "location": "stranica e-Prijava"
+        },
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 107, napomena o e-podnošenju"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "E-kanal se koristi kao zvanično ponuđen od ZIS-a, ali tehnički format prikaza za e-Prijavu nije poznat (N-01) — to blokira planiranje digitalnih prikaza dok se ne dostavi.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "N-01"
+      ],
+      "precedence": "AI ZAKLJUČAK: ZIS kao nadležni organ zvanično nudi e-Prijavu i Tarifa predviđa umanjenje za e-podnošenje, pa se kanal smatra dostupnim; pravni osnov e-podnošenja nije analiziran."
+    },
+    {
+      "id": "MZ-020",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikazom se predstavlja spoljašnji izgled predmeta zaštite i njegovi delovi koji se vide stalno ili prilikom redovne upotrebe; u prikazu moraju jasno da se predstave svi elementi koji dizajn čine novim.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 21 st. 1–2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Svaka karakteristika panela koja se ističe u opisu (npr. ivice, profil, završni sloj) mora biti jasno vidljiva na prikazima.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-021",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz može biti fotografija ili nacrt i mora ispunjavati propisane uslove kvaliteta i tehničkih karakteristika.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 21 st. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Izbor medija (fotografija, render, linijski nacrt) donosi se u fazi plana prikaza.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-022",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz se podnosi u dva istovetna primerka: jedan se lepi ili unosi računarom na A4 uz zahtev, drugi se dostavlja odvojeno.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Format papirnog paketa prikaza.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-023",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz sadrži samo predmet zaštite i ne sme sadržati drugi predmet, pripadak, lice ili životinju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 2"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 4–5"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "AI ZAKLJUČAK: panel se prikazuje samostalno — bez zgrade, susednih panela, alata ili pribora za montažu.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-024",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz (fotografija ili nacrt) ne može biti veći od 16 × 16 cm.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Granica formata za svaki prikaz.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-025",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz ne može biti manji od 3 × 3 cm; može biti crno-beli ili u boji.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 31"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Navedeno samo u Metodologiji (2012), ne i u Uredbi. Boja je važna ako je boja završnog sloja deo dizajna.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "N-01"
+      ]
+    },
+    {
+      "id": "MZ-026",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Ako se jednom fotografijom ili nacrtom ne mogu prikazati sva nova spoljna obeležja, dostavlja se onoliko prikaza koliko je neophodno; fiksan skup pogleda nije propisan.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 4"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 31–32"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Broj pogleda panela određuje se prema tome koje karakteristike treba pokazati (faza 7).",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-027",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikazi se numerišu sa dva broja razdvojena tačkom (1.1, 1.2…); kod više predmeta zaštite 2.1, 2.2… Na zahtevu numeracija je na licu prikaza, na drugom primerku na poleđini.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 5–6"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Pravilo numeracije za indeks prikaza i za pozivanje u opisu.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-028",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikazi se lepe po rednom broju na A4; najviše 20 prikaza po strani, margina najmanje 5 mm oko svakog, prikazi se ne savijaju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11 st. 7"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Raspored listova sa prikazima u papirnom paketu.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-029",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Fotografije: profesionalnog kvaliteta, bez podloge, ravnih uglova, predmet na neutralnoj jednobojnoj osnovi i bez senki. Nisu dozvoljene instant, retuširane, za ofset nepodobne fotografije i fotokopije.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 12"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "AI ZAKLJUČAK: tekstura završnog sloja mora biti čitljiva bez senki — zahtevno za fotografisanje; razmatra se u fazi 7.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-030",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Nacrt: profesionalnog kvaliteta, u perspektivi, sa dozvoljenim senkama i senčenjem radi reljefa. Ne sme biti tehnički crtež u projekcijama i preseku sa osnim linijama i dimenzijama, niti sadržati objašnjenja ili legende.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 13"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 4"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 33"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Profil ivica panela ne sme se prikazati presekom, kotama ni legendama; postojeći proizvodni crteži nisu automatski upotrebljivi kao prikaz.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-031",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Prikaz se u prijavi ne može naknadno izmeniti tako da se po obimu i sadržini bitno razlikuje od onog određenog opisom dostavljenim pri podnošenju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 27"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "FAQ „Da li se može naknadno izmeniti prikaz\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Prikazi i opis panela moraju biti konačni i međusobno usklađeni pre podnošenja.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-032",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Primer BOCE (ZIS): četiri senčena prikaza bez kota i teksta — 1.1 perspektiva, 1.2 pogled spreda, 1.3 pogled odozdo, 1.4 pogled odozgo.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 6–8 (prikazi na str. 8)"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Polazni šablon za plan prikaza panela, na koji je ZIS izričito uputio u e-mailu.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-033",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "Primer KORPE ZA OTPATKE (Metodologija): šest prikaza — dve perspektive (odozgo i odozdo) i četiri pogleda.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 34–35"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Drugi zvanični primer skupa pogleda; pokazuje da je dozvoljeno više perspektiva.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-04",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "NEUSKLAĐENOST — perspektiva i ortogonalni pogledi. Uredba čl. 13 i Uputstvo str. 4 traže nacrt „u perspektivi\" i zabranjuju crtež „u projekcijama i preseku\"; Metodologija str. 33 dozvoljava „po potrebi u projekcijama\"; primer BOCE sadrži senčene ortogonalne poglede (spreda, odozdo, odozgo).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 13"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 4 i str. 8"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 33"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Za panel su verovatno potrebni pogledi na ivice; da li su senčeni ortogonalni pogledi bez kota prihvatljivi kao nacrt — P-05.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "P-05"
+      ],
+      "precedence": "Uredba je pravno obavezujuća; AI ZAKLJUČAK: zvanični ZIS primer i Metodologija ukazuju da je zabranjen kotirani tehnički crtež i presek, a ne senčeni pogled."
+    },
+    {
+      "id": "NS-05",
+      "area": "prikazi",
+      "area_code": "representations",
+      "requirement": "NEUSKLAĐENOST — digitalni prikazi. Uredba čl. 12 traži fotografije „dobijene na osnovu negativa ili dijapozitiva\" i lepljenje na A4; Korisničko uputstvo e-Prijave (2018) daje format samo za sliku žiga (JPEG, do 2 MB), ne za prikaz dizajna.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 11–12"
+        },
+        {
+          "id": "Z-13",
+          "document": "ZIS — e-Prijava (stranica i Korisničko uputstvo 2018)",
+          "url": "https://www.zis.gov.rs/e-prijava/",
+          "location": "Korisničko uputstvo 2018, odeljak o prilozima"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Tehnički format digitalnih prikaza panela (format, rezolucija, veličina) nije poznat — N-01 blokira konačnu pripremu prikaza za e-Prijavu.",
+      "phases": [
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "N-01"
+      ],
+      "precedence": "Uredba; AI ZAKLJUČAK: zahtev za negativ/dijapozitiv je zastareo u odnosu na digitalnu fotografiju, ali ga do potvrde ne treba smatrati ukinutim."
+    },
+    {
+      "id": "MZ-040",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis sadrži precizan i sažet opis bitnih karakteristika onih elemenata koji dizajn čine novim i različitim od dizajna dostupnih javnosti.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 20 st. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Opis panela ističe karakteristike koje ga razlikuju, a ne opšti izgled ploče.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-041",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis mora biti zasnovan na podnetom prikazu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 20 st. 2"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 33"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "U opisu se navodi samo ono što se vidi na prikazima; sve oblikovne karakteristike vidljive na prikazima treba opisati.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-042",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis ne treba da sadrži podatke o konstrukciji, funkciji ili funkcionalnim prednostima i slične podatke o telu ili njegovim delovima.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 20 st. 3"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 6"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 30–31"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ne opisivati spajanje panela, termoizolaciju, lepljenje, montažu, nosivost — ivice se opisuju samo kao vidljiva geometrija.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-043",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis se dostavlja u dva istovetna primerka, otkucan, terminološki jasan, na A4, i sadrži: podatke o podnosiocu (gore levo), kratak i pravi naziv (gore u sredini), novost predmeta zaštite, namenu (ako nije jasna iz naziva) i potpis podnosioca.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 10 st. 1 i 3"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 30"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Obavezni raspored stranice opisa.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-044",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "U izdvojenom stavu opis treba da sadrži naznačene karakteristike za koje se traži zaštita, pomoću kojih se određuju novost i obim zaštite.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 10 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "AI ZAKLJUČAK: primer BOCE nema zasebno označen stav, ali tu ulogu vrše stav o novosti i završni stav; u nacrtu opisa panela predvideti jasno izdvojen stav.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-045",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Ako prijava sadrži više predmeta zaštite, za svaki se podnosi poseban opis (na posebnom A4).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 10 st. 4"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 31"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Svaka varijanta panela u višestrukoj prijavi dobija sopstveni opis.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-046",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis se kuca samo na jednoj strani lista.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 5"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Format štampe opisa.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-047",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Opis se odnosi samo na spoljni oblik (površine vidljive stalno ili pri redovnoj upotrebi); prvo se opisuje oblik u celini, zatim delovi; koriste se geometrijski pojmovi; poziva se na brojčane oznake prikaza; delovi se opisuju određenim redom (npr. odozgo nadole).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 6"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 30–31"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Metod pisanja opisa panela (faza 8).",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-048",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Struktura opisa po primeru BOCE: (1) šta je prijavljeno telo i namena; (2) u čemu je novost (oblikovanje celine/segmenata); (3) spisak prikaza „Slika 1.1 predstavlja…\"; (4) detaljan geometrijski opis delova sa približnim proporcijama; (5) završna rečenica o novom ukupnom izgledu.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 6–8, „Primer: BOCA\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Šablon za opis panela (sekcija D Rezultata); ZIS ga je izričito preporučio.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-049",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "Podaci koji se odnose na žig treba ukloniti sa prikaza ili u opisu navesti da se za njih ne traži zaštita industrijskim dizajnom.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 31 i 50"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Relevantno ako panel nosi logo, utisnut znak ili natpis (pitanje za intervju).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-06",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "NEUSKLAĐENOST — materijal u opisu. Uputstvo str. 6: opis ne treba da sadrži „materijal od koga je izrađen\". Zakon čl. 2 navodi materijale kao vizuelnu karakteristiku dizajna, a čl. 20 st. 3 zabranjuje samo konstrukciju, funkciju i funkcionalne prednosti; Metodologija (str. 34) u primeru opisuje teksturu površine.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 6"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 2 st. 1, čl. 20 st. 3"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 3, 34"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Ključno za panel od EPS-a sa završnim slojem: kako opisati vidljivu teksturu i boju završnog sloja, a ne navoditi sastav materijala (P-06).",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "P-06"
+      ],
+      "precedence": "Zakon; AI ZAKLJUČAK: vidljivi izgled površine (tekstura, boja, sjaj) opisuje se kao izgled, a vrsta i sastav materijala ne."
+    },
+    {
+      "id": "NS-07",
+      "area": "opis",
+      "area_code": "description",
+      "requirement": "NEUSKLAĐENOST — šta određuje obim prava. Metodologija str. 4 (stari tekst čl. 41 st. 1): obim prava „određen je sadržinom opisa\". Važeći čl. 41 st. 1: pravo obuhvata svaki dizajn koji na informisanog korisnika ne ostavlja drugačiji ukupan utisak. Uredba čl. 10 st. 2 i dalje kaže da izdvojeni stav opisa određuje „novost i obim zaštite\".",
+      "classification": "ČINJENICA",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 4"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 41 st. 1"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 10 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Opis ostaje važan (Uredba, čl. 41 st. 2), ali merilo obima je ukupan utisak, pa prikazi imaju presudnu težinu.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "Važeći Zakon (čl. 41 st. 1)."
+    },
+    {
+      "id": "MZ-060",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Zahtev sadrži naročito: podatke o podnosiocu; podatke o autoru ili izjavu autora da ne želi da bude naveden; naznačenje da li se prijava odnosi na jedan ili više dizajna; stvaran i kratak naziv; pravni osnov ako autor nije podnosilac; potpis podnosioca.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Zakonski minimum sadržaja D-1.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-061",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Zahtev sadrži: 1) poslovno ime i sedište podnosioca, odnosno ime i adresu fizičkog lica; 2) punomoćnika; 3) zajedničkog predstavnika; 4) stvaran i kratak naziv; 5) autora ili napomenu o izjavi; 6) zatraženo pravo prvenstva; 7) pravni osnov; 8) odloženo objavljivanje; 9) element na kome se ne traži isključivo pravo; 10) podatak o plaćenoj taksi; 11) potpis i pečat podnosioca ili punomoćnika.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Uredba precizira 11 elemenata — osnova D-1 vodiča po poljima (sekcija E).",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-062",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Obrazac D-1 ima polja 1–10 (podnosilac; punomoćnik/zajednički predstavnik; naziv; pojedinačna/višestruka; autor; pravni osnov; pravo prvenstva; odloženo objavljivanje; element bez isključivog prava; plaćene takse) i listu priloga za označavanje.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polja 1–10, „Prilozi uz zahtev\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Struktura podataka za D-1 (faza 8) i za model podataka web aplikacije.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-063",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Naziv predmeta zaštite mora biti kratak i stvaran, a ne komercijalan (npr. „stona lampa\", a ne „stona lampa SVETLOST\"); na osnovu naziva ispitivač određuje klasu i potklasu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1 tač. 4"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 3"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 27"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Naziv panela bez trgovačkog imena; naziv utiče na Lokarnsku potklasu (MZ-211).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-064",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Podnosilac može sam ili na zahtev ZIS-a izjaviti da ne traži isključiva prava na elementu dizajna navedenom u opisu (D-1 polje 9).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 41 st. 2"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 9"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 9"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 4, 25, 29"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Moguća opcija za element panela koji je pretežno funkcionalan; element mora biti naveden u opisu. Odluka u fazi 6, uz zastupnika.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-065",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "Kao potvrdu prijema, ZIS podnosiocu dostavlja primerak zahteva sa naznačenim datumom prijema.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podnosilac čuva vraćeni primerak D-1 kao dokaz datuma.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-08",
+      "area": "D-1",
+      "area_code": "form_d1",
+      "requirement": "NEUSKLAĐENOST — potpis i pečat. Zakon čl. 19 st. 1 tač. 6 traži „potpis podnosioca prijave\". Uredba čl. 8 tač. 11 (označena kao izmenjena aktom 44/2018) na Paragrafu i dalje glasi „potpis i pečat\"; Uputstvo (str. 3 i 10) i Metodologija (str. 29: pravno lice mora staviti i pečat) traže pečat.",
+      "classification": "ČINJENICA",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1 tač. 6"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 11*"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 3, 10"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 29"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "PREPORUKA: ako je podnosilac pravno lice koje koristi pečat, staviti i potpis i pečat dok se ne potvrdi (P-02).",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "P-02"
+      ],
+      "precedence": "Zakon (ne traži pečat); tekst Uredbe posle izmene 44/2018 nije potvrđen iz Službenog glasnika."
+    },
+    {
+      "id": "MZ-070",
+      "area": "prilozi",
+      "area_code": "attachments",
+      "requirement": "Uz zahtev se podnose: 1) opis; 2) prikaz; 3) punomoćje (ako postoji punomoćnik); 4) overeni prepis prijave (konvencijsko pravo prvenstva); 5) potvrda/uverenje (sajamsko pravo prvenstva); 6) izjava autora da ne želi da bude naveden; 7) izjava o osnovu sticanja prava (ako autor nije podnosilac); 8) izjava o zajedničkom predstavniku (više podnosilaca); 9) dokaz o uplati takse.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 9"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Kompletan spisak mogućih priloga; za panel se aktiviraju samo oni koji odgovaraju činjenicama iz intervjua.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-071",
+      "area": "prilozi",
+      "area_code": "attachments",
+      "requirement": "Na D-1 se označavaju prilozi: dva primerka prikaza; dva primerka opisa; izjava o zajedničkom predstavniku; punomoćje; dokaz o pravu prvenstva; dokaz o uplati takse; potpis podnosioca.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "„Prilozi uz zahtev\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Checklista priloga u finalnom paketu.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-072",
+      "area": "prilozi",
+      "area_code": "attachments",
+      "requirement": "Kao dokaz o uplati takse dostavlja se prvi primerak uplatnice ili overen i potpisan izvod banke.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 29, 84"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Metodologija (2012) ne obrađuje e-bankarstvo i plaćanje karticom u e-Prijavi; prihvatljiv oblik dokaza za papirnu prijavu potvrditi.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-073",
+      "area": "prilozi",
+      "area_code": "attachments",
+      "requirement": "Ako autor nije podnosilac, prilaže se dokaz o pravnom osnovu (npr. ugovor o radu, ugovor o delu).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 28"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Podnošenje prijave\""
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 9 tač. 7"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ako panel nije osmislio sam podnosilac, potreban je ugovor ili izjava (N-06).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-080",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Taksa za prijavu (Tar. br. 107): jedan dizajn 8.540 RSD (fizička lica 4.270); za drugi i svaki sledeći dizajn u višestrukoj prijavi 6.410 RSD (fizička lica 3.205).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 107"
+        },
+        {
+          "id": "Z-10",
+          "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+          "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+          "location": "tačka 119), Tar. br. 107 st. 9"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Iznos za uplatu pri podnošenju; važi od 1. 7. 2026.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-081",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Za elektronski podnetu prijavu dizajna taksa se umanjuje za 25% od propisane; tačan iznos daje ZIS kalkulator taksi.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 107, napomena"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ušteda ako se bira e-Prijava.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-082",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Kolona „Taksa za fizička lica\" primenjuje se kada su svi podnosioci fizička lica.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "zaglavlje tabele"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 29"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Iznos zavisi od statusa podnosioca (pitanje A1).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-083",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Nije utvrđeno da li se umanjenje za e-podnošenje (−25%) i umanjenje za fizička lica kumuliraju.",
+      "classification": "AI ZAKLJUČAK",
+      "source_type": "AGENT_INFERENCE",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 107, napomena i kolona za fizička lica"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Tačan iznos za fizičko lice u e-Prijavi nije poznat (P-04).",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-04"
+      ]
+    },
+    {
+      "id": "MZ-084",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Za svaki odgovor na rezultat ispitivanja plaća se taksa (Tar. br. 109): 1.040 RSD (fizička lica 520).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 109"
+        },
+        {
+          "id": "Z-10",
+          "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+          "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+          "location": "tačka 121)"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 12"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Trošak svake korekcije posle rezultata ispitivanja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-085",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Ako prijava ispunjava uslove, ZIS zaključkom poziva podnosioca da plati taksu za prvih pet godina zaštite i troškove objave i da dostavi dokaze; ako ih ne dostavi u ostavljenom roku, prijava se smatra povučenom.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 36 st. 1–2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Drugi obavezan trošak, posle pozitivnog ispitivanja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-086",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Taksa za sticanje/održavanje za prvih 5 godina (Tar. br. 115): prvi dizajn 21.390 RSD (fizička lica 10.695); drugi i svaki sledeći iz serije 14.950 (7.475). Isprava o dizajnu (Tar. br. 123): 4.290 (2.145).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 115, 123"
+        },
+        {
+          "id": "Z-10",
+          "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+          "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+          "location": "tačke 127), 135)"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 23"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Budžet posle priznanja.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-087",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Iznos troškova objave industrijskog dizajna nije prikazan na stranici taksi ZIS-a; visinu troškova utvrđuje Vlada.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 22 st. 2–3"
+        },
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "odeljak Industrijski dizajn"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Ukupan trošak priznanja ne može se izračunati dok se ne dostavi N-02.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "N-02"
+      ]
+    },
+    {
+      "id": "MZ-088",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Produženje roka (Tar. br. 122): prvi zahtev do 30 dana 2.160 RSD (1.080); za svaki sledeći mesec 3.200 (1.600).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 122"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 17"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Trošak ako se traži produženje roka za uređenje ili izjašnjenje.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-089",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Održavanje od 6. do 25. godine, po petogodištu (Tar. br. 115 st. 2): prvi dizajn 12.820 (6.410); sledeći 8.540 (4.270). Plaća se do početka perioda, najranije 6 meseci pre isteka; naknadno u roku od 6 meseci uz uvećanje od 50%.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 115"
+        },
+        {
+          "id": "Z-10",
+          "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+          "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+          "location": "tačka 127)"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Dugoročni troškovi održavanja prava.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-090",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Uplata: račun 840-30880845-62, poziv na broj 97 2801864040, primalac „Republičke administrativne takse – Zavod za intelektualnu svojinu\"; u svrsi uplate navesti tarifni broj (i broj prijave ako postoji).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "uputstvo za uplatu"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podaci za uplatnicu u finalnom paketu.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-091",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Dinarski iznosi taksi usklađuju se periodično (poslednje usklađivanje od 1. 7. 2026); iznose proveriti neposredno pre uplate.",
+      "classification": "PREPORUKA",
+      "source_type": "AGENT_INFERENCE",
+      "sources": [
+        {
+          "id": "Z-10",
+          "document": "Usklađeni dinarski iznosi iz Tarife republičkih administrativnih taksi („Sl. glasnik RS\" 54/2026)",
+          "url": "https://pravno-informacioni-sistem.rs/eli/rep/sgrs/vlada/iznos/2026/54/1",
+          "location": "„Sl. glasnik RS\" 54/2026"
+        },
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "napomena o usklađenim iznosima"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Iznosi u paketu nose datum provere.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-092",
+      "area": "takse",
+      "area_code": "fees",
+      "requirement": "Rešerš ZIS-a po prikazu proizvoda (Tar. br. 134l): 4.210 RSD; zahtev sadrži naziv proizvoda, prikaze i dokaz o uplati.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 134l"
+        },
+        {
+          "id": "Z-14",
+          "document": "ZIS — Primer zahteva za rešerš dizajna na osnovu prikaza (02-2025)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/primer-resersa-dizajna-po-prikazu-proizvoda-02-2025.pdf",
+          "location": "ceo dokument"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Opcioni trošak u fazi pretrage (sekcija L).",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-100",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Ako prijava ne sadrži elemente za datum podnošenja, ZIS poziva da se nedostaci otklone u roku od 30 dana; datum podnošenja je dan otklanjanja; ako se ne otklone, prijava se odbacuje. Ovaj rok se ne produžava.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 23 st. 4–7"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 17–18"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Nepotpuna prijava gubi raniji datum.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-101",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Neuredna prijava: ZIS poziva na uređenje u roku koji odredi; na obrazloženi zahtev, uz taksu, rok se može produžiti najviše 3 meseca; neuređena prijava ili neplaćena taksa — odbacivanje.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 29 st. 2–4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Rok za ispravke posle formalnog ispitivanja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-102",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Povraćaj u pređašnje stanje: u roku od 3 meseca od prijema zaključka o odbacivanju (čl. 29) ili o obustavi zbog neplaćanja taksi za priznanje (čl. 36), uz taksu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 29 st. 6, čl. 36 st. 4"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 18"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Sigurnosni mehanizam ako se propusti rok.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-103",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Kad prijava ne ispunjava uslove za priznanje, ZIS obaveštava o razlozima i poziva na izjašnjenje u roku koji odredi (produženje najviše do 3 meseca); bez izjašnjenja ili ako ZIS ostane pri stavu — rešenje o odbijanju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 31"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Rok za odgovor na prigovore ispitivača (npr. zbog novosti ili tehničke funkcije).",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-104",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Žalba Vladi u roku od 15 dana od prijema odluke ZIS-a; upravni spor u roku od 30 dana od prijema odluke Vlade.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 12 st. 2 i 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Pravni lekovi posle odbijanja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-105",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Pravo se stiče upisom u registar i traje 5 godina od datuma podnošenja; produžava se za periode od po 5 godina, najduže do 25 godina (zahtev na obrascu D-7 uz dokaz o uplati).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 11"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Kako se stiče i koliko traje pravo\", „Produženje važnosti\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Kalendar održavanja prava posle priznanja.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-106",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "Rok za plaćanje taksi za priznanje i troškova objave određuje ZIS u zaključku („u ostavljenom roku\").",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 36 st. 1–2"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 23"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Tačan rok biće poznat tek iz zaključka ZIS-a.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-09",
+      "area": "rokovi",
+      "area_code": "deadlines",
+      "requirement": "NEUSKLAĐENOST — rok za uređenje prijave. ZIS web stranica: „rok od mesec dana\"; Metodologija str. 20–21: „u roku od 30 dana\"; Zakon čl. 29 st. 2: „u roku koji nadležni organ odredi\".",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Kako teče postupak ispitivanja\""
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 20–21"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 29 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Merodavan je rok naveden u konkretnom rezultatu ispitivanja; za planiranje računati sa oko 30 dana.",
+      "phases": [
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "Zakon — rok iz akta ZIS-a u konkretnom predmetu."
+    },
+    {
+      "id": "MZ-120",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Jedna prijava može sadržati zahtev za jedan ili više, najviše do 100 industrijskih dizajna.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Gornja granica ako postoje varijante panela.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-121",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Kod višestruke prijave svi proizvodi moraju biti svrstani u istu klasu i potklasu Lokarnske klasifikacije.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 5"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Varijante panela mogu u istu prijavu samo ako su u istoj potklasi (P-03).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-122",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Pojedinačna prijava se odnosi na spoljni oblik jednog proizvoda, koji može biti od jednog ili više neraskidivo povezanih elemenata; višestruka — na više proizvoda koji nisu neraskidivo povezani (npr. kauč i fotelja su različiti dizajni).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "AI ZAKLJUČAK: različite varijante panela (dimenzije, profili, ugaoni paneli) verovatno su posebni dizajni; odluka u fazi 6 posle intervjua (grupa F).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-123",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "U zahtevu se naznačava da li se prijava odnosi na jedan ili više dizajna, odnosno broj dizajna (D-1 polje 4).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1 tač. 3"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 4"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 27"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podatak za D-1 iz strategije zaštite.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-124",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Za svaki predmet zaštite podnosi se poseban opis i poseban prikaz sa sopstvenom numeracijom (1.x, 2.x…); ZIS materijalne uslove ispituje za svaki dizajn posebno.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 10 st. 4, čl. 11 st. 6"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 41"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Svaka varijanta zahteva sopstveni komplet opisa i prikaza.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 7,
+          "name": "Faza 7 — Plan prikaza"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-125",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Višestruka prijava može se, uz taksu (Tar. br. 108: 3.200 RSD, fizička lica 1.600, e-podnošenje −25%), razdvojiti zahtevom na obrascu D-2; izdvojene prijave dobijaju novi broj, ali zadržavaju datum podnošenja i pravo prvenstva.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 33"
+        },
+        {
+          "id": "Z-15",
+          "document": "ZIS — Obrazac D-2 (razdvajanje višestruke prijave)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D2-Zahtev-za-razdvajanje-visestruke-prijave-industrijskog-dizajna.pdf",
+          "location": "obrazac D-2"
+        },
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 108"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Fleksibilnost ako se kasnije pokaže da varijante treba razdvojiti.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-126",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "Ako neki dizajni iz višestruke prijave ne ispunjavaju uslove, ZIS donosi rešenje o delimičnom priznanju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 34"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 22"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Problem jedne varijante ne ruši celu višestruku prijavu.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-10",
+      "area": "pojedinačna/višestruka prijava",
+      "area_code": "single_multiple",
+      "requirement": "NEUSKLAĐENOST — uslov za višestruku prijavu. Metodologija str. 27: proizvodi u istoj „klasi\"; Metodologija str. 24 i 41, Uputstvo str. 2 i Zakon čl. 18 st. 5: ista klasa i potklasa.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 24, 27, 41"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 2"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 18 st. 5"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Primenjuje se strožiji uslov (klasa i potklasa).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "Zakon (čl. 18 st. 5)."
+    },
+    {
+      "id": "MZ-130",
+      "area": "odloženo objavljivanje",
+      "area_code": "deferred_publication",
+      "requirement": "Zahtev može sadržati izjavu da se objavljivanje priznatog prava odloži 12 meseci od datuma donošenja rešenja o priznanju (D-1 polje 8).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 2"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 8"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 8"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Opcija ako podnosilac želi da izgled panela ostane neobjavljen do izlaska na tržište (pitanje za intervju, odluka u fazi 6).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-131",
+      "area": "odloženo objavljivanje",
+      "area_code": "deferred_publication",
+      "requirement": "Priznato pravo se objavljuje u službenom glasilu ZIS-a (nosilac, registarski broj, datumi, naziv, prikaz, klasa).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 38"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Bez odlaganja, prikazi panela postaju javni posle upisa.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-132",
+      "area": "odloženo objavljivanje",
+      "area_code": "deferred_publication",
+      "requirement": "U tabeli taksi ZIS-a nije pronađena posebna taksa za zahtev za odloženo objavljivanje; Metodologija ne obrađuje taksu za odlaganje.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "odeljak Industrijski dizajn"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 25, 28"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Ne pretpostavljati da je odlaganje besplatno dok se ne potvrdi (P-07).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-07"
+      ]
+    },
+    {
+      "id": "MZ-140",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Pravo na zaštitu industrijskog dizajna pripada autoru ili njegovom pravnom sledbeniku, odnosno poslodavcu u slučajevima predviđenim zakonom.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8a st. 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Treba utvrditi ko je autor i po kom osnovu podnosilac ima pravo (grupe A i B).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-141",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Zaštita se ne odobrava ako je prijavu podnelo lice koje nema pravo na zaštitu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 9 tač. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Pogrešan podnosilac je osnov za odbijanje.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-142",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Ako autor nije podnosilac, u zahtevu se navode podaci o autoru i pravni osnov za podnošenje (D-1 polja 5 i 6), a prilaže se izjava o osnovu sticanja prava.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1 tač. 2 i 5"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 5 i 7, čl. 9 tač. 7"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polja 5–6"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podaci za D-1 i prilog.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-143",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Autor može izjaviti da ne želi da bude naveden (prilog: izjava autora) i tu izjavu može povući tokom postupka i trajanja prava; autor ima moralno pravo da mu ime bude navedeno.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 19 st. 1 tač. 2 i st. 3, čl. 40 st. 2"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 9 tač. 6"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Pitanje za intervju (grupa B).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-144",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Na dizajn stvoren u radnom odnosu shodno se primenjuju odredbe zakona kojim se uređuju patenti.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 47"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Ako je autor zaposlen kod podnosioca, primenjuju se pravila Zakona o patentima o službenim delima — taj zakon nije analiziran u ovoj fazi; potvrditi sa zastupnikom (P-08).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-08"
+      ]
+    },
+    {
+      "id": "MZ-145",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Ako postoji više podnosilaca, navodi se zajednički predstavnik i prilaže izjava o zajedničkom predstavniku.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 3, čl. 9 tač. 8"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 3, tač. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Samo ako ima više podnosilaca (pitanje A).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-146",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Podnosilac pravno lice navodi poslovno ime i sedište; fizičko lice ime i adresu (D-1 polje 1, uz telefon i e-mail).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 1"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 1"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Tačni podaci podnosioca (pitanje A).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-147",
+      "area": "autor i podnosilac",
+      "area_code": "author_applicant",
+      "requirement": "Strana fizička i pravna lica uživaju ista prava kao domaća ako to proizlazi iz međunarodnih ugovora ili uzajamnosti.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8a st. 2–3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Relevantno samo ako je podnosilac strano lice.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-150",
+      "area": "zastupanje",
+      "area_code": "representation_agent",
+      "requirement": "Strano fizičko ili pravno lice bez prebivališta, odnosno sedišta u Srbiji mora imati zastupnika upisanog u Registar zastupnika ZIS-a ili domaćeg advokata.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 16"
+        },
+        {
+          "id": "Z-03",
+          "document": "ZIS — Registar zastupnika",
+          "url": "https://www.zis.gov.rs/podrska/registar-zastupnika/",
+          "location": "uslovi za zastupanje"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Šta sve treba da znate\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Obavezan zastupnik samo ako je podnosilac strano lice.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-151",
+      "area": "zastupanje",
+      "area_code": "representation_agent",
+      "requirement": "U Registar zastupnika upisuju se lica koja ispunjavaju uslove iz zakona kojim se uređuju patenti; registar je javno dostupan.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 17"
+        },
+        {
+          "id": "Z-03",
+          "document": "ZIS — Registar zastupnika",
+          "url": "https://www.zis.gov.rs/podrska/registar-zastupnika/",
+          "location": "e-registar zastupnika"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Izvor za izbor zastupnika.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-152",
+      "area": "zastupanje",
+      "area_code": "representation_agent",
+      "requirement": "Domaće lice može samo voditi postupak; zastupnik nije obavezan.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 13, 26"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 16"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Domaći podnosilac može podneti prijavu bez zastupnika.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-153",
+      "area": "zastupanje",
+      "area_code": "representation_agent",
+      "requirement": "Ako se prijava podnosi preko punomoćnika, prilaže se punomoćje (Metodologija: original punomoćja).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 2, čl. 9 tač. 3"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 2"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 26"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Prilog ako se angažuje zastupnik.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-154",
+      "area": "zastupanje",
+      "area_code": "representation_agent",
+      "requirement": "Pre podnošenja prijavu proveriti kod registrovanog zastupnika, posebno zbog nepotvrđene novosti i rizika tehničke funkcije.",
+      "classification": "PREPORUKA",
+      "source_type": "AGENT_INFERENCE",
+      "sources": [
+        {
+          "id": "Z-03",
+          "document": "ZIS — Registar zastupnika",
+          "url": "https://www.zis.gov.rs/podrska/registar-zastupnika/",
+          "location": "Registar zastupnika"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Usklađeno sa odlukom podnosioca od 2026-10-05 i pravilima projekta; sistem nije zamena za zastupnika.",
+      "phases": [
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        },
+        {
+          "number": 10,
+          "name": "Faza 10 — Finalni paket"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-160",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "Podnosilac uživa pravo prvenstva od datuma podnošenja prijave prema svima koji su za isti dizajn kasnije podneli prijavu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 24"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Podnošenje prijave\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Brzo podnošenje štiti od kasnijih prijava trećih lica.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-161",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "Konvencijsko pravo prvenstva: ako je za isti dizajn podneta uredna prijava u zemlji Pariske unije ili STO, prijava u Srbiji mora se podneti u roku od 6 meseci; u zahtevu se navode datum, broj i zemlja; overen prepis prve prijave dostavlja se u roku od 3 meseca od podnošenja u Srbiji.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 25"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 8 tač. 6, čl. 9 tač. 4"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polje 7"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Samo ako postoji ranija prijava u inostranstvu (pitanje G).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-162",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "Sajamsko pravo prvenstva: ako je dizajn izlagan na međunarodnom sajmu ili izložbi u roku od 3 meseca pre podnošenja, može se tražiti prvenstvo od dana prvog izlaganja; uz prijavu se dostavlja potvrda nadležnog organa (za sajam u Srbiji — Privredna komora Srbije).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 26 st. 1–3"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 9 tač. 5"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Podnošenje prijave\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Samo ako je panel izlagan na sajmu (pitanje G).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-163",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "Sajamsko pravo prvenstva ne produžava rokove konvencijskog prvenstva.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 26 st. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Rokovi se ne sabiraju.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-164",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "Na zahtev podnosioca uredne prijave ZIS izdaje uverenje o pravu prvenstva (za prijave u inostranstvu).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 25a"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 14–15"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Osnov za kasniju zaštitu u inostranstvu u roku od 6 meseci.",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-11",
+      "area": "pravo prvenstva",
+      "area_code": "priority",
+      "requirement": "NEUSKLAĐENOST — prevod prioritetnog dokumenta. Uputstvo str. 3 traži prepis prve prijave „sa overenim prevodom\"; Zakon čl. 25 st. 3 i Uredba čl. 9 tač. 4 traže samo overen prepis.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 3, tač. 7"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 25 st. 3"
+        },
+        {
+          "id": "Z-07",
+          "document": "Uredba o sadržini registra prijava i registra industrijskog dizajna… („Sl. glasnik RS\" 43/2010, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/uredba_o_sadrzini_registra_prijava_i_registra_industrijskog_dizajna.html",
+          "location": "čl. 9 tač. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Relevantno samo ako se zatraži konvencijsko prvenstvo; potvrditi da li je prevod obavezan (P-09).",
+      "phases": [
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [
+        "P-09"
+      ],
+      "precedence": "Zakon i Uredba."
+    },
+    {
+      "id": "MZ-170",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Industrijski dizajn se štiti ako je nov i ako ima individualni karakter.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 3"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Koje uslove dizajn mora da ispuni\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Dva materijalna uslova za panel.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-171",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Dizajn je nov ako identičan dizajn nije postao dostupan javnosti pre dana podnošenja ili priznatog prvenstva; dizajni su identični ako se razlikuju samo u nebitnim detaljima.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 4"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Svaka ranija javna pojava istog panela ugrožava novost.",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-172",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Individualni karakter: ukupan utisak na informisanog korisnika razlikuje se od ukupnog utiska bilo kog ranije dostupnog dizajna; uzima se u obzir stepen slobode autora. Informisani korisnik je fizičko lice koje se redovno susreće sa tim tipom proizvoda.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 1 st. 2–3, čl. 5, čl. 41 st. 3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Kod panela je sloboda autora ograničena (pravougaoni format, spajanje) — razlika mora proisteći iz vizuelnih karakteristika.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-173",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Dizajn je dostupan javnosti ako je objavljen, izlagan, korišćen u prometu ili na drugi način otkriven, osim ako specijalizovani poslovni krugovi u Srbiji nisu razumno mogli da saznaju za to; otkrivanje uz obavezu čuvanja tajnosti se ne računa.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 7 st. 1–2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Grupa G intervjua: sve ranije objave, uz podatak o poverljivosti (NDA).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-174",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Otkrivanje od strane autora, njegovog pravnog sledbenika ili trećeg lica na osnovu njihove informacije ne uništava novost ako je od otkrivanja do podnošenja (ili prvenstva) proteklo manje od 12 meseci.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 7 st. 3"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 7, 47"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ako je panel već javno prikazan, datum prve objave određuje krajnji rok za podnošenje (VISOK PRIORITET).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-175",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Objava na internetu (sajt, društvene mreže, aplikacije, e-mail) može činiti dizajn dostupnim javnosti; lozinka ili plaćanje ne sprečavaju dostupnost; dokaz je odštampan primerak ili skrinšot sa jasnom slikom, datumom i URL-om, a prednost imaju arhivski servisi.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Izveštaj o praksi CP10 — objavljivanje dizajna na internetu (Aneks I Metodologije)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/CP10-Disclosure-of-Designs-on-the-Internet_SR-IPORS-comments-EUIPO-min.pdf",
+          "location": "str. 3–7, 18–21"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podnosilac treba da sačuva dokaze o svim ranijim objavama (N-05).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-176",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "ZIS po službenoj dužnosti ispituje novost i individualni karakter i pretražuje nacionalnu i međunarodnu (WIPO) bazu u istoj klasi i potklasi.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 21, 41–42"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Kako teče postupak ispitivanja\""
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Sličan raniji dizajn u bazama može dovesti do odbijanja.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-177",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Generični oblici (kupa, kocka, prizma, valjak, kvadrat…) bez drugih vizuelnih karakteristika (linija, kontura, boja, tekstura) su osnov za odbijanje.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 43–44"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "AI ZAKLJUČAK: pravougaona ploča je prizma — novost i individualni karakter moraju proisticati iz ivica, profila, proporcija, teksture ili boje.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-178",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "Pre podnošenja može se tražiti rešerš ZIS-a (uz taksu); nacionalna baza dizajna je javno dostupna (e-reg.zis.gov.rs).",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Pre podnošenja prijave\""
+        },
+        {
+          "id": "Z-12",
+          "document": "ZIS — Baze podataka: Dizajn",
+          "url": "https://www.zis.gov.rs/baze-podataka/dizajn/",
+          "location": "opis baze"
+        },
+        {
+          "id": "Z-14",
+          "document": "ZIS — Primer zahteva za rešerš dizajna na osnovu prikaza (02-2025)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/primer-resersa-dizajna-po-prikazu-proizvoda-02-2025.pdf",
+          "location": "ceo dokument"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Osnov plana pretrage (sekcija L).",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-12",
+      "area": "novost i individualni karakter",
+      "area_code": "novelty_individual_character",
+      "requirement": "NEUSKLAĐENOST — test individualnog karaktera. Metodologija str. 45–46: dizajn ne ispunjava uslove ako je identičan ili se razlikuje u nebitnim detaljima, u istoj klasi/potklasi i uz verovatnoću zabune. Zakon čl. 5: ukupan utisak na informisanog korisnika, uz stepen slobode autora.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 45–46"
+        },
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 5"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "U pretrazi i analizi koristiti zakonski test (ukupan utisak), uz svest da praksa ZIS-a može biti drugačija.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "Zakon (čl. 5)."
+    },
+    {
+      "id": "MZ-190",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Industrijskim dizajnom ne može se zaštititi spoljašnji izgled proizvoda koji je isključivo određen tehničkom funkcijom proizvoda.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 1"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Šta sve treba da znate\""
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 7, 48"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ključni rizik za profilisane/stepenaste ivice; klasifikacija karakteristika u fazi 4.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-191",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Ne može se zaštititi spoljašnji izgled koji mora biti reprodukovan u tačnom obliku i dimenzijama da bi proizvod mogao biti mehanički povezan sa drugim proizvodom, ili postavljen u, oko ili uz njega, tako da svaki obavlja svoju funkciju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 2"
+        },
+        {
+          "id": "Z-01",
+          "document": "ZIS — Industrijski dizajn (web stranica)",
+          "url": "https://www.zis.gov.rs/prava/dizajn/",
+          "location": "„Šta sve treba da znate\""
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 7"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Direktno se odnosi na geometriju spoja panela.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-192",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Nezavisno od st. 2, uz uslove novosti i individualnog karaktera, štiti se dizajn koji omogućava višestruko sastavljanje ili povezivanje međusobno zamenjivih proizvoda u modularnom sistemu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 3"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 7"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Moguć osnov za zaštitu ivica ako su paneli zamenjivi modularni elementi — otvoreno pitanje (P-10).",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-10"
+      ]
+    },
+    {
+      "id": "MZ-193",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Dizajn sastavnog dela složenog proizvoda smatra se novim i sa individualnim karakterom samo ako deo ostaje vidljiv tokom redovne upotrebe složenog proizvoda i ako vidljive karakteristike ispunjavaju uslove; redovna upotreba isključuje održavanje, servisiranje i popravke.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 6"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 6, 46–47"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Ako je fasada „složeni proizvod\", delovi ivica skriveni posle ugradnje možda ne doprinose zaštiti (P-11).",
+      "phases": [
+        {
+          "number": 3,
+          "name": "Faza 3 — Intervju"
+        },
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-11"
+      ]
+    },
+    {
+      "id": "MZ-194",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Proizvod uključuje i delove namenjene spajanju u složeni proizvod; složeni proizvod je sastavljen od više zamenjivih delova koji omogućavaju sastavljanje i rastavljanje.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 2 st. 2–3"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Definicije za procenu da li se čl. 6 primenjuje na panel.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-195",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Zaštita se ne odobrava ako: nije dizajn u smislu čl. 2; nisu ispunjeni uslovi čl. 3–8; podnosilac nema pravo; postoji sukob sa ranije zaštićenim dizajnom; koristi se tuđi prepoznatljiv znak; povređuje autorsko pravo ili prava industrijske svojine; sadrži grb, zastavu ili druge javne simbole bez odobrenja; protivno javnom poretku i moralu.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 8 st. 4, čl. 9"
+        },
+        {
+          "id": "Z-05",
+          "document": "Uputstvo „Sastavljanje i podnošenje prijave za priznanje prava na industrijski dizajn\" (2016, sa primerom BOCE)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/uputstvo-novo-PDF.pdf",
+          "location": "str. 10"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Kontrolna lista za fazu provere.",
+      "phases": [
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-196",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Do okončanja postupka, prijava za industrijski dizajn može se pretvoriti u prijavu patenta, odnosno malog patenta (Tar. br. 129).",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 35"
+        },
+        {
+          "id": "Z-09",
+          "document": "ZIS — Takse, odeljak Industrijski dizajn",
+          "url": "https://www.zis.gov.rs/prava/takse/",
+          "location": "Tar. br. 129"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 23"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Poseban put za elemente koji su pretežno tehničko rešenje; ne meša se sa sadržajem prijave dizajna.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-197",
+      "area": "isključenja (tehnička funkcija, must-fit, vidljivost)",
+      "area_code": "exclusions",
+      "requirement": "Metodologija ne daje kriterijume ni primere za spojne ivice, preklope ili profile za međusobno spajanje.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 7, 48–49 (razmotreno; kriterijumi izostaju)"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Kako ZIS tretira stepenaste spojne ivice mora se potvrditi (P-10); ne donositi zaključak bez potvrde.",
+      "phases": [
+        {
+          "number": 4,
+          "name": "Faza 4 — Vizuelne karakteristike i tehnička funkcija"
+        },
+        {
+          "number": 9,
+          "name": "Faza 9 — Nezavisna provera"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-10"
+      ]
+    },
+    {
+      "id": "MZ-210",
+      "area": "Lokarnska klasifikacija",
+      "area_code": "locarno",
+      "requirement": "Klasa 25 „Building units and construction elements\": 25-01 (Building materials — „uključujući … panele\"; pojmovi Wall panels, Insulating materials for building, Decorative panels for building, Cladding for building) i 25-02 (Prefabricated or pre-assembled building parts; pojam Insulated building panels).",
+      "classification": "ČINJENICA",
+      "source_type": "WIPO",
+      "sources": [
+        {
+          "id": "Z-11",
+          "document": "WIPO — Lokarnska klasifikacija, klasa 25 (LOC 15 / LOC 16)",
+          "url": "https://locpub.wipo.int/enfr/?class_number=25&lang=en&menulang=en&mode=flat&version=20250101",
+          "location": "klasa 25, potklase 25-01 i 25-02 (LOC 15 i LOC 16)"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
+      "impact": "Kandidati potklase za panel: 25-01 ili 25-02 — izbor nije potvrđen (P-03); utiče na višestruku prijavu i na pretragu.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": [
+        "P-03"
+      ]
+    },
+    {
+      "id": "MZ-211",
+      "area": "Lokarnska klasifikacija",
+      "area_code": "locarno",
+      "requirement": "Klasu i potklasu određuje ispitivač na osnovu naziva i namene; primenjuje se poslednja važeća verzija Lokarnske klasifikacije; D-1 nema polje za klasu.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 27, 38–39"
+        },
+        {
+          "id": "Z-04",
+          "document": "Obrazac D-1 — Zahtev za priznanje prava na industrijski dizajn",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/D-1-zahtev-za-priznanje-dizajn.docx",
+          "location": "polja 1–10"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Podnosilac ne upisuje klasu, ali naziv i namena u opisu treba da je jasno usmere.",
+      "phases": [
+        {
+          "number": 8,
+          "name": "Faza 8 — Nacrt opisa i podaci za D-1"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-212",
+      "area": "Lokarnska klasifikacija",
+      "area_code": "locarno",
+      "requirement": "LOC 15 je na snazi od 1. 1. 2025; LOC 16 stupa na snagu 1. 1. 2027; relevantni pojmovi klase 25 su isti u oba izdanja.",
+      "classification": "ČINJENICA",
+      "source_type": "WIPO",
+      "sources": [
+        {
+          "id": "Z-11",
+          "document": "WIPO — Lokarnska klasifikacija, klasa 25 (LOC 15 / LOC 16)",
+          "url": "https://locpub.wipo.int/enfr/?class_number=25&lang=en&menulang=en&mode=flat&version=20250101",
+          "location": "LOCPUB, verzije 20250101 i 20270101; vest WIPO o LOC 16"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Prijava podneta posle 1. 1. 2027. klasifikuje se po LOC 16.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        },
+        {
+          "number": 6,
+          "name": "Faza 6 — Strategija zaštite"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "MZ-213",
+      "area": "Lokarnska klasifikacija",
+      "area_code": "locarno",
+      "requirement": "Registar industrijskog dizajna i objava sadrže klasu Međunarodne klasifikacije.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
+      "sources": [
+        {
+          "id": "Z-06",
+          "document": "Zakon o pravnoj zaštiti industrijskog dizajna („Sl. glasnik RS\" 104/2009, 45/2015, 44/2018 – dr. zakon)",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_pravnoj_zastiti_industrijskog_dizajna.html",
+          "location": "čl. 13 st. 6, čl. 38 st. 2"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Potklasa određuje i ko će naći panel u bazama.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": false,
+      "open_items": []
+    },
+    {
+      "id": "NS-13",
+      "area": "Lokarnska klasifikacija",
+      "area_code": "locarno",
+      "requirement": "NEUSKLAĐENOST — izdanje Lokarnske klasifikacije. ZIS stranica „Baze podataka — Dizajn\" upućuje na „Trinaesto izdanje\"; WIPO: na snazi je LOC 15 (od 2025), LOC 16 od 2027; Metodologija: primenjuje se poslednja važeća verzija.",
+      "classification": "ČINJENICA",
+      "source_type": "ZIS",
+      "sources": [
+        {
+          "id": "Z-12",
+          "document": "ZIS — Baze podataka: Dizajn",
+          "url": "https://www.zis.gov.rs/baze-podataka/dizajn/",
+          "location": "odeljak „Klasifikacije\""
+        },
+        {
+          "id": "Z-11",
+          "document": "WIPO — Lokarnska klasifikacija, klasa 25 (LOC 15 / LOC 16)",
+          "url": "https://locpub.wipo.int/enfr/?class_number=25&lang=en&menulang=en&mode=flat&version=20250101",
+          "location": "LOCPUB"
+        },
+        {
+          "id": "Z-08",
+          "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
+          "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
+          "location": "str. 38"
+        }
+      ],
+      "access_date": "2026-10-06",
+      "status": "POTVRĐENO",
+      "impact": "Za pretragu i klasifikaciju koristiti aktuelno WIPO izdanje.",
+      "phases": [
+        {
+          "number": 5,
+          "name": "Faza 5 — Pretraga postojećih dizajna"
+        }
+      ],
+      "is_discrepancy": true,
+      "open_items": [],
+      "precedence": "WIPO (aktuelno izdanje), u skladu sa Metodologijom str. 38."
+    }
+  ]
+}
