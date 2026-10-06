@@ -202,6 +202,8 @@ model Question {
   whyNeeded        String   @default("")
   exampleAnswer    String   @default("")
   required         Boolean  @default(false)
+  /// Needed only for filing ("ODLOŽENO ZA PODNOŠENJE"): never blocks drafting steps.
+  deferredToFiling Boolean  @default(false)
   allowsAttachment Boolean  @default(true)
   createdByActor   ActorType @default(SYSTEM)
   createdAt        DateTime @default(now())
@@ -538,6 +540,8 @@ model OpenQuestion {
   whyNeeded  String             @default("")
   /// A blocking open question prevents its step from moving to review.
   blocking   Boolean            @default(false)
+  /// Needed only for filing: counts against the first filing step, never a drafting step.
+  deferredToFiling Boolean      @default(false)
   status     OpenQuestionStatus @default(OPEN)
   answer     String?
   createdBy  ActorType

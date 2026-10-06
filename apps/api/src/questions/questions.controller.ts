@@ -1,8 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { Actor } from '../common/actor.decorator';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
-import { CreateQuestionDto, createQuestionSchema, SaveAnswerDto, saveAnswerSchema } from './questions.dto';
+import {
+  CreateQuestionDto,
+  createQuestionSchema,
+  SaveAnswerDto,
+  saveAnswerSchema,
+  UpdateQuestionDto,
+  updateQuestionSchema,
+} from './questions.dto';
 import { QuestionsService } from './questions.service';
 
 @Controller('projects/:projectId')
@@ -21,6 +28,15 @@ export class QuestionsController {
     @Actor() actor: ActorType,
   ) {
     return this.questions.create(projectId, dto, actor);
+  }
+
+  @Patch('questions/:questionId')
+  update(
+    @Param('projectId') projectId: string,
+    @Param('questionId') questionId: string,
+    @Body(new ZodValidationPipe(updateQuestionSchema)) dto: UpdateQuestionDto,
+  ) {
+    return this.questions.update(projectId, questionId, dto);
   }
 
   @Put('answers/:questionId')

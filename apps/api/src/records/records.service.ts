@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DomainError } from '../domain/domain-error';
+import { isDeferredToFiling } from '../domain/filing-deferral';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { AnswerOpenQuestionDto, CreateDecisionDto, CreateOpenQuestionDto } from './records.dto';
@@ -16,7 +17,8 @@ export class RecordsService {
 
   async createOpenQuestion(projectId: string, dto: CreateOpenQuestionDto, actor: ActorType) {
     await this.projects.assertExists(projectId);
-    return this.prisma.openQuestion.create({ data: { ...dto, projectId, createdBy: actor } });
+    const deferredToFiling = isDeferredToFiling({ stepKey: dto.stepKey ?? null, deferredToFiling: dto.deferredToFiling });
+    return this.prisma.openQuestion.create({ data: { ...dto, deferredToFiling, projectId, createdBy: actor } });
   }
 
   async answerOpenQuestion(id: string, dto: AnswerOpenQuestionDto, actor: ActorType) {

@@ -3,6 +3,7 @@ import { useKnowledge } from '@/api/hooks';
 import type { MissingInfoType } from '@/api/types';
 import { Badge } from '@/components/ui/badge';
 import { ErrorText } from '@/components/ErrorText';
+import { DEFERRED_TO_FILING_LABEL } from '@/lib/labels';
 
 const TYPE_LABEL: Record<MissingInfoType, string> = {
   PROJECT_FIELD: 'Podatak projekta',
@@ -11,6 +12,7 @@ const TYPE_LABEL: Record<MissingInfoType, string> = {
   OPEN_QUESTION: 'Otvoreno pitanje',
   CONFLICT: 'Konflikt',
   DOCUMENT_NEEDS_MANUAL_REVIEW: 'Dokument',
+  DEFERRED_TO_FILING: DEFERRED_TO_FILING_LABEL,
 };
 
 /** Right-hand side: the permanent project context and what is still missing. */

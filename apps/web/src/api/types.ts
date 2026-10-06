@@ -32,11 +32,15 @@ export interface Project {
   updatedAt: string;
 }
 
+/** DRAFTING: description and representations up to review. FILING: needed only to submit. */
+export type StepPhase = 'DRAFTING' | 'FILING';
+
 export interface ProjectStep {
   id: string;
   stepKey: string;
   title: string;
   position: number;
+  phase: StepPhase;
   status: StepStatus;
   blockedReason: string | null;
   openBlockingItems: number;
@@ -74,6 +78,7 @@ export interface Question {
   whyNeeded: string;
   exampleAnswer: string;
   required: boolean;
+  deferredToFiling: boolean;
   allowsAttachment: boolean;
   answer: UserAnswer | null;
 }
@@ -135,6 +140,7 @@ export interface OpenQuestion {
   text: string;
   whyNeeded: string;
   blocking: boolean;
+  deferredToFiling: boolean;
   status: 'OPEN' | 'ANSWERED' | 'CLOSED';
   answer: string | null;
   createdAt: string;
@@ -198,7 +204,8 @@ export type MissingInfoType =
   | 'UNCONFIRMED_INFORMATION'
   | 'OPEN_QUESTION'
   | 'CONFLICT'
-  | 'DOCUMENT_NEEDS_MANUAL_REVIEW';
+  | 'DOCUMENT_NEEDS_MANUAL_REVIEW'
+  | 'DEFERRED_TO_FILING';
 
 export interface MissingInfoItem {
   type: MissingInfoType;

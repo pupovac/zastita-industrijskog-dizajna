@@ -5,6 +5,7 @@ import type {
   InformationKind,
   Severity,
   SourceType,
+  StepPhase,
   StepStatus,
 } from '@/api/types';
 
@@ -27,6 +28,17 @@ export const STEP_STATUS_TONE: Record<StepStatus, BadgeTone> = {
   READY_FOR_REVIEW: 'secondary',
   APPROVED: 'success',
 };
+
+export const STEP_PHASE_LABEL: Record<StepPhase, string> = {
+  DRAFTING: 'Izrada dokumenta',
+  FILING: 'Podnošenje prijave',
+};
+
+/** Marks questions and steps needed only for filing; they never hold up drafting. */
+export const DEFERRED_TO_FILING_LABEL = 'ODLOŽENO ZA PODNOŠENJE';
+
+export const FILING_PHASE_NOTE =
+  'Takse, podaci za D-1, e-Prijava, zastupnik i pravo prvenstva rešavaju se posle nezavisne provere opisa i prikaza.';
 
 export const KIND_LABEL: Record<InformationKind, string> = {
   FACT: 'ČINJENICA',

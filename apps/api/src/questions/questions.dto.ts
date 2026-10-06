@@ -9,9 +9,13 @@ export const createQuestionSchema = z.object({
   whyNeeded: z.string().trim().max(2000).default(''),
   exampleAnswer: z.string().trim().max(2000).default(''),
   required: z.boolean().default(false),
+  deferredToFiling: z.boolean().default(false),
   allowsAttachment: z.boolean().default(true),
 });
 export type CreateQuestionDto = z.infer<typeof createQuestionSchema>;
+
+export const updateQuestionSchema = z.object({ deferredToFiling: z.boolean() });
+export type UpdateQuestionDto = z.infer<typeof updateQuestionSchema>;
 
 export const saveAnswerSchema = z.object({
   value: z.string().max(20000),

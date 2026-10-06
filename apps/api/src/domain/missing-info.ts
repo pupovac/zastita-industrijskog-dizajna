@@ -1,11 +1,26 @@
 import { ExtractionStatus, InformationKind, OpenQuestionStatus, ReviewIssueStatus, ReviewIssueType } from '@prisma/client';
-import { StepKey } from './steps';
+import { isDeferredToFiling } from './filing-deferral';
+import { FIRST_FILING_STEP, StepKey } from './steps';
 
 export interface MissingInfoInput {
   project: { productName: string; applicantName: string; designerName: string };
-  questions: { id: string; text: string; stepKey: string; required: boolean; answerValue: string | null }[];
+  questions: {
+    id: string;
+    text: string;
+    stepKey: string;
+    required: boolean;
+    deferredToFiling: boolean;
+    answerValue: string | null;
+  }[];
   facts: { id: string; statement: string; kind: InformationKind; verified: boolean }[];
-  openQuestions: { id: string; text: string; stepKey: string | null; blocking: boolean; status: OpenQuestionStatus }[];
+  openQuestions: {
+    id: string;
+    text: string;
+    stepKey: string | null;
+    blocking: boolean;
+    deferredToFiling: boolean;
+    status: OpenQuestionStatus;
+  }[];
   reviewIssues: { id: string; title: string; stepKey: string | null; type: ReviewIssueType; status: ReviewIssueStatus }[];
   files: { id: string; originalName: string; extractionStatus: ExtractionStatus }[];
 }
@@ -16,7 +31,9 @@ export type MissingInfoType =
   | 'UNCONFIRMED_INFORMATION'
   | 'OPEN_QUESTION'
   | 'CONFLICT'
-  | 'DOCUMENT_NEEDS_MANUAL_REVIEW';
+  | 'DOCUMENT_NEEDS_MANUAL_REVIEW'
+  /** Needed only for filing; never blocks drafting. */
+  | 'DEFERRED_TO_FILING';
 
 export interface MissingInfoItem {
   type: MissingInfoType;
@@ -32,9 +49,21 @@ const PROJECT_FIELDS: { field: keyof MissingInfoInput['project']; label: string 
   { field: 'designerName', label: 'Autor / dizajner' },
 ];
 
-/** What the right-hand panel lists as still missing. Blocking items come first. */
+/**
+ * What the right-hand panel lists as still missing. Blocking items come first,
+ * items deferred to filing last. Deferred items are never blocking here: they can
+ * only hold up the filing phase (see `gatingStepKey`).
+ */
 export function computeMissingInfo(input: MissingInfoInput): MissingInfoItem[] {
   const items: MissingInfoItem[] = [];
+  const deferred: MissingInfoItem[] = [];
+  const deferredItem = (label: string, refId: string): MissingInfoItem => ({
+    type: 'DEFERRED_TO_FILING',
+    label,
+    stepKey: FIRST_FILING_STEP,
+    refId,
+    blocking: false,
+  });
 
   for (const { field, label } of PROJECT_FIELDS) {
     if (!input.project[field].trim()) {
@@ -42,7 +71,10 @@ export function computeMissingInfo(input: MissingInfoInput): MissingInfoItem[] {
     }
   }
   for (const q of input.questions) {
-    if (q.required && !q.answerValue?.trim()) {
+    if (q.answerValue?.trim()) continue;
+    if (isDeferredToFiling(q)) {
+      deferred.push(deferredItem(q.text, q.id));
+    } else if (q.required) {
       items.push({ type: 'REQUIRED_QUESTION', label: q.text, stepKey: q.stepKey, refId: q.id, blocking: false });
     }
   }
@@ -53,7 +85,10 @@ export function computeMissingInfo(input: MissingInfoInput): MissingInfoItem[] {
     }
   }
   for (const q of input.openQuestions) {
-    if (q.status === 'OPEN') {
+    if (q.status !== 'OPEN') continue;
+    if (isDeferredToFiling(q)) {
+      deferred.push(deferredItem(q.text, q.id));
+    } else {
       items.push({ type: 'OPEN_QUESTION', label: q.text, stepKey: q.stepKey, refId: q.id, blocking: q.blocking });
     }
   }
@@ -74,5 +109,5 @@ export function computeMissingInfo(input: MissingInfoInput): MissingInfoItem[] {
     }
   }
 
-  return [...items.filter((i) => i.blocking), ...items.filter((i) => !i.blocking)];
+  return [...items.filter((i) => i.blocking), ...items.filter((i) => !i.blocking), ...deferred];
 }

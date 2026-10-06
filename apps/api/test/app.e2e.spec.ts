@@ -44,6 +44,8 @@ describe('API (e2e)', () => {
     expect(res.body).toHaveLength(14);
     expect(res.body[0]).toMatchObject({ stepKey: 'PROJECT_SETUP', position: 1, status: 'NOT_STARTED' });
     expect(res.body[13]).toMatchObject({ stepKey: 'FINAL_APPLICANT_REVIEW', title: 'Završni pregled podnosioca / zastupnika' });
+    expect(res.body[10]).toMatchObject({ stepKey: 'INDEPENDENT_REVIEW', position: 11, phase: 'DRAFTING' });
+    expect(res.body[11]).toMatchObject({ stepKey: 'D1_FORM_DATA', position: 12, phase: 'FILING' });
   });
 
   it('persists every autosaved field immediately', async () => {
@@ -185,6 +187,86 @@ describe('API (e2e)', () => {
         'READY_FOR_REVIEW',
         'IN_PROGRESS',
       ]);
+    });
+
+    it('does not let items deferred to filing block a drafting step', async () => {
+      const deferred = await request(app.getHttpServer())
+        .post(`/api/projects/${projectId}/open-questions`)
+        .set(asAgent())
+        .send({ stepKey: 'ZIS_RESEARCH', text: 'Ko podnosi prijavu kao zastupnik?', blocking: true, deferredToFiling: true })
+        .expect(201);
+      expect(deferred.body.deferredToFiling).toBe(true);
+      const filingStep = await request(app.getHttpServer())
+        .post(`/api/projects/${projectId}/open-questions`)
+        .set(asAgent())
+        .send({ stepKey: 'FINAL_PACKAGE', text: 'Dokaz o uplati takse', blocking: true })
+        .expect(201);
+      expect(filingStep.body.deferredToFiling).toBe(true);
+
+      const move = (to: string) =>
+        request(app.getHttpServer())
+          .post(`/api/projects/${projectId}/steps/ZIS_RESEARCH/transition`)
+          .set(asUser())
+          .send({ to });
+      await move('IN_PROGRESS').expect(201);
+      const res = await move('READY_FOR_REVIEW').expect(201);
+      const byKey = Object.fromEntries(res.body.map((s: { stepKey: string }) => [s.stepKey, s]));
+      expect(byKey.ZIS_RESEARCH).toMatchObject({ status: 'READY_FOR_REVIEW', openBlockingItems: 0 });
+      expect(byKey.D1_FORM_DATA.openBlockingItems).toBe(2);
+    });
+
+    it('still blocks a drafting step on its own blocking questions', async () => {
+      const blocking = await request(app.getHttpServer())
+        .post(`/api/projects/${projectId}/open-questions`)
+        .set(asAgent())
+        .send({ stepKey: 'ZIS_RESEARCH', text: 'Koja verzija Uputstva važi?', blocking: true })
+        .expect(201);
+      const move = (to: string) =>
+        request(app.getHttpServer())
+          .post(`/api/projects/${projectId}/steps/ZIS_RESEARCH/transition`)
+          .set(asUser())
+          .send({ to });
+      await move('IN_PROGRESS').expect(201);
+      const res = await move('READY_FOR_REVIEW').expect(409);
+      expect(res.body.code).toBe('STEP_HAS_OPEN_BLOCKING_ITEMS');
+
+      await request(app.getHttpServer())
+        .post(`/api/open-questions/${blocking.body.id}/answer`)
+        .set(asUser())
+        .send({ answer: 'Važeće Uputstvo sa sajta ZIS-a.' })
+        .expect(201);
+      await move('READY_FOR_REVIEW').expect(201);
+    });
+
+    it('marks interview questions as deferred to filing', async () => {
+      const created = await request(app.getHttpServer())
+        .post(`/api/projects/${projectId}/questions`)
+        .set(asAgent())
+        .send({ stepKey: 'PRODUCT_INTERVIEW', text: 'Da li imate kvalifikovani elektronski sertifikat?', required: true })
+        .expect(201);
+      expect(created.body.deferredToFiling).toBe(false);
+      const updated = await request(app.getHttpServer())
+        .patch(`/api/projects/${projectId}/questions/${created.body.id}`)
+        .set(asAgent())
+        .send({ deferredToFiling: true })
+        .expect(200);
+      expect(updated.body.deferredToFiling).toBe(true);
+
+      const knowledge = await request(app.getHttpServer()).get(`/api/projects/${projectId}/knowledge`).expect(200);
+      const item = knowledge.body.missingInfo.find((i: { refId: string }) => i.refId === created.body.id);
+      expect(item).toMatchObject({ type: 'DEFERRED_TO_FILING', blocking: false, stepKey: 'D1_FORM_DATA' });
+
+      const d1 = await request(app.getHttpServer())
+        .post(`/api/projects/${projectId}/questions`)
+        .set(asAgent())
+        .send({ stepKey: 'D1_FORM_DATA', text: 'Broj primeraka prikaza' })
+        .expect(201);
+      const res = await request(app.getHttpServer())
+        .patch(`/api/projects/${projectId}/questions/${d1.body.id}`)
+        .set(asAgent())
+        .send({ deferredToFiling: false })
+        .expect(409);
+      expect(res.body.code).toBe('FILING_STEP_QUESTION_ALWAYS_DEFERRED');
     });
   });
 

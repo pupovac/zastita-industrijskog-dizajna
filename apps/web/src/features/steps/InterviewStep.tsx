@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { DEFERRED_TO_FILING_LABEL, FILING_PHASE_NOTE } from '@/lib/labels';
 import { useAutosave } from '@/lib/use-autosave';
 import { FactCard } from '../knowledge/FactCard';
 
@@ -30,16 +31,29 @@ export function InterviewStep({ projectId, stepKey }: { projectId: string; stepK
   if (!questions.data) return <p className="text-sm text-muted-foreground">Učitavanje…</p>;
   if (questions.data.length === 0) return <p className="text-sm text-muted-foreground">Za ovaj korak još nema pitanja.</p>;
 
+  const card = (q: Question) => (
+    <QuestionCard
+      key={q.id}
+      projectId={projectId}
+      question={q}
+      interpretations={q.answer ? facts.filter((f) => f.userAnswerId === q.answer!.id) : []}
+    />
+  );
+  const drafting = questions.data.filter((q) => !q.deferredToFiling);
+  const deferred = questions.data.filter((q) => q.deferredToFiling);
+
   return (
     <div className="flex flex-col gap-4">
-      {questions.data.map((q) => (
-        <QuestionCard
-          key={q.id}
-          projectId={projectId}
-          question={q}
-          interpretations={q.answer ? facts.filter((f) => f.userAnswerId === q.answer!.id) : []}
-        />
-      ))}
+      {drafting.map(card)}
+      {deferred.length > 0 && (
+        <div className="flex flex-col gap-1 pt-2">
+          <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{DEFERRED_TO_FILING_LABEL}</h2>
+          <p className="text-sm text-muted-foreground">
+            Ova pitanja nisu uslov za izradu opisa i prikaza. Možete odgovoriti sada ili kasnije. {FILING_PHASE_NOTE}
+          </p>
+        </div>
+      )}
+      {deferred.map(card)}
     </div>
   );
 }
@@ -79,7 +93,11 @@ function QuestionCard({
         <Section title="Pitanje">
           <div className="flex items-start justify-between gap-3">
             <p className="font-medium">{question.text}</p>
-            {question.required && <Badge variant="outline">Obavezno</Badge>}
+            {question.deferredToFiling ? (
+              <Badge variant="muted">{DEFERRED_TO_FILING_LABEL}</Badge>
+            ) : (
+              question.required && <Badge variant="outline">Obavezno</Badge>
+            )}
           </div>
         </Section>
         {question.whyNeeded && (

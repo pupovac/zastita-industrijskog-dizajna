@@ -8,6 +8,7 @@ export const createOpenQuestionSchema = z.object({
   text: z.string().trim().min(1).max(2000),
   whyNeeded: z.string().trim().max(2000).default(''),
   blocking: z.boolean().default(false),
+  deferredToFiling: z.boolean().default(false),
 });
 export type CreateOpenQuestionDto = z.infer<typeof createOpenQuestionSchema>;
 
