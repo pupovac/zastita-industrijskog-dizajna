@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { DomainError } from '../domain/domain-error';
 import { gatingStepKey } from '../domain/filing-deferral';
-import { planStepTransition } from '../domain/step-status';
+import { planStepTransition, STEP_GATED_BY_BLOCKERS } from '../domain/step-status';
 import { isStepKey, StepKey, stepPhase, stepTitle } from '../domain/steps';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
@@ -19,11 +19,13 @@ export class StepsService {
     await this.projects.assertExists(projectId);
     const steps = await this.prisma.projectStep.findMany({ where: { projectId }, orderBy: { position: 'asc' } });
     const blocking = await this.blockingItemsByStep(projectId);
+    const openBlockerFindings = await this.openBlockerFindings(projectId);
     return steps.map((s) => ({
       ...s,
       title: isStepKey(s.stepKey) ? stepTitle(s.stepKey) : s.stepKey,
       phase: isStepKey(s.stepKey) ? stepPhase(s.stepKey) : 'DRAFTING',
       openBlockingItems: blocking.get(s.stepKey) ?? 0,
+      blockedByBlockerFindings: s.stepKey === STEP_GATED_BY_BLOCKERS ? openBlockerFindings : 0,
     }));
   }
 
@@ -47,6 +49,7 @@ export class StepsService {
         actor,
         reason: dto.reason,
         openBlockingItems: blocking.get(stepKey) ?? 0,
+        openBlockerFindings: await this.openBlockerFindings(projectId, tx),
       });
       for (const change of changes) {
         const step = steps.find((s) => s.stepKey === change.stepKey)!;
@@ -67,6 +70,11 @@ export class StepsService {
     });
 
     return this.list(projectId);
+  }
+
+  /** Unresolved BLOCKER findings anywhere in the project; they hold up the final package. */
+  private openBlockerFindings(projectId: string, db: Pick<PrismaService, 'reviewIssue'> = this.prisma) {
+    return db.reviewIssue.count({ where: { projectId, status: 'OPEN', severity: 'BLOCKER' } });
   }
 
   /**

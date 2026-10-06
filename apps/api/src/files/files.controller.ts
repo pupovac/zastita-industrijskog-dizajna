@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
   Post,
+  Query,
   Res,
   UploadedFile as UploadedFileParam,
   UseInterceptors,
@@ -34,8 +36,8 @@ export class FilesController {
   constructor(private readonly files: FilesService) {}
 
   @Get('projects/:projectId/files')
-  list(@Param('projectId') projectId: string) {
-    return this.files.list(projectId);
+  list(@Param('projectId') projectId: string, @Query('includeReplaced') includeReplaced?: string) {
+    return this.files.list(projectId, includeReplaced === 'true');
   }
 
   @Post('projects/:projectId/files')
@@ -68,14 +70,24 @@ export class FilesController {
     res.sendFile(this.files.absolutePath(file));
   }
 
+  @Post('files/:fileId/replace')
+  @UseInterceptors(FileInterceptor('file', { storage: memoryStorage(), limits: { fileSize: MAX_UPLOAD_BYTES } }))
+  replace(
+    @Param('fileId') fileId: string,
+    @UploadedFileParam() file: IncomingFile | undefined,
+    @Actor() actor: ActorType,
+  ) {
+    return this.files.replace(fileId, file, actor);
+  }
+
+  @Delete('files/:fileId')
+  remove(@Param('fileId') fileId: string, @Actor() actor: ActorType) {
+    return this.files.remove(fileId, actor);
+  }
+
   @Patch('files/:fileId')
   update(@Param('fileId') fileId: string, @Body(new ZodValidationPipe(updateFileSchema)) dto: UpdateFileDto) {
     return this.files.update(fileId, dto);
-  }
-
-  @Get('projects/:projectId/review-issues')
-  reviewIssues(@Param('projectId') projectId: string) {
-    return this.files.listReviewIssues(projectId);
   }
 
   @Post('projects/:projectId/conflicts')

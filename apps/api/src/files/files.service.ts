@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ActorType, UploadedFile } from '@prisma/client';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { orNotFound } from '../common/not-found';
 import { assertValidConflict, planConflictResolution } from '../domain/conflict-rules';
@@ -29,9 +29,13 @@ export class FilesService {
     private readonly projects: ProjectsService,
   ) {}
 
-  async list(projectId: string) {
+  /** Current files; replaced originals stay stored and are listed only on request. */
+  async list(projectId: string, includeReplaced = false) {
     await this.projects.assertExists(projectId);
-    return this.prisma.uploadedFile.findMany({ where: { projectId }, orderBy: { createdAt: 'asc' } });
+    return this.prisma.uploadedFile.findMany({
+      where: { projectId, ...(includeReplaced ? {} : { replacedById: null }) },
+      orderBy: { createdAt: 'asc' },
+    });
   }
 
   async get(fileId: string): Promise<UploadedFile> {
@@ -44,6 +48,44 @@ export class FilesService {
 
   async upload(projectId: string, file: IncomingFile | undefined, dto: UploadFileDto, actor: ActorType) {
     await this.projects.assertExists(projectId);
+    return this.store(projectId, file, dto, actor);
+  }
+
+  /**
+   * Replaces a file with a new version. The original stays stored (marked as replaced);
+   * representations and interview answers that used it now point to the new version.
+   * Facts keep pointing to the document they were extracted from.
+   */
+  async replace(fileId: string, file: IncomingFile | undefined, actor: ActorType) {
+    if (actor !== 'USER') {
+      throw new DomainError('REPLACE_REQUIRES_USER', 'Dokument može da zameni samo korisnik.', 'FORBIDDEN');
+    }
+    const old = await this.get(fileId);
+    if (old.replacedById) {
+      throw new DomainError('FILE_ALREADY_REPLACED', 'Ovaj dokument je već zamenjen novijom verzijom.', 'CONFLICT');
+    }
+    const next = await this.store(old.projectId, file, { role: old.role }, actor);
+    await this.prisma.$transaction([
+      this.prisma.uploadedFile.update({ where: { id: old.id }, data: { replacedById: next.id } }),
+      this.prisma.representation.updateMany({ where: { uploadedFileId: old.id }, data: { uploadedFileId: next.id } }),
+      this.prisma.userAnswer.updateMany({ where: { attachmentFileId: old.id }, data: { attachmentFileId: next.id } }),
+      this.prisma.priorDesign.updateMany({ where: { imageFileId: old.id }, data: { imageFileId: next.id } }),
+    ]);
+    return next;
+  }
+
+  /** Deletes a document and its stored original. Only the user can do it. */
+  async remove(fileId: string, actor: ActorType) {
+    if (actor !== 'USER') {
+      throw new DomainError('DELETE_REQUIRES_USER', 'Dokument može da obriše samo korisnik.', 'FORBIDDEN');
+    }
+    const file = await this.get(fileId);
+    await this.prisma.uploadedFile.delete({ where: { id: file.id } });
+    await rm(this.absolutePath(file), { force: true });
+    return { id: file.id, deleted: true };
+  }
+
+  private async store(projectId: string, file: IncomingFile | undefined, dto: UploadFileDto, actor: ActorType) {
     if (!file || file.size === 0) {
       throw new DomainError('FILE_REQUIRED', 'Izaberite dokument za otpremanje.');
     }
@@ -95,15 +137,6 @@ export class FilesService {
   async update(fileId: string, dto: UpdateFileDto) {
     await this.get(fileId);
     return this.prisma.uploadedFile.update({ where: { id: fileId }, data: dto });
-  }
-
-  async listReviewIssues(projectId: string) {
-    await this.projects.assertExists(projectId);
-    return this.prisma.reviewIssue.findMany({
-      where: { projectId },
-      orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
-      include: { fileA: true, fileB: true, chosenFile: true },
-    });
   }
 
   /** Flags a discrepancy between two materials. It is handed to the user to decide. */

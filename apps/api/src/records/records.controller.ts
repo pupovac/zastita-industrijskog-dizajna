@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { Actor } from '../common/actor.decorator';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
@@ -15,6 +15,16 @@ import { RecordsService } from './records.service';
 @Controller()
 export class RecordsController {
   constructor(private readonly records: RecordsService) {}
+
+  @Get('projects/:projectId/open-questions')
+  listOpenQuestions(@Param('projectId') projectId: string, @Query('stepKey') stepKey?: string) {
+    return this.records.listOpenQuestions(projectId, stepKey);
+  }
+
+  @Get('projects/:projectId/decisions')
+  listDecisions(@Param('projectId') projectId: string) {
+    return this.records.listDecisions(projectId);
+  }
 
   @Post('projects/:projectId/open-questions')
   createOpenQuestion(

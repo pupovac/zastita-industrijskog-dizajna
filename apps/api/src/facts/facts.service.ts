@@ -3,6 +3,7 @@ import { ActorType, Fact } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DomainError } from '../domain/domain-error';
 import { assertValidNewFact, isConfirmedUserFact, planConfirmation, planContentChange } from '../domain/fact-rules';
+import { assertMockAllowed } from '../domain/mock-data';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { ConfirmFactDto, CreateFactDto, UpdateFactDto } from './facts.dto';
@@ -27,7 +28,7 @@ export class FactsService {
   }
 
   async create(projectId: string, dto: CreateFactDto, actor: ActorType): Promise<FactView> {
-    await this.projects.assertExists(projectId);
+    assertMockAllowed(await this.projects.get(projectId), dto.sourceReference);
     assertValidNewFact(dto);
     if (dto.sourceType === 'USER' && actor !== 'USER' && !dto.userAnswerId) {
       throw new DomainError(
