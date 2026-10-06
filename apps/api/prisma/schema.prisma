@@ -120,6 +120,79 @@ enum AgentTaskStatus {
   FAILED
 }
 
+/// "Mapa vizuelnih karakteristika": A primarily visual, B mixed visual/functional,
+/// C predominantly technical, D unclear (needs further analysis).
+enum FeatureCategory {
+  A_VISUAL
+  B_MIXED
+  C_TECHNICAL
+  D_UNCLEAR
+}
+
+/// Visual similarity of a prior design to ours (search result, not a legal conclusion).
+enum SimilarityLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum SearchCoverageStatus {
+  COMPLETED
+  PARTIAL
+  BLOCKED
+  SKIPPED
+}
+
+/// Research status of a requirement from the "Matrica zahteva ZIS-a".
+enum RequirementStatus {
+  CONFIRMED
+  UNVERIFIED
+}
+
+enum RepresentationRequirement {
+  MANDATORY
+  RECOMMENDED
+}
+
+enum RepresentationMedium {
+  RENDER
+  CAD
+  PHOTO
+  LINE_DRAWING
+}
+
+enum RepresentationAssessment {
+  ACCEPTABLE
+  NEEDS_REWORK
+  UNSUITABLE
+}
+
+/// The protection strategy decisions (step 8).
+enum StrategyItemKey {
+  FILING_TYPE
+  VARIANT_RESOLUTION
+  DEFERRED_PUBLICATION
+  PRIORITY_CLAIM
+}
+
+/// The nine documents of the final application package (step 13).
+enum GeneratedDocumentType {
+  DESCRIPTION
+  PACKAGE_DOCX
+  PACKAGE_PDF
+  D1_DATA
+  REPRESENTATION_INDEX
+  FILING_CHECKLIST
+  ATTACHMENT_LIST
+  SOURCES_REPORT
+  OPEN_LEGAL_QUESTIONS
+}
+
+enum SignoffRole {
+  APPLICANT
+  REPRESENTATIVE
+}
+
 // ---------------------------------------------------------------------------
 // Project and wizard progress
 // ---------------------------------------------------------------------------
@@ -135,26 +208,34 @@ model Project {
   representativeName String   @default("")
   /// Last step the user had open, so the wizard resumes where they left off.
   currentStepKey     String   @default("PROJECT_SETUP")
+  /// Demo project with invented data. Mock records never enter a real project.
+  isDemo             Boolean  @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
-  steps              ProjectStep[]
-  questions          Question[]
-  answers            UserAnswer[]
-  facts              Fact[]
-  designFeatures     DesignFeature[]
-  designVariants     DesignVariant[]
-  sources            Source[]
-  sourceRequirements SourceRequirement[]
-  uploadedFiles      UploadedFile[]
-  representations    Representation[]
-  researchFindings   ResearchFinding[]
-  priorDesigns       PriorDesign[]
+  steps               ProjectStep[]
+  questions           Question[]
+  answers             UserAnswer[]
+  facts               Fact[]
+  designFeatures      DesignFeature[]
+  designVariants      DesignVariant[]
+  sources             Source[]
+  sourceRequirements  SourceRequirement[]
+  uploadedFiles       UploadedFile[]
+  representations     Representation[]
+  researchFindings    ResearchFinding[]
+  priorDesigns        PriorDesign[]
   applicationSections ApplicationSection[]
-  agentTasks         AgentTask[]
-  reviewIssues       ReviewIssue[]
-  decisions          Decision[]
-  openQuestions      OpenQuestion[]
+  agentTasks          AgentTask[]
+  reviewIssues        ReviewIssue[]
+  decisions           Decision[]
+  openQuestions       OpenQuestion[]
+  searchCoverage      SearchCoverage[]
+  strategyItems       ProtectionStrategyItem[]
+  d1Fields            D1FieldValue[]
+  reportSections      ResearchReportSection[]
+  generatedDocuments  GeneratedDocument[]
+  signoffs            FinalSignoff[]
 }
 
 model ProjectStep {
@@ -194,20 +275,22 @@ model StepStatusEvent {
 // ---------------------------------------------------------------------------
 
 model Question {
-  id               String   @id @default(uuid())
+  id               String    @id @default(uuid())
   projectId        String
   stepKey          String
   position         Int
   text             String
-  whyNeeded        String   @default("")
-  exampleAnswer    String   @default("")
-  required         Boolean  @default(false)
+  whyNeeded        String    @default("")
+  exampleAnswer    String    @default("")
+  required         Boolean   @default(false)
   /// Needed only for filing ("ODLOŽENO ZA PODNOŠENJE"): never blocks drafting steps.
-  deferredToFiling Boolean  @default(false)
-  allowsAttachment Boolean  @default(true)
+  deferredToFiling Boolean   @default(false)
+  allowsAttachment Boolean   @default(true)
+  /// Interview group A–G (§4), so questions are shown in small groups.
+  interviewGroup   String?
   createdByActor   ActorType @default(SYSTEM)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   project Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
   answers UserAnswer[]
@@ -268,12 +351,16 @@ model Fact {
 }
 
 model DesignVariant {
-  id          String   @id @default(uuid())
-  projectId   String
-  name        String
-  description String   @default("")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String     @id @default(uuid())
+  projectId       String
+  name            String
+  description     String     @default("")
+  sourceType      SourceType @default(AGENT_INFERENCE)
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   project  Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
   features DesignFeature[]
@@ -285,7 +372,11 @@ model DesignFeature {
   variantId         String?
   name              String
   description       String             @default("")
+  category          FeatureCategory?
+  /// Why the category was chosen; for B it explains why the feature needs careful review.
+  categoryRationale String             @default("")
   functionalityRisk FunctionalityRisk?
+  riskRationale     String             @default("")
   kind              InformationKind    @default(AI_INFERENCE)
   sourceType        SourceType
   sourceReference   String?
@@ -294,25 +385,56 @@ model DesignFeature {
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
-  project Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  variant DesignVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  project          Project                  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  variant          DesignVariant?           @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  functionAnalysis FunctionAnalysisAnswer[]
+}
+
+/// One answer of the "Tehnička funkcija naspram vizuelnog dizajna" module (8 questions, §11).
+model FunctionAnalysisAnswer {
+  id              String          @id @default(uuid())
+  designFeatureId String
+  questionNumber  Int
+  answer          String          @default("")
+  kind            InformationKind @default(AI_INFERENCE)
+  sourceType      SourceType
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  designFeature DesignFeature @relation(fields: [designFeatureId], references: [id], onDelete: Cascade)
+
+  @@unique([designFeatureId, questionNumber])
 }
 
 /// An external source (e.g. official ZIS website section, a law, WIPO page).
 model Source {
-  id              String     @id @default(uuid())
-  projectId       String
-  name            String
-  url             String
-  sourceType      SourceType
+  id               String     @id @default(uuid())
+  projectId        String
+  /// Stable code from the phase 1 source records (e.g. "Z-04"); key for idempotent import.
+  code             String?
+  name             String
+  url              String
+  sourceType       SourceType
   /// 1 = ZIS, 2 = laws/bylaws, 3 = WIPO, 4 = EUIPO/DesignView, 5 = other.
-  priority        Int        @default(5)
-  accessedAt      DateTime?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  priority         Int        @default(5)
+  institution      String     @default("")
+  documentKind     String     @default("")
+  documentVersion  String     @default("")
+  relevantSections String     @default("")
+  significance     String     @default("")
+  /// JSON text: list of repository-relative paths of local copies.
+  localCopiesJson  String     @default("[]")
+  accessedAt       DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
 
   project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   documents SourceDocument[]
+
+  @@unique([projectId, code])
 }
 
 model SourceDocument {
@@ -327,35 +449,88 @@ model SourceDocument {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  source           Source              @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  source           Source                @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   requirements     SourceRequirement[]
+  citations        RequirementCitation[]
   researchFindings ResearchFinding[]
   facts            Fact[]
 }
 
 /// One row of the "ZIS requirements matrix".
 model SourceRequirement {
-  id                  String     @id @default(uuid())
+  id                  String            @id @default(uuid())
   projectId           String
   sourceDocumentId    String
+  /// Matrix code (e.g. "MZ-001", "NS-01"); key for idempotent import.
+  code                String?
+  /// Research status from the matrix: POTVRĐENO / NEPROVERENO.
+  status              RequirementStatus @default(UNVERIFIED)
+  area                String            @default("")
+  areaCode            String            @default("")
+  /// JSON text: wizard phases the requirement applies to ([{number, name}]).
+  phasesJson          String            @default("[]")
+  /// A discrepancy between sources ("NEUSKLAĐENOST") and which source prevails.
+  isDiscrepancy       Boolean           @default(false)
+  precedence          String            @default("")
+  /// JSON text: open checks (e.g. ["P-01"]).
+  openItemsJson       String            @default("[]")
+  accessDate          String            @default("")
   requirementText     String
-  section             String     @default("")
-  impactOnApplication String     @default("")
-  kind                InformationKind @default(LEGAL_REQUIREMENT)
+  section             String            @default("")
+  impactOnApplication String            @default("")
+  kind                InformationKind   @default(LEGAL_REQUIREMENT)
   sourceType          SourceType
   sourceReference     String
   confidence          Float?
-  verified            Boolean    @default(false)
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  verified            Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
 
-  project        Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  sourceDocument SourceDocument @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+  project        Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceDocument SourceDocument        @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+  citations      RequirementCitation[]
+
+  @@unique([projectId, code])
+}
+
+/// Every source a matrix requirement cites, with the exact location (article, page, section).
+model RequirementCitation {
+  id                  String @id @default(uuid())
+  sourceRequirementId String
+  sourceDocumentId    String
+  location            String @default("")
+  position            Int    @default(0)
+
+  requirement    SourceRequirement @relation(fields: [sourceRequirementId], references: [id], onDelete: Cascade)
+  sourceDocument SourceDocument    @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceRequirementId, sourceDocumentId])
+}
+
+/// A section of the "Rezultati inicijalnog istraživanja" report (A–N), imported from phase 2.
+model ResearchReportSection {
+  id              String   @id @default(uuid())
+  projectId       String
+  reportKey       String
+  code            String
+  position        Int
+  heading         String
+  /// Markdown body as written by the research agent.
+  body            String
+  sourceReference String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, reportKey, code])
 }
 
 model ResearchFinding {
   id               String          @id @default(uuid())
   projectId        String
+  /// Stable code for imported findings (e.g. "Z-01#3"); null for findings added by agents.
+  code             String?
   sourceDocumentId String?
   summary          String
   details          String          @default("")
@@ -369,25 +544,107 @@ model ResearchFinding {
 
   project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
   sourceDocument SourceDocument? @relation(fields: [sourceDocumentId], references: [id], onDelete: SetNull)
+
+  @@unique([projectId, code])
 }
 
 model PriorDesign {
-  id                 String     @id @default(uuid())
+  id                 String           @id @default(uuid())
   projectId          String
   title              String
   registrationNumber String?
   holder             String?
   url                String?
-  similarityNotes    String     @default("")
-  kind               InformationKind @default(AI_INFERENCE)
+  country            String?
+  /// Filing / registration date as given by the database (kept verbatim).
+  designDate         String?
+  locarnoClass       String?
+  /// Where it was found (ZIS, DesignView, WIPO GDD, Hague...).
+  database           String?
+  imageFileId        String?
+  similarFeatures    String           @default("")
+  differingFeatures  String           @default("")
+  similarityLevel    SimilarityLevel?
+  similarityNotes    String           @default("")
+  /// „Rezultat pretrage": what was found. Kept strictly apart from the legal conclusion.
+  searchResult       String           @default("")
+  /// „Pravni zaključak": always an inference until confirmed by a representative; never final.
+  legalConclusion    String           @default("")
+  kind               InformationKind  @default(AI_INFERENCE)
   sourceType         SourceType
   sourceReference    String?
   confidence         Float?
-  verified           Boolean    @default(false)
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  verified           Boolean          @default(false)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  project   Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  imageFile UploadedFile? @relation("PriorDesignImage", fields: [imageFileId], references: [id], onDelete: SetNull)
+}
+
+/// „Izveštaj o pokrivenosti": one search attempt per database, including what blocked access.
+model SearchCoverage {
+  id              String               @id @default(uuid())
+  projectId       String
+  database        String
+  query           String               @default("")
+  searchedAt      DateTime?
+  status          SearchCoverageStatus
+  resultSummary   String               @default("")
+  blockedReason   String               @default("")
+  coverageGap     String               @default("")
+  sourceType      SourceType           @default(AGENT_INFERENCE)
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean              @default(false)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+/// One decision of the protection strategy, with its rationale and matrix references.
+model ProtectionStrategyItem {
+  id              String          @id @default(uuid())
+  projectId       String
+  key             StrategyItemKey
+  value           String          @default("")
+  details         String          @default("")
+  rationale       String          @default("")
+  /// Comma-separated matrix codes the rationale relies on (e.g. "MZ-120, MZ-123").
+  requirementRefs String          @default("")
+  kind            InformationKind @default(RECOMMENDATION)
+  sourceType      SourceType      @default(AGENT_INFERENCE)
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, key])
+}
+
+/// Value of one field of form D-1 (definitions live in src/domain/d1-fields.ts).
+model D1FieldValue {
+  id               String     @id @default(uuid())
+  projectId        String
+  fieldKey         String
+  value            String     @default("")
+  notes            String     @default("")
+  /// null = use the field definition's default.
+  deferredToFiling Boolean?
+  sourceType       SourceType @default(USER)
+  sourceReference  String?
+  confidence       Float?
+  verified         Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, fieldKey])
 }
 
 // ---------------------------------------------------------------------------
@@ -410,27 +667,42 @@ model UploadedFile {
   summary          String           @default("")
   extractionError  String?
   uploadedByActor  ActorType
+  /// Set when the user replaced this file with a newer one; the original stays stored.
+  replacedById     String?
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 
-  project          Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  answers          UserAnswer[]
-  facts            Fact[]
-  representations  Representation[]
-  conflictsAsFirst  ReviewIssue[]   @relation("ConflictFileA")
-  conflictsAsSecond ReviewIssue[]   @relation("ConflictFileB")
-  chosenInConflicts ReviewIssue[]   @relation("ConflictChosenFile")
+  project           Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  priorDesigns      PriorDesign[]    @relation("PriorDesignImage")
+  answers           UserAnswer[]
+  facts             Fact[]
+  representations   Representation[]
+  conflictsAsFirst  ReviewIssue[]    @relation("ConflictFileA")
+  conflictsAsSecond ReviewIssue[]    @relation("ConflictFileB")
+  chosenInConflicts ReviewIssue[]    @relation("ConflictChosenFile")
 }
 
 model Representation {
-  id             String   @id @default(uuid())
-  projectId      String
-  uploadedFileId String?
-  position       Int
-  viewName       String
-  notes          String   @default("")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String                    @id @default(uuid())
+  projectId       String
+  uploadedFileId  String?
+  position        Int
+  viewName        String
+  notes           String                    @default("")
+  /// Why the view is needed and which design feature it shows.
+  purpose         String                    @default("")
+  featureShown    String                    @default("")
+  requirement     RepresentationRequirement @default(RECOMMENDED)
+  medium          RepresentationMedium?
+  mediumRationale String                    @default("")
+  assessment      RepresentationAssessment?
+  assessmentNote  String                    @default("")
+  sourceType      SourceType                @default(AGENT_INFERENCE)
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean                   @default(false)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
 
   project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
   uploadedFile UploadedFile? @relation(fields: [uploadedFileId], references: [id], onDelete: SetNull)
@@ -441,14 +713,19 @@ model Representation {
 // ---------------------------------------------------------------------------
 
 model ApplicationSection {
-  id        String   @id @default(uuid())
-  projectId String
-  key       String
-  title     String
-  required  Boolean  @default(true)
-  confirmed Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String     @id @default(uuid())
+  projectId       String
+  key             String
+  title           String
+  required        Boolean    @default(true)
+  confirmed       Boolean    @default(false)
+  position        Int        @default(0)
+  sourceType      SourceType @default(AGENT_INFERENCE)
+  sourceReference String?
+  confidence      Float?
+  verified        Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   project  Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
   versions DraftVersion[]
@@ -457,12 +734,16 @@ model ApplicationSection {
 }
 
 model DraftVersion {
-  id                   String    @id @default(uuid())
+  id                   String     @id @default(uuid())
   applicationSectionId String
   versionNumber        Int
   content              String
   createdByActor       ActorType
-  createdAt            DateTime  @default(now())
+  sourceType           SourceType @default(AGENT_INFERENCE)
+  sourceReference      String?
+  confidence           Float?
+  verified             Boolean    @default(false)
+  createdAt            DateTime   @default(now())
 
   section ApplicationSection @relation(fields: [applicationSectionId], references: [id], onDelete: Cascade)
 
@@ -504,6 +785,12 @@ model ReviewIssue {
   resolutionNote    String?
   resolvedBy        ActorType?
   resolvedAt        DateTime?
+  /// Which reviewer check produced the finding (e.g. "DESCRIPTION_MATCHES_REPRESENTATIONS").
+  checkKey          String?
+  sourceType        SourceType        @default(AGENT_INFERENCE)
+  sourceReference   String?
+  confidence        Float?
+  verified          Boolean           @default(false)
   createdByActor    ActorType
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
@@ -518,38 +805,87 @@ model ReviewIssue {
 }
 
 model Decision {
-  id              String    @id @default(uuid())
+  id              String     @id @default(uuid())
   projectId       String
   stepKey         String?
   title           String
-  rationale       String    @default("")
+  rationale       String     @default("")
   decidedBy       ActorType
   reviewIssueId   String?
+  sourceType      SourceType @default(USER)
   sourceReference String?
-  createdAt       DateTime  @default(now())
+  confidence      Float?
+  verified        Boolean    @default(false)
+  createdAt       DateTime   @default(now())
 
   project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
   reviewIssue ReviewIssue? @relation(fields: [reviewIssueId], references: [id], onDelete: SetNull)
 }
 
 model OpenQuestion {
-  id         String             @id @default(uuid())
-  projectId  String
-  stepKey    String?
-  text       String
-  whyNeeded  String             @default("")
+  id               String             @id @default(uuid())
+  projectId        String
+  stepKey          String?
+  text             String
+  whyNeeded        String             @default("")
   /// A blocking open question prevents its step from moving to review.
-  blocking   Boolean            @default(false)
+  blocking         Boolean            @default(false)
   /// Needed only for filing: counts against the first filing step, never a drafting step.
-  deferredToFiling Boolean      @default(false)
-  status     OpenQuestionStatus @default(OPEN)
-  answer     String?
-  createdBy  ActorType
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
-  resolvedAt DateTime?
+  deferredToFiling Boolean            @default(false)
+  status           OpenQuestionStatus @default(OPEN)
+  answer           String?
+  sourceType       SourceType         @default(AGENT_INFERENCE)
+  sourceReference  String?
+  confidence       Float?
+  verified         Boolean            @default(false)
+  createdBy        ActorType
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  resolvedAt       DateTime?
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId, status])
+}
+
+// ---------------------------------------------------------------------------
+// Final package and sign-off
+// ---------------------------------------------------------------------------
+
+/// One generated document of the final package. Every generation adds a new version.
+model GeneratedDocument {
+  id             String                @id @default(uuid())
+  projectId      String
+  type           GeneratedDocumentType
+  versionNumber  Int
+  fileName       String
+  storedPath     String
+  mimeType       String
+  sizeBytes      Int
+  sha256         String
+  /// false = draft: not all mandatory data was confirmed when it was generated.
+  isFinal        Boolean               @default(false)
+  isDemo         Boolean               @default(false)
+  /// JSON text: what was still missing at generation time.
+  missingJson    String                @default("[]")
+  createdByActor ActorType
+  createdAt      DateTime              @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, type, versionNumber])
+}
+
+/// Confirmation by the applicant or representative that they reviewed the package (step 14).
+/// The system never files the application.
+model FinalSignoff {
+  id             String      @id @default(uuid())
+  projectId      String
+  reviewerName   String
+  role           SignoffRole
+  note           String      @default("")
+  packageVersion Int?
+  confirmedAt    DateTime    @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }

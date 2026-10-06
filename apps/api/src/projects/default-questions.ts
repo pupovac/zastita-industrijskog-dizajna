@@ -1,3 +1,4 @@
+import { InterviewGroupKey } from '../domain/interview-groups';
 import { StepKey } from '../domain/steps';
 
 /**
@@ -11,6 +12,7 @@ export interface DefaultQuestion {
   whyNeeded: string;
   exampleAnswer: string;
   required: boolean;
+  interviewGroup: InterviewGroupKey;
 }
 
 export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
@@ -20,6 +22,7 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Naziv i kratak opis koristimo kao polaznu tačku za sve dalje korake i za usklađivanje sa prikazima.',
     exampleAnswer: 'Fasadni termoizolacioni panel od EPS-a sa nanetim završnim slojem.',
     required: true,
+    interviewGroup: 'C',
   },
   {
     stepKey: 'PRODUCT_INTERVIEW',
@@ -27,6 +30,7 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Spoljašnji izgled je ono što se beleži; potreban nam je vaš opis onoga što se vidi.',
     exampleAnswer: 'Fina zrnasta tekstura, mat završni sloj, svetlosiva boja.',
     required: true,
+    interviewGroup: 'D',
   },
   {
     stepKey: 'PRODUCT_INTERVIEW',
@@ -34,6 +38,7 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Oblik ivica je vidljiva karakteristika koju treba tačno zabeležiti i kasnije posebno proceniti.',
     exampleAnswer: 'Stepenasti profil na dužim ivicama, sa ravnim kratkim ivicama.',
     required: true,
+    interviewGroup: 'E',
   },
   {
     stepKey: 'PRODUCT_INTERVIEW',
@@ -41,6 +46,7 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Proporcije utiču na ukupan izgled i moraju se slagati sa prikazima.',
     exampleAnswer: '1000 × 500 mm, debljina 100 mm.',
     required: false,
+    interviewGroup: 'D',
   },
   {
     stepKey: 'PRODUCT_INTERVIEW',
@@ -48,6 +54,7 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Varijante se beleže odvojeno kako bi se kasnije odlučilo kako ih obuhvatiti.',
     exampleAnswer: 'Da, tri boje završnog sloja: bela, svetlosiva, antracit.',
     required: false,
+    interviewGroup: 'F',
   },
   {
     stepKey: 'PRODUCT_INTERVIEW',
@@ -55,5 +62,6 @@ export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
     whyNeeded: 'Podatak o autoru se beleži kao deo osnovnih podataka projekta.',
     exampleAnswer: 'Ime i prezime, adresa.',
     required: true,
+    interviewGroup: 'B',
   },
 ];

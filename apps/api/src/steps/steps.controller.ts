@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { Actor } from '../common/actor.decorator';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
+import { INTERVIEW_GROUPS } from '../domain/interview-groups';
 import { STEP_DEFINITIONS } from '../domain/steps';
 import { TransitionStepDto, transitionStepSchema } from './steps.dto';
 import { StepsService } from './steps.service';
@@ -13,6 +14,11 @@ export class StepsController {
   @Get('step-definitions')
   definitions() {
     return STEP_DEFINITIONS.map((s, i) => ({ ...s, position: i + 1 }));
+  }
+
+  @Get('interview-groups')
+  interviewGroups() {
+    return INTERVIEW_GROUPS;
   }
 
   @Get('projects/:projectId/steps')

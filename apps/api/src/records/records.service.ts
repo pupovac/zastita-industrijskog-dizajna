@@ -3,6 +3,7 @@ import { ActorType } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DomainError } from '../domain/domain-error';
 import { isDeferredToFiling } from '../domain/filing-deferral';
+import { assertMockAllowed } from '../domain/mock-data';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { AnswerOpenQuestionDto, CreateDecisionDto, CreateOpenQuestionDto } from './records.dto';
@@ -15,8 +16,21 @@ export class RecordsService {
     private readonly projects: ProjectsService,
   ) {}
 
-  async createOpenQuestion(projectId: string, dto: CreateOpenQuestionDto, actor: ActorType) {
+  async listOpenQuestions(projectId: string, stepKey?: string) {
     await this.projects.assertExists(projectId);
+    return this.prisma.openQuestion.findMany({
+      where: { projectId, ...(stepKey ? { stepKey } : {}) },
+      orderBy: [{ status: 'asc' }, { createdAt: 'asc' }],
+    });
+  }
+
+  async listDecisions(projectId: string) {
+    await this.projects.assertExists(projectId);
+    return this.prisma.decision.findMany({ where: { projectId }, orderBy: { createdAt: 'desc' } });
+  }
+
+  async createOpenQuestion(projectId: string, dto: CreateOpenQuestionDto, actor: ActorType) {
+    assertMockAllowed(await this.projects.get(projectId), dto.sourceReference);
     const deferredToFiling = isDeferredToFiling({ stepKey: dto.stepKey ?? null, deferredToFiling: dto.deferredToFiling });
     return this.prisma.openQuestion.create({ data: { ...dto, deferredToFiling, projectId, createdBy: actor } });
   }
@@ -37,7 +51,7 @@ export class RecordsService {
     if (actor !== 'USER') {
       throw new DomainError('DECISION_REQUIRES_USER', 'Odluku donosi korisnik.', 'FORBIDDEN');
     }
-    await this.projects.assertExists(projectId);
-    return this.prisma.decision.create({ data: { ...dto, projectId, decidedBy: 'USER' } });
+    assertMockAllowed(await this.projects.get(projectId), dto.sourceReference);
+    return this.prisma.decision.create({ data: { ...dto, projectId, decidedBy: 'USER', sourceType: 'USER' } });
   }
 }

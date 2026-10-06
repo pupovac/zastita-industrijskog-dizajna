@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { useCreateProject, useProjects } from '@/api/hooks';
 import { ErrorText } from '@/components/ErrorText';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -51,7 +52,10 @@ export function ProjectsPage() {
                 <li key={p.id} className="py-3">
                   <Link to={`/projects/${p.id}`} className="flex items-center justify-between gap-4 hover:underline">
                     <div>
-                      <div className="font-medium">{p.name}</div>
+                      <div className="flex items-center gap-2 font-medium">
+                        {p.name}
+                        {p.isDemo && <Badge variant="danger">DEMO</Badge>}
+                      </div>
                       <div className="text-xs text-muted-foreground">
                         {p.productName || 'Proizvod nije unet'} · izmenjeno {formatDateTime(p.updatedAt)}
                       </div>

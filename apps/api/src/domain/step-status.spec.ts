@@ -219,3 +219,76 @@ describe('progressPercent', () => {
     expect(progressPercent(STEP_KEYS.map(() => ({ status: 'APPROVED' as const })))).toBe(100);
   });
 });
+
+describe('final package gated by BLOCKER findings', () => {
+  const allDraftingApproved = (extra: Partial<Record<StepKey, StepStatus>> = {}) =>
+    steps({
+      ...Object.fromEntries(STEP_KEYS.slice(0, 12).map((k) => [k, 'APPROVED'])),
+      ...extra,
+    } as Partial<Record<StepKey, StepStatus>>);
+
+  it('does not let step 13 start while a BLOCKER is unresolved', () => {
+    expectError(
+      () =>
+        planStepTransition({
+          ...base,
+          steps: allDraftingApproved(),
+          stepKey: 'FINAL_PACKAGE',
+          to: 'IN_PROGRESS',
+          openBlockerFindings: 1,
+        }),
+      'FINAL_PACKAGE_BLOCKED_BY_BLOCKER',
+    );
+  });
+
+  it('does not let step 13 go to review or be approved while a BLOCKER is unresolved', () => {
+    for (const [from, to] of [
+      ['IN_PROGRESS', 'READY_FOR_REVIEW'],
+      ['READY_FOR_REVIEW', 'APPROVED'],
+    ] as const) {
+      expectError(
+        () =>
+          planStepTransition({
+            ...base,
+            steps: allDraftingApproved({ FINAL_PACKAGE: from }),
+            stepKey: 'FINAL_PACKAGE',
+            to,
+            openBlockerFindings: 2,
+          }),
+        'FINAL_PACKAGE_BLOCKED_BY_BLOCKER',
+      );
+    }
+  });
+
+  it('still allows blocking or pausing step 13, and other steps ignore BLOCKERs elsewhere', () => {
+    expect(
+      planStepTransition({
+        ...base,
+        steps: allDraftingApproved({ FINAL_PACKAGE: 'IN_PROGRESS' }),
+        stepKey: 'FINAL_PACKAGE',
+        to: 'WAITING_FOR_USER',
+        openBlockerFindings: 1,
+      })[0].to,
+    ).toBe('WAITING_FOR_USER');
+    expect(
+      planStepTransition({
+        ...base,
+        steps: allDraftingApproved({ D1_FORM_DATA: 'IN_PROGRESS' }),
+        stepKey: 'D1_FORM_DATA',
+        to: 'READY_FOR_REVIEW',
+        openBlockerFindings: 1,
+      })[0].to,
+    ).toBe('READY_FOR_REVIEW');
+  });
+
+  it('opens step 13 once no BLOCKER is left', () => {
+    const changes = planStepTransition({
+      ...base,
+      steps: allDraftingApproved(),
+      stepKey: 'FINAL_PACKAGE',
+      to: 'IN_PROGRESS',
+      openBlockerFindings: 0,
+    });
+    expect(changes[0]).toMatchObject({ stepKey: 'FINAL_PACKAGE', to: 'IN_PROGRESS' });
+  });
+});

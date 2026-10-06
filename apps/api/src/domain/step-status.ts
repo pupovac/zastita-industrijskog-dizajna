@@ -17,6 +17,8 @@ export interface StepTransitionRequest {
   reason?: string | null;
   /** Open blocking questions + open conflicts attached to the step being moved. */
   openBlockingItems: number;
+  /** Unresolved BLOCKER review findings anywhere in the project. */
+  openBlockerFindings?: number;
 }
 
 export interface StepStatusChange {
@@ -38,6 +40,10 @@ export const ALLOWED_TRANSITIONS: Record<StepStatus, readonly StepStatus[]> = {
 
 export const REOPENED_UPSTREAM_REASON = 'Prethodni korak je ponovo otvoren.';
 
+/** The final package step cannot advance while any BLOCKER finding is unresolved. */
+export const STEP_GATED_BY_BLOCKERS: StepKey = 'FINAL_PACKAGE';
+const BLOCKER_GATED_TARGETS: readonly StepStatus[] = ['IN_PROGRESS', 'READY_FOR_REVIEW', 'APPROVED'];
+
 /**
  * Decides whether a step may change status and which other steps change with it.
  *
@@ -49,6 +55,8 @@ export const REOPENED_UPSTREAM_REASON = 'Prethodni korak je ponovo otvoren.';
  * - BLOCKED always carries a reason.
  * - Reopening an approved step invalidates every later step that had started:
  *   they become BLOCKED until the reopened step is approved again.
+ * - The final package (step 13) cannot start, go to review or be approved while
+ *   the independent review has an unresolved BLOCKER finding.
  */
 export function planStepTransition(req: StepTransitionRequest): StepStatusChange[] {
   const ordered = [...req.steps].sort((a, b) => a.position - b.position);
@@ -91,6 +99,18 @@ export function planStepTransition(req: StepTransitionRequest): StepStatusChange
     throw new DomainError(
       'STEP_HAS_OPEN_BLOCKING_ITEMS',
       'Korak ima otvorena blokirajuća pitanja ili nerešene konflikte.',
+      'CONFLICT',
+    );
+  }
+
+  if (
+    current.stepKey === STEP_GATED_BY_BLOCKERS &&
+    BLOCKER_GATED_TARGETS.includes(to) &&
+    (req.openBlockerFindings ?? 0) > 0
+  ) {
+    throw new DomainError(
+      'FINAL_PACKAGE_BLOCKED_BY_BLOCKER',
+      'Finalni paket je blokiran dok postoji nerešen nalaz BLOCKER iz nezavisne provere.',
       'CONFLICT',
     );
   }

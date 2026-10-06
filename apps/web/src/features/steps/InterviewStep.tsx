@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useKnowledge, useQuestions, useSaveAnswer, useUploadFile } from '@/api/hooks';
+import { useInterviewGroups, useKnowledge, useQuestions, useSaveAnswer, useUploadFile } from '@/api/hooks';
 import { fileContentUrl } from '@/api/client';
 import type { Fact, Question } from '@/api/types';
 import { ErrorText } from '@/components/ErrorText';
 import { SaveIndicator } from '@/components/SaveIndicator';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,8 +15,61 @@ import { FactCard } from '../knowledge/FactCard';
 
 export function InterviewStep({ projectId, stepKey }: { projectId: string; stepKey: string }) {
   const questions = useQuestions(projectId, stepKey);
-  const knowledge = useKnowledge(projectId);
+  const groups = useInterviewGroups();
+  const [selected, setSelected] = useState<string | null>(null);
 
+  if (questions.error) return <ErrorText error={questions.error} />;
+  if (!questions.data) return <p className="text-sm text-muted-foreground">Učitavanje…</p>;
+  if (questions.data.length === 0) return <p className="text-sm text-muted-foreground">Za ovaj korak još nema pitanja.</p>;
+
+  // Small groups (§13): A–G in order, then anything without a group.
+  const tabs = [
+    ...(groups.data ?? []).map((g) => ({ key: g.key, title: `${g.key}. ${g.title}`, highPriority: g.highPriority })),
+    { key: OTHER_GROUP, title: 'Ostala pitanja', highPriority: false },
+  ]
+    .map((tab) => ({
+      ...tab,
+      questions: questions.data.filter((q) => (q.interviewGroup ?? OTHER_GROUP) === tab.key),
+    }))
+    .filter((tab) => tab.questions.length > 0);
+  const active = tabs.find((t) => t.key === selected) ?? tabs[0];
+
+  return (
+    <div className="flex flex-col gap-4">
+      <nav aria-label="Grupe pitanja" className="flex flex-wrap gap-2">
+        {tabs.map((tab) => {
+          const answered = tab.questions.filter((q) => q.answer?.value.trim()).length;
+          return (
+            <Button
+              key={tab.key}
+              size="sm"
+              variant={tab.key === active.key ? 'default' : 'outline'}
+              onClick={() => setSelected(tab.key)}
+            >
+              {tab.title}
+              <span className="tabular-nums opacity-70">
+                {answered}/{tab.questions.length}
+              </span>
+              {tab.highPriority && <Badge variant="danger">VISOK PRIORITET</Badge>}
+            </Button>
+          );
+        })}
+      </nav>
+      {active.highPriority && (
+        <p className="text-sm text-muted-foreground">
+          Ova grupa je visokog prioriteta: odgovori mogu biti relevantni za procenu novosti i prava prvenstva.
+        </p>
+      )}
+      <QuestionList projectId={projectId} questions={active.questions} />
+    </div>
+  );
+}
+
+const OTHER_GROUP = '_';
+
+/** Questions with the PITANJE / ZAŠTO / PRIMER / MOJ ODGOVOR / PRILOG layout; filing-only ones last. */
+export function QuestionList({ projectId, questions }: { projectId: string; questions: Question[] }) {
+  const knowledge = useKnowledge(projectId);
   const facts: Fact[] = knowledge.data
     ? [
         ...knowledge.data.sections.productFacts,
@@ -26,11 +80,6 @@ export function InterviewStep({ projectId, stepKey }: { projectId: string; stepK
         ...knowledge.data.sections.otherFacts,
       ]
     : [];
-
-  if (questions.error) return <ErrorText error={questions.error} />;
-  if (!questions.data) return <p className="text-sm text-muted-foreground">Učitavanje…</p>;
-  if (questions.data.length === 0) return <p className="text-sm text-muted-foreground">Za ovaj korak još nema pitanja.</p>;
-
   const card = (q: Question) => (
     <QuestionCard
       key={q.id}
@@ -39,8 +88,8 @@ export function InterviewStep({ projectId, stepKey }: { projectId: string; stepK
       interpretations={q.answer ? facts.filter((f) => f.userAnswerId === q.answer!.id) : []}
     />
   );
-  const drafting = questions.data.filter((q) => !q.deferredToFiling);
-  const deferred = questions.data.filter((q) => q.deferredToFiling);
+  const drafting = questions.filter((q) => !q.deferredToFiling);
+  const deferred = questions.filter((q) => q.deferredToFiling);
 
   return (
     <div className="flex flex-col gap-4">
@@ -108,6 +157,7 @@ function QuestionCard({
         {question.exampleAnswer && (
           <Section title="Primer odgovora">
             <p className="text-sm italic text-muted-foreground">{question.exampleAnswer}</p>
+            <p className="text-xs text-muted-foreground">Primer je samo ilustracija — ne kopirajte ga ako nije tačan.</p>
           </Section>
         )}
         <Section title="Moj odgovor">

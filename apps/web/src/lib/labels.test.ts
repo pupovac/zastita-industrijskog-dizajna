@@ -29,3 +29,10 @@ describe('step status labels', () => {
     }
   });
 });
+
+describe('review severity labels', () => {
+  it('shows BLOCKER as "BLOCKER"', async () => {
+    const { SEVERITY_LABEL } = await import('./labels');
+    expect(SEVERITY_LABEL).toEqual({ BLOCKER: 'BLOCKER', HIGH: 'VISOK', MEDIUM: 'SREDNJI', LOW: 'NIZAK' });
+  });
+});
