@@ -49,6 +49,11 @@ export function StepStatusCard({ projectId, step }: { projectId: string; step: P
             ))}
           </div>
         </div>
+        {step.blockedByBlockerFindings > 0 && (
+          <p className="text-sm text-destructive">
+            Korak je zatvoren dok postoji nerešen nalaz BLOCKER iz nezavisne provere ({step.blockedByBlockerFindings}).
+          </p>
+        )}
         {step.status === 'BLOCKED' && step.blockedReason && (
           <p className="text-sm">
             <span className="text-muted-foreground">Razlog blokade: </span>

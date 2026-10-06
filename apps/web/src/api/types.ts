@@ -27,6 +27,8 @@ export interface Project {
   designerName: string;
   representativeName: string;
   currentStepKey: string;
+  /** Demo project with invented data ("[DEMO] … – mock podaci"). */
+  isDemo: boolean;
   progressPercent: number;
   createdAt: string;
   updatedAt: string;
@@ -44,6 +46,8 @@ export interface ProjectStep {
   status: StepStatus;
   blockedReason: string | null;
   openBlockingItems: number;
+  /** Step 13 only: unresolved BLOCKER findings that keep the final package closed. */
+  blockedByBlockerFindings: number;
   updatedAt: string;
 }
 
@@ -59,6 +63,7 @@ export interface UploadedFile {
   metadataJson: string;
   summary: string;
   extractionError: string | null;
+  replacedById?: string | null;
   createdAt: string;
 }
 
@@ -80,6 +85,7 @@ export interface Question {
   required: boolean;
   deferredToFiling: boolean;
   allowsAttachment: boolean;
+  interviewGroup: string | null;
   answer: UserAnswer | null;
 }
 
@@ -118,6 +124,10 @@ export interface ReviewIssue {
   resolutionNote: string | null;
   resolvedBy: ActorType | null;
   resolvedAt: string | null;
+  checkKey: string | null;
+  sourceType: SourceType;
+  sourceReference: string | null;
+  createdByActor: ActorType;
   fileA?: UploadedFile | null;
   fileB?: UploadedFile | null;
   chosenFile?: UploadedFile | null;
@@ -232,4 +242,307 @@ export interface Knowledge {
     otherFacts: Fact[];
   };
   missingInfo: MissingInfoItem[];
+}
+
+// ---------------------------------------------------------------------------
+// FUZZ-130: data of steps 2–14
+// ---------------------------------------------------------------------------
+
+export type FeatureCategory = 'A_VISUAL' | 'B_MIXED' | 'C_TECHNICAL' | 'D_UNCLEAR';
+export type SimilarityLevel = 'LOW' | 'MEDIUM' | 'HIGH';
+export type SearchCoverageStatus = 'COMPLETED' | 'PARTIAL' | 'BLOCKED' | 'SKIPPED';
+export type RepresentationRequirement = 'MANDATORY' | 'RECOMMENDED';
+export type RepresentationMedium = 'RENDER' | 'CAD' | 'PHOTO' | 'LINE_DRAWING';
+export type RepresentationAssessment = 'ACCEPTABLE' | 'NEEDS_REWORK' | 'UNSUITABLE';
+export type ReviewIssueStatus = 'OPEN' | 'RESOLVED' | 'DISMISSED';
+export type StrategyItemKey = 'FILING_TYPE' | 'VARIANT_RESOLUTION' | 'DEFERRED_PUBLICATION' | 'PRIORITY_CLAIM';
+export type SignoffRole = 'APPLICANT' | 'REPRESENTATIVE';
+export type GeneratedDocumentType =
+  | 'DESCRIPTION'
+  | 'PACKAGE_DOCX'
+  | 'PACKAGE_PDF'
+  | 'D1_DATA'
+  | 'REPRESENTATION_INDEX'
+  | 'FILING_CHECKLIST'
+  | 'ATTACHMENT_LIST'
+  | 'SOURCES_REPORT'
+  | 'OPEN_LEGAL_QUESTIONS';
+
+/** Fields every agent-writable record carries. */
+export interface Provenance {
+  id: string;
+  sourceType: SourceType;
+  sourceReference: string | null;
+  confidence: number | null;
+  verified: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ResearchFinding extends Provenance {
+  code: string | null;
+  summary: string;
+  details: string;
+  kind: InformationKind;
+}
+
+export interface SourceDocument {
+  id: string;
+  title: string;
+  url: string | null;
+  section: string | null;
+  localCopyPath: string | null;
+  accessedAt: string | null;
+  researchFindings: ResearchFinding[];
+}
+
+export interface Source {
+  id: string;
+  code: string | null;
+  name: string;
+  url: string;
+  sourceType: SourceType;
+  priority: number;
+  institution: string;
+  documentKind: string;
+  documentVersion: string;
+  relevantSections: string;
+  significance: string;
+  localCopiesJson: string;
+  accessedAt: string | null;
+  documents: SourceDocument[];
+}
+
+export interface RequirementCitation {
+  id: string;
+  location: string;
+  sourceDocument: { id: string; title: string; url: string | null; source: { id: string; code: string | null; name: string; url: string } };
+}
+
+export interface MatrixRequirement {
+  id: string;
+  code: string | null;
+  requirementText: string;
+  section: string;
+  impactOnApplication: string;
+  kind: InformationKind;
+  sourceType: SourceType;
+  sourceReference: string;
+  status: 'CONFIRMED' | 'UNVERIFIED';
+  area: string;
+  areaCode: string;
+  phases: { number: number; name: string }[];
+  isDiscrepancy: boolean;
+  precedence: string;
+  openItems: string[];
+  accessDate: string;
+  verified: boolean;
+  citations: RequirementCitation[];
+}
+
+export interface ResearchReportSection {
+  id: string;
+  code: string;
+  position: number;
+  heading: string;
+  body: string;
+  sourceReference: string;
+}
+
+export interface ResearchImportSummary {
+  sources: number;
+  sourceDocuments: number;
+  findings: number;
+  requirements: number;
+  citations: number;
+  reportSections: number;
+}
+
+export interface InterviewGroup {
+  key: string;
+  title: string;
+  highPriority: boolean;
+}
+
+export interface FunctionAnalysisAnswer extends Provenance {
+  questionNumber: number;
+  answer: string;
+  kind: InformationKind;
+}
+
+export interface DesignVariant extends Provenance {
+  name: string;
+  description: string;
+}
+
+export interface DesignFeatureRecord extends Provenance {
+  variantId: string | null;
+  name: string;
+  description: string;
+  category: FeatureCategory | null;
+  categoryRationale: string;
+  functionalityRisk: FunctionalityRisk | null;
+  riskRationale: string;
+  kind: InformationKind;
+  variant: DesignVariant | null;
+  functionAnalysis: FunctionAnalysisAnswer[];
+}
+
+export interface PriorDesignRecord extends Provenance {
+  title: string;
+  registrationNumber: string | null;
+  holder: string | null;
+  url: string | null;
+  country: string | null;
+  designDate: string | null;
+  locarnoClass: string | null;
+  database: string | null;
+  imageFileId: string | null;
+  imageFile: UploadedFile | null;
+  similarFeatures: string;
+  differingFeatures: string;
+  similarityLevel: SimilarityLevel | null;
+  similarityNotes: string;
+  searchResult: string;
+  legalConclusion: string;
+  kind: InformationKind;
+}
+
+export interface SearchCoverage extends Provenance {
+  database: string;
+  query: string;
+  searchedAt: string | null;
+  status: SearchCoverageStatus;
+  resultSummary: string;
+  blockedReason: string;
+  coverageGap: string;
+}
+
+export interface StrategyItem extends Provenance {
+  key: StrategyItemKey;
+  value: string;
+  details: string;
+  rationale: string;
+  requirementRefs: string;
+  kind: InformationKind;
+}
+
+export interface StrategyEntry {
+  key: StrategyItemKey;
+  title: string;
+  allowedValues: string[] | null;
+  item: StrategyItem | null;
+  requirements: (Omit<MatrixRequirement, 'phases' | 'openItems'> & { citations: RequirementCitation[] })[];
+  unknownRequirementRefs: string[];
+}
+
+export interface Representation extends Provenance {
+  uploadedFileId: string | null;
+  uploadedFile: UploadedFile | null;
+  position: number;
+  viewName: string;
+  notes: string;
+  purpose: string;
+  featureShown: string;
+  requirement: RepresentationRequirement;
+  medium: RepresentationMedium | null;
+  mediumRationale: string;
+  assessment: RepresentationAssessment | null;
+  assessmentNote: string;
+}
+
+export interface PatentTermMatch {
+  term: string;
+  match: string;
+  index: number;
+}
+
+export interface DraftVersion {
+  id: string;
+  versionNumber: number;
+  content: string;
+  createdByActor: ActorType;
+  sourceType: SourceType;
+  sourceReference: string | null;
+  verified: boolean;
+  createdAt: string;
+  terminologyIssues: PatentTermMatch[];
+}
+
+export interface ApplicationSectionRecord {
+  id: string;
+  key: string;
+  title: string;
+  required: boolean;
+  confirmed: boolean;
+  position: number;
+  versions: DraftVersion[];
+}
+
+export interface D1Field {
+  key: string;
+  number: string;
+  label: string;
+  legalBasis: string;
+  requirementRefs: string[];
+  conditional: boolean;
+  deferredToFiling: boolean;
+  hint: string;
+  missing: boolean;
+  value: (Provenance & { fieldKey: string; value: string; notes: string; deferredToFiling: boolean | null }) | null;
+}
+
+export interface ReviewCheck {
+  key: string;
+  label: string;
+}
+
+export interface ChecklistItem {
+  key: string;
+  label: string;
+  done: boolean;
+  detail: string;
+}
+
+export interface GeneratedDocument {
+  id: string;
+  type: GeneratedDocumentType;
+  versionNumber: number;
+  fileName: string;
+  mimeType: string;
+  sizeBytes: number;
+  sha256: string;
+  isFinal: boolean;
+  isDemo: boolean;
+  missingJson: string;
+  createdByActor: ActorType;
+  createdAt: string;
+}
+
+export interface PackageStatus {
+  checklist: ChecklistItem[];
+  openBlockers: number;
+  terminology: { sectionTitle: string; matches: PatentTermMatch[] }[];
+  gate: { canGenerate: boolean; blockedCode: string | null; blockedReason: string | null; isFinal: boolean; missing: string[] };
+  latestVersion: number | null;
+  documents: { type: GeneratedDocumentType; versions: GeneratedDocument[] }[];
+}
+
+export interface FinalSignoff {
+  id: string;
+  reviewerName: string;
+  role: SignoffRole;
+  note: string;
+  packageVersion: number | null;
+  confirmedAt: string;
+}
+
+export interface AgentTask {
+  id: string;
+  stepKey: string | null;
+  agentName: string;
+  title: string;
+  status: 'QUEUED' | 'RUNNING' | 'DONE' | 'FAILED';
+  resultSummary: string;
+  createdAt: string;
 }

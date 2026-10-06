@@ -237,7 +237,7 @@ function FactList({ projectId, facts }: { projectId: string; facts: Fact[] }) {
   );
 }
 
-function OpenQuestionItem({ projectId, question }: { projectId: string; question: OpenQuestion }) {
+export function OpenQuestionItem({ projectId, question }: { projectId: string; question: OpenQuestion }) {
   const answer = useAnswerOpenQuestion(projectId);
   const [value, setValue] = useState('');
   return (

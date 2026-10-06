@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { fileContentUrl } from '@/api/client';
 import {
   useCreateConflict,
+  useDeleteFile,
   useFiles,
+  useReplaceFile,
   useResolveConflict,
   useReviewIssues,
   useUpdateFileRole,
@@ -38,7 +40,10 @@ export function DocumentUploadStep({ projectId }: { projectId: string }) {
       <Card>
         <CardHeader>
           <CardTitle>Dostavljeni dokumenti</CardTitle>
-          <CardDescription>Original se čuva nepromenjen. Izaberite dva dokumenta za uporedni prikaz.</CardDescription>
+          <CardDescription>
+            Original se čuva nepromenjen. Zamena čuva i prethodnu verziju, a prikazi i odgovori koji su je koristili
+            prelaze na novu. Izaberite dva dokumenta za uporedni prikaz.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ErrorText error={files.error} />
@@ -122,6 +127,8 @@ function FileRow({
   onToggle: () => void;
 }) {
   const updateRole = useUpdateFileRole(projectId);
+  const replace = useReplaceFile(projectId);
+  const remove = useDeleteFile(projectId);
   const needsManual = file.extractionStatus === 'FAILED' || file.extractionStatus === 'NOT_SUPPORTED';
 
   return (
@@ -156,6 +163,34 @@ function FileRow({
             </option>
           ))}
         </select>
+        <label className="inline-flex h-8 cursor-pointer items-center rounded-md border bg-card px-3 text-sm shadow-xs hover:bg-accent">
+          Zameni
+          <input
+            type="file"
+            className="sr-only"
+            accept=".pdf,.docx,.png,.jpg,.jpeg,.svg"
+            disabled={replace.isPending}
+            onChange={(e) => {
+              const next = e.target.files?.[0];
+              e.target.value = '';
+              if (next) replace.mutate({ fileId: file.id, file: next });
+            }}
+          />
+        </label>
+        <Button
+          size="sm"
+          variant="ghost"
+          disabled={remove.isPending}
+          onClick={() => {
+            if (window.confirm(`Obrisati „${file.originalName}"? Original će biti uklonjen iz projekta.`)) remove.mutate(file.id);
+          }}
+        >
+          Obriši
+        </Button>
+      </div>
+      <div className="w-full">
+        <ErrorText error={replace.error ?? remove.error ?? updateRole.error} />
+        {replace.isPending && <p className="text-xs text-muted-foreground">Zamena i obrada…</p>}
       </div>
     </li>
   );

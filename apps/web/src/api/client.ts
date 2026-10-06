@@ -26,7 +26,7 @@ export async function apiGet<T>(path: string): Promise<T> {
   return parse<T>(await fetch(`/api${path}`, { headers: ACTOR_HEADERS }));
 }
 
-export async function apiSend<T>(method: 'POST' | 'PATCH' | 'PUT', path: string, body?: unknown): Promise<T> {
+export async function apiSend<T>(method: 'POST' | 'PATCH' | 'PUT' | 'DELETE', path: string, body?: unknown): Promise<T> {
   return parse<T>(
     await fetch(`/api${path}`, {
       method,
@@ -42,4 +42,12 @@ export async function apiUpload<T>(path: string, form: FormData): Promise<T> {
 
 export function fileContentUrl(fileId: string): string {
   return `/api/files/${fileId}/content`;
+}
+
+export function generatedDocumentUrl(documentId: string): string {
+  return `/api/generated-documents/${documentId}/content`;
+}
+
+export function localCopyUrl(sourceId: string, index: number): string {
+  return `/api/sources/${sourceId}/local-copies/${index}`;
 }

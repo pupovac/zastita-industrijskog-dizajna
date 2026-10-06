@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useProject } from '@/api/hooks';
 import { ErrorText } from '@/components/ErrorText';
+import { DEMO_BANNER } from '@/lib/labels';
 import { cn } from '@/lib/utils';
 import { ContextPanel } from './ContextPanel';
 import { StepSidebar } from './StepSidebar';
@@ -12,6 +13,11 @@ export function WorkspaceLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {project.data?.isDemo && (
+        <div role="status" className="bg-red-700 px-6 py-1.5 text-center text-sm font-medium text-white">
+          {DEMO_BANNER}
+        </div>
+      )}
       <header className="border-b bg-card">
         <div className="flex items-center gap-6 px-6 py-3">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">
