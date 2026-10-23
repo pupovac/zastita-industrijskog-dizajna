@@ -18,7 +18,7 @@ patches:
 images:
 - name: patent-api
   newName: registry.drowranger.com/patent/patent-api
-  newTag: ca5ae4b41ac79f5efaac41566ad37b4b7eb56e8d
+  newTag: 8e576712cbfbc77b2a6883e222956855611aea7d
 - name: patent-web
   newName: registry.drowranger.com/patent/patent-web
-  newTag: ca5ae4b41ac79f5efaac41566ad37b4b7eb56e8d
+  newTag: 8e576712cbfbc77b2a6883e222956855611aea7d
