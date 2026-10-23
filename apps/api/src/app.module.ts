@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { HealthController } from './health/health.controller';
 import { CollectionsModule } from './collections/collections.module';
 import { D1Module } from './d1/d1.module';
 import { DraftingModule } from './drafting/drafting.module';
@@ -35,5 +36,6 @@ import { StrategyModule } from './strategy/strategy.module';
     D1Module,
     PackageModule,
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}

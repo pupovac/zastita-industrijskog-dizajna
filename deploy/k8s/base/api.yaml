@@ -1,0 +1,94 @@
+# API (NestJS + Prisma on SQLite).
+#
+# Single replica with the `Recreate` strategy: the SQLite database file lives on
+# a single ReadWriteOnce PVC and SQLite is not safe for concurrent writers across
+# processes/pods. A second pod would corrupt the DB, and RWO cannot attach the
+# volume to two nodes anyway. Scaling out requires moving to PostgreSQL (the
+# schema is already written to be portable — see repo README).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patent-api
+  labels:
+    app.kubernetes.io/name: patent-api
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: patent-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: patent-api
+    spec:
+      imagePullSecrets:
+        - name: harbor-pull
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: patent-api
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            # DB file and uploads both live on the mounted PVC at /data.
+            - name: DATABASE_URL
+              value: file:/data/db/app.db
+            - name: UPLOAD_DIR
+              value: /data/uploads
+          readinessProbe:
+            httpGet:
+              path: /api/healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/healthz
+              port: http
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 100m
+              memory: 192Mi
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            # Root FS read-only; only the PVC (/data) and /tmp are writable.
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: patent-data
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: patent-api
+  labels:
+    app.kubernetes.io/name: patent-api
+spec:
+  selector:
+    app.kubernetes.io/name: patent-api
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
