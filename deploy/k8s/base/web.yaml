@@ -55,10 +55,16 @@ spec:
               mountPath: /var/cache/nginx
             - name: run
               mountPath: /var/run
+            # Proxying /api makes nginx create proxy/client temp dirs under
+            # /tmp; with readOnlyRootFilesystem that path must be writable.
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: cache
           emptyDir: {}
         - name: run
+          emptyDir: {}
+        - name: tmp
           emptyDir: {}
 ---
 apiVersion: v1
