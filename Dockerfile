@@ -81,6 +81,15 @@ COPY --from=prod-deps-api /app/node_modules /app/node_modules
 COPY --from=build-api /app/apps/api/dist ./dist
 COPY --from=build-api /app/apps/api/package.json ./package.json
 COPY --from=build-api /app/apps/api/prisma ./prisma
+# Research documents (phase 1–2 results: source records, local copies of the
+# sources, the ZIS requirements matrix and the research report). The api reads
+# them at runtime for `POST /api/projects/:id/research/import` and serves the
+# local copies under `GET /api/sources/:id/local-copies/:n`, so they must ship
+# in the image — there is no repo checkout in production and no PVC for them.
+# RESEARCH_DOCS_DIR points the api at this copy; `GET /api/healthz` reports
+# `researchDocs: ok|missing` so a build without them is visible right after deploy.
+COPY docs /app/docs
+ENV RESEARCH_DOCS_DIR=/app/docs
 COPY deploy/docker/api-entrypoint.sh /usr/local/bin/api-entrypoint.sh
 RUN chmod +x /usr/local/bin/api-entrypoint.sh
 # Put the workspace-root node_modules/.bin on PATH so `prisma` resolves at runtime.

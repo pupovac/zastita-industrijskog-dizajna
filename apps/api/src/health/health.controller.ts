@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { researchDocsStatus } from '../research/research-docs-dir';
 
 /**
  * Liveness/readiness probe target. With the global `/api` prefix this is
@@ -7,11 +8,21 @@ import { Controller, Get } from '@nestjs/common';
  * Kubernetes to kill an otherwise-serving pod. Prisma migrations run at
  * startup (entrypoint) before the server listens, so readiness implies the
  * schema is applied.
+ *
+ * `researchDocs` reports whether the research documents the import reads
+ * (`docs/`, see RESEARCH_DOCS_DIR) are present in this deployment, so a build
+ * that forgot them is visible right after deploy instead of on the first
+ * click. It is informational: a missing directory does not fail the probe.
  */
 @Controller()
 export class HealthController {
   @Get('healthz')
   healthz() {
-    return { status: 'ok' };
+    const docs = researchDocsStatus();
+    return {
+      status: 'ok',
+      researchDocs: docs.status,
+      ...(docs.missing.length > 0 ? { researchDocsMissing: docs.missing } : {}),
+    };
   }
 }

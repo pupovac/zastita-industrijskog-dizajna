@@ -14,10 +14,11 @@ apps/api/prisma/*.db-journal
 apps/api/.env
 apps/api/storage
 
-# Docs are not needed to build the images (research import reads them at runtime
-# from the repo checkout, not the image — see note in deploy/README.md).
-# They are large; exclude from the image build context.
-docs
+# docs/ is NOT excluded: the api image ships it (COPY docs /app/docs) because the
+# research import and the local copies of the sources are read from it at runtime.
+# Only generator scripts and derived renderings of the matrix are left out.
+docs/faza-2/render_matrix.py
+docs/faza-2/matrica-zahteva-zis.csv
 
 # Editor / OS noise
 .DS_Store

@@ -30,6 +30,7 @@ export function RequirementsSummaryStep({ projectId }: { projectId: string }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <ImportResearchCard projectId={projectId} />
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Rezultati inicijalnog istraživanja</CardTitle>

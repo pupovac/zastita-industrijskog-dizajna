@@ -85,6 +85,11 @@ neusklađenostima i svim citiranim izvorima) i „Rezultate inicijalnog istraži
 idempotentan: zapisi se prepoznaju po oznakama (Z-xx, MZ-xxx, NS-xx, A.1 …) i ažuriraju na mestu; potvrde korisnika
 se ne diraju. Pravila se čuvaju kao kopija po projektu (vidi opis PR-a FUZZ-130).
 
+Dokumenti se čitaju iz direktorijuma `docs/` repozitorijuma, ili iz `RESEARCH_DOCS_DIR` ako je postavljen; API
+image kopira `docs/` u `/app/docs` i postavlja tu promenljivu (vidi `deploy/README.md`). `GET /api/healthz` vraća
+`researchDocs: ok | missing`, a `GET /api/projects/:id/research/import-status` kaže da li je uvoz obavljen, kada i sa
+koliko zapisa — koraci 2 i 3 to prikazuju umesto ponovne ponude uvoza.
+
 ## Demo projekat i mock podaci
 
 `npm run db:seed:demo` briše i ponovo pravi samo projekte sa `isDemo = true`. Stvarni projekti se ne menjaju.
@@ -128,6 +133,7 @@ POST   /api/<kolekcija>/:id/confirm        (samo korisnik)
 | `POST /api/projects/:id/conflicts`, `POST /api/review-issues/:id/resolve-conflict` | neslaganja dokumenata |
 | `GET /api/projects/:id/requirements?area=&phase=&status=&discrepancy=` | Matrica zahteva sa filterima |
 | `GET /api/projects/:id/research-report`, `GET /api/sources/:id/local-copies/:n` | Rezultati istraživanja, lokalne kopije |
+| `GET /api/projects/:id/research/import-status` | Da li je uvoz obavljen, kada i koliko zapisa ima |
 | `GET /api/function-analysis/questions`, `PUT /api/design-features/:id/function-analysis/:n`, `POST …/:n/confirm` | modul „Tehnička funkcija naspram vizuelnog dizajna" (8 pitanja) |
 | `GET /api/projects/:id/strategy`, `PUT /api/projects/:id/strategy/:key`, `POST …/:key/confirm` | strategija zaštite (`FILING_TYPE`, `VARIANT_RESOLUTION`, `DEFERRED_PUBLICATION`, `PRIORITY_CLAIM`) |
 | `GET/POST /api/projects/:id/application-sections`, `PUT /api/application-sections/:id/working-draft`, `POST …/versions`, `GET …/versions`, `POST …/confirm` | sekcije opisa i istorija verzija |
