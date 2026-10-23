@@ -2,23 +2,23 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: patent
 resources:
-  - ../../base
-patches:
-  - path: ingress.yaml
-    target:
-      kind: Ingress
-      name: patent
+- ../../base
   # Pin every workload to the home nodes (amd64; local-path storage is there).
-  - path: node-selector.yaml
-    target:
-      kind: Deployment
-images:
+patches:
+- path: ingress.yaml
+  target:
+    kind: Ingress
+    name: patent
+- path: node-selector.yaml
+  target:
+    kind: Deployment
   # CI (the images workflow's bump job) rewrites newTag to the built commit SHA
   # and commits here; Argo CD then rolls it out. They start at :latest for the
   # very first sync before any bump has happened.
-  - name: patent-api
-    newName: registry.drowranger.com/patent/patent-api
-    newTag: latest
-  - name: patent-web
-    newName: registry.drowranger.com/patent/patent-web
-    newTag: latest
+images:
+- name: patent-api
+  newName: registry.drowranger.com/patent/patent-api
+  newTag: 004aa7143cc38a25fc638aea0c0e5be13b8a6037
+- name: patent-web
+  newName: registry.drowranger.com/patent/patent-web
+  newTag: 004aa7143cc38a25fc638aea0c0e5be13b8a6037
