@@ -1,7 +1,13 @@
 # Production host, ingress class and TLS. k3s Traefik is the ingress; cert-manager
 # issues `patent-tls` from the cluster-issuer annotation. The root domain has a
-# wildcard DNS record, so www.patent.drowranger.com already resolves to Traefik —
-# no new DNS record is needed.
+# wildcard DNS record, so both www and the apex already resolve to Traefik — no
+# new DNS record is needed.
+#
+# Both www.patent.drowranger.com AND patent.drowranger.com are served and both
+# are on the cert. Cloudflare sits in front in Full (strict) mode and validates
+# the origin cert for whichever hostname is requested; serving (and certifying)
+# only www made the apex return Cloudflare 526 (origin served its default
+# self-signed cert for patent.drowranger.com). Covering both fixes that.
 - op: add
   path: /metadata/annotations
   value:
@@ -12,8 +18,22 @@
 - op: replace
   path: /spec/rules/0/host
   value: www.patent.drowranger.com
+# Apex host, same web backend as rule 0.
+- op: add
+  path: /spec/rules/-
+  value:
+    host: patent.drowranger.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: patent-web
+              port:
+                name: http
 - op: add
   path: /spec/tls
   value:
-    - hosts: [www.patent.drowranger.com]
+    - hosts: [www.patent.drowranger.com, patent.drowranger.com]
       secretName: patent-tls
