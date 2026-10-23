@@ -46,7 +46,7 @@ export function StepPage() {
         <h1 className="text-xl font-semibold">{step.title}</h1>
         {step.phase === 'FILING' && <p className="mt-1 text-sm text-muted-foreground">{FILING_PHASE_NOTE}</p>}
       </div>
-      <StepStatusCard projectId={projectId} step={step} />
+      <StepStatusCard key={step.stepKey} projectId={projectId} step={step} steps={steps.data} />
       <StepBody key={`${projectId}-${step.stepKey}`} projectId={projectId} stepKey={step.stepKey} />
     </div>
   );

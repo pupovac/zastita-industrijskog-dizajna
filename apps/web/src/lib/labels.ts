@@ -190,27 +190,75 @@ export const NO_GUARANTEE_NOTICE =
   'Sistem ne garantuje da će prijava biti prihvaćena i prijavu ne podnosi automatski. Nije zamena za registrovanog zastupnika.';
 
 /** Status buttons offered for each current status (the backend enforces the same graph). */
-export const STEP_ACTIONS: Record<StepStatus, { to: StepStatus; label: string; needsReason?: boolean }[]> = {
+export type StepActorType = Extract<ActorType, 'USER' | 'AGENT'>;
+
+export interface StepAction {
+  to: StepStatus;
+  label: string;
+  /** The one highlighted button for this status; everything else is secondary. */
+  primary?: boolean;
+  /** Blocking always asks for a reason. */
+  needsReason?: boolean;
+  /** Meaningful only when an agent acts through the API; the web UI (actor USER) hides it. */
+  agentOnly?: boolean;
+}
+
+/** Full transition graph as offered to any actor; mirrors ALLOWED_TRANSITIONS on the backend. */
+export const STEP_ACTIONS: Record<StepStatus, StepAction[]> = {
   NOT_STARTED: [
-    { to: 'IN_PROGRESS', label: 'Započni korak' },
+    { to: 'IN_PROGRESS', label: 'Započni korak', primary: true },
     { to: 'BLOCKED', label: 'Blokiraj', needsReason: true },
   ],
   IN_PROGRESS: [
-    { to: 'READY_FOR_REVIEW', label: 'Pošalji na pregled' },
-    { to: 'WAITING_FOR_USER', label: 'Čeka korisnika' },
+    { to: 'READY_FOR_REVIEW', label: 'Pošalji na pregled', primary: true },
+    { to: 'WAITING_FOR_USER', label: 'Čeka korisnika', agentOnly: true },
     { to: 'BLOCKED', label: 'Blokiraj', needsReason: true },
   ],
   WAITING_FOR_USER: [
-    { to: 'IN_PROGRESS', label: 'Nastavi rad' },
+    { to: 'IN_PROGRESS', label: 'Nastavi rad', primary: true },
     { to: 'BLOCKED', label: 'Blokiraj', needsReason: true },
   ],
-  BLOCKED: [{ to: 'IN_PROGRESS', label: 'Ukloni blokadu' }],
+  BLOCKED: [{ to: 'IN_PROGRESS', label: 'Ukloni blokadu', primary: true }],
   READY_FOR_REVIEW: [
-    { to: 'APPROVED', label: 'Odobri' },
+    { to: 'APPROVED', label: 'Odobri', primary: true },
     { to: 'IN_PROGRESS', label: 'Vrati na doradu' },
   ],
   APPROVED: [{ to: 'IN_PROGRESS', label: 'Ponovo otvori' }],
 };
+
+/** Actions a given actor may trigger. The web UI always acts as USER, so agent-only moves disappear. */
+export function stepActionsFor(status: StepStatus, actor: StepActorType): StepAction[] {
+  return STEP_ACTIONS[status].filter((action) => actor === 'AGENT' || !action.agentOnly);
+}
+
+/** What each status means, shown in the status explanation under the buttons. */
+export const STEP_STATUS_HELP: Record<StepStatus, string> = {
+  NOT_STARTED: 'Korak još nije otvoren. Otključava se kada prethodni korak bude odobren.',
+  IN_PROGRESS:
+    'Na koraku se radi: unosite podatke, odgovarate na pitanja ili otpremate dokumente. Svaki unos se čuva odmah.',
+  WAITING_FOR_USER: 'Agent je zastao jer mu je potreban vaš odgovor ili odluka. Kada odgovorite, nastavite rad.',
+  BLOCKED:
+    'Korak je zaustavljen iz navedenog razloga, na primer zato što je prethodni korak ponovo otvoren. Blokada se uklanja ručno.',
+  READY_FOR_REVIEW:
+    'Unos je završen i čeka pregled. Pregled radite vi, podnosilac: proverite podatke i kliknite „Odobri“ ili vratite korak na doradu.',
+  APPROVED:
+    'Podnosilac je potvrdio korak i sledeći korak je otključan. Ponovno otvaranje odobrenog koraka blokira sve kasnije započete korake.',
+};
+
+/** One sentence under the buttons: what the user is expected to do in the current status. */
+export const STEP_STATUS_HINT: Record<StepStatus, string> = {
+  NOT_STARTED: 'Započnite korak da biste otvorili unos.',
+  IN_PROGRESS:
+    'Kada završite unos, pošaljite korak na pregled. Niko ne pregleda u pozadini: pregled radite vi sami, pa odobravate korak.',
+  WAITING_FOR_USER: 'Agent čeka vaš odgovor. Kada ga date, kliknite „Nastavi rad“.',
+  BLOCKED: 'Otklonite razlog blokade, pa je uklonite. Ako je prethodni korak ponovo otvoren, prvo njega odobrite.',
+  READY_FOR_REVIEW: 'Pregledajte unete podatke ispod. Klikom na „Odobri“ potvrđujete korak i otključavate sledeći.',
+  APPROVED:
+    'Korak je završen. Ponovo ga otvorite samo ako treba da izmenite podatke; kasniji započeti koraci će biti blokirani.',
+};
+
+export const STEP_APPROVAL_RULE =
+  'Odobravanje koraka radi isključivo podnosilac. Korak N+1 se otključava tek kada je korak N odobren.';
 
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
