@@ -1,0 +1,6 @@
+# Keep every patent pod on the home nodes (amd64, same as Traefik/ArgoCD). The
+# api also depends on this: its PVC is local-path (node-local) storage.
+- op: add
+  path: /spec/template/spec/nodeSelector
+  value:
+    hardware: home-pc

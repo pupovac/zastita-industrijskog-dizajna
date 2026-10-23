@@ -1,0 +1,19 @@
+# Production host, ingress class and TLS. k3s Traefik is the ingress; cert-manager
+# issues `patent-tls` from the cluster-issuer annotation. The root domain has a
+# wildcard DNS record, so www.patent.drowranger.com already resolves to Traefik —
+# no new DNS record is needed.
+- op: add
+  path: /metadata/annotations
+  value:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+- op: add
+  path: /spec/ingressClassName
+  value: traefik
+- op: replace
+  path: /spec/rules/0/host
+  value: www.patent.drowranger.com
+- op: add
+  path: /spec/tls
+  value:
+    - hosts: [www.patent.drowranger.com]
+      secretName: patent-tls

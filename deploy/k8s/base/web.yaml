@@ -1,0 +1,76 @@
+# Web (static SPA on nginx-unprivileged, port 8080). Also reverse-proxies /api
+# to the patent-api Service, so the whole app sits behind one hostname.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patent-web
+  labels:
+    app.kubernetes.io/name: patent-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: patent-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: patent-web
+    spec:
+      imagePullSecrets:
+        - name: harbor-pull
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: web
+          image: patent-web
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          volumeMounts:
+            # nginx-unprivileged writes its pid/temp dirs under these paths.
+            - name: cache
+              mountPath: /var/cache/nginx
+            - name: run
+              mountPath: /var/run
+      volumes:
+        - name: cache
+          emptyDir: {}
+        - name: run
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: patent-web
+  labels:
+    app.kubernetes.io/name: patent-web
+spec:
+  selector:
+    app.kubernetes.io/name: patent-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

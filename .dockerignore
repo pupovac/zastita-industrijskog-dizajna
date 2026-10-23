@@ -1,0 +1,25 @@
+# Keep the build context small and deterministic. node_modules is always
+# reinstalled inside the image from package-lock.json; local DB / uploads and
+# build output must never leak into the image.
+**/node_modules
+**/dist
+**/.git
+**/.github
+**/*.log
+
+# Local Prisma SQLite database and any dev artifacts (the real DB lives on a PVC).
+apps/api/prisma/dev.db
+apps/api/prisma/*.db
+apps/api/prisma/*.db-journal
+apps/api/.env
+apps/api/storage
+
+# Docs are not needed to build the images (research import reads them at runtime
+# from the repo checkout, not the image — see note in deploy/README.md).
+# They are large; exclude from the image build context.
+docs
+
+# Editor / OS noise
+.DS_Store
+**/.vscode
+**/.idea

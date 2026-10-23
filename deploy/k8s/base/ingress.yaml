@@ -1,0 +1,20 @@
+# Single host. All traffic goes to the web (nginx) Service; nginx serves the
+# SPA and reverse-proxies /api to the api Service in-cluster. Routing /api at
+# the ingress is therefore unnecessary — one backend keeps TLS and CORS trivial.
+# Host, ingress class and TLS are set in the overlay.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: patent
+spec:
+  rules:
+    - host: HOST
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: patent-web
+                port:
+                  name: http

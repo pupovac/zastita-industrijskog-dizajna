@@ -1,0 +1,20 @@
+# Persistent storage for the SQLite database (/data/db/app.db) and uploaded /
+# generated documents (/data/uploads). ReadWriteOnce: the data is node-local and
+# only ever mounted by the single api pod (Recreate strategy).
+#
+# storageClassName is intentionally OMITTED so the k3s DefaultStorageClass
+# admission plugin stamps the cluster default (`local-path`). local-path is
+# node-local, which is why the api Deployment is pinned to one node in the
+# overlay (nodeSelector) — a reschedule to another node would not see this data.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: patent-data
+  labels:
+    app.kubernetes.io/name: patent-api
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
