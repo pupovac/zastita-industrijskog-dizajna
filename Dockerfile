@@ -51,18 +51,40 @@ RUN npm ci --omit=dev --workspace @zid/api --no-audit --no-fund
 FROM node:${NODE_VERSION}-alpine AS api
 ENV NODE_ENV=production PORT=3000
 WORKDIR /app/apps/api
-# The prisma CLI (a dev dependency) is needed at runtime for `migrate deploy`.
-# Rather than ship all devDependencies, install just the pinned prisma CLI.
-# The version MUST match @prisma/client in apps/api/package.json.
-ARG PRISMA_VERSION=6.19.3
-RUN npm install -g "prisma@${PRISMA_VERSION}" --no-audit --no-fund && npm cache clean --force
-# App code + production deps (node_modules lives at the workspace root).
+# App code + production deps (node_modules lives at the workspace root). The
+# prisma CLI needed for `migrate deploy` is already inside node_modules
+# (node_modules/.bin/prisma) — no separate global install (that was a redundant
+# ~130 MB layer). The entrypoint invokes it via npx/.bin.
+#
+# node_modules is copied across SEVERAL layers on purpose. The registry
+# (registry.drowranger.com) is fronted by Cloudflare, which rejects a single
+# blob upload over its body-size cap with `413 Payload Too Large`. A single
+# `COPY node_modules` is one ~400 MB blob and trips that. Splitting the biggest
+# packages (and @prisma's sub-packages) into their own COPY layers keeps each
+# pushed blob small enough to get through, without shrinking anything. If a new
+# heavy dependency 413s the push later, give it its own COPY line here.
+COPY --from=prod-deps-api /app/node_modules/@prisma/client /app/node_modules/@prisma/client
+COPY --from=prod-deps-api /app/node_modules/@prisma/engines /app/node_modules/@prisma/engines
+COPY --from=prod-deps-api /app/node_modules/@prisma /app/node_modules/@prisma
+COPY --from=prod-deps-api /app/node_modules/prisma /app/node_modules/prisma
+COPY --from=prod-deps-api /app/node_modules/.prisma /app/node_modules/.prisma
+COPY --from=prod-deps-api /app/node_modules/effect /app/node_modules/effect
+COPY --from=prod-deps-api /app/node_modules/pdf-parse /app/node_modules/pdf-parse
+COPY --from=prod-deps-api /app/node_modules/typescript /app/node_modules/typescript
+COPY --from=prod-deps-api /app/node_modules/rxjs /app/node_modules/rxjs
+COPY --from=prod-deps-api /app/node_modules/docx /app/node_modules/docx
+COPY --from=prod-deps-api /app/node_modules/pdfkit /app/node_modules/pdfkit
+COPY --from=prod-deps-api /app/node_modules/dejavu-fonts-ttf /app/node_modules/dejavu-fonts-ttf
+COPY --from=prod-deps-api /app/node_modules/fontkit /app/node_modules/fontkit
+# Everything else (the long tail of smaller packages, incl. .bin, @nestjs, zod…).
 COPY --from=prod-deps-api /app/node_modules /app/node_modules
 COPY --from=build-api /app/apps/api/dist ./dist
 COPY --from=build-api /app/apps/api/package.json ./package.json
 COPY --from=build-api /app/apps/api/prisma ./prisma
 COPY deploy/docker/api-entrypoint.sh /usr/local/bin/api-entrypoint.sh
 RUN chmod +x /usr/local/bin/api-entrypoint.sh
+# Put the workspace-root node_modules/.bin on PATH so `prisma` resolves at runtime.
+ENV PATH="/app/node_modules/.bin:${PATH}"
 # DB + uploads live under /data, which is a mounted PVC at runtime (writable);
 # the rest of the filesystem can stay read-only.
 ENV DATABASE_URL="file:/data/db/app.db" \
