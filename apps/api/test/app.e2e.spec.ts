@@ -41,7 +41,7 @@ describe('API (e2e)', () => {
 
   it('answers the health probe and reports that the research documents are present', async () => {
     const res = await request(app.getHttpServer()).get('/api/healthz').expect(200);
-    expect(res.body).toEqual({ status: 'ok', researchDocs: 'ok' });
+    expect(res.body).toEqual({ status: 'ok', researchDocs: 'ok', ai: 'not_configured' });
   });
 
   it('creates a project with 14 steps, all not started', async () => {

@@ -193,6 +193,20 @@ enum SignoffRole {
   REPRESENTATIVE
 }
 
+/// Outcome of one "Proveri sa AI" call.
+enum AiReviewStatus {
+  OK
+  REFUSED
+  ERROR
+}
+
+/// What the user did with an AI suggestion. Only the user decides.
+enum AiSuggestionStatus {
+  PROPOSED
+  ACCEPTED
+  REJECTED
+}
+
 // ---------------------------------------------------------------------------
 // Project and wizard progress
 // ---------------------------------------------------------------------------
@@ -236,6 +250,7 @@ model Project {
   reportSections      ResearchReportSection[]
   generatedDocuments  GeneratedDocument[]
   signoffs            FinalSignoff[]
+  aiReviews           AiReview[]
 }
 
 model ProjectStep {
@@ -888,4 +903,59 @@ model FinalSignoff {
   confirmedAt    DateTime    @default(now())
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// AI review of a step (Claude API). Everything the model returns is an
+// AI inference; it reaches the project memory only through an accepted
+// suggestion, written with the user's provenance.
+// ---------------------------------------------------------------------------
+
+model AiReview {
+  id                  String         @id @default(uuid())
+  projectId           String
+  stepKey             String
+  /// Model that actually served the response (may be a server-side fallback).
+  model               String
+  status              AiReviewStatus
+  /// Short description of what was sent (entities, counts), never the key.
+  requestSummary      String         @default("")
+  /// JSON text: the validated structured response (summary, findings, suggestions, openQuestions).
+  responseJson        String         @default("")
+  errorMessage        String?
+  inputTokens         Int            @default(0)
+  outputTokens        Int            @default(0)
+  cacheReadTokens     Int            @default(0)
+  cacheCreationTokens Int            @default(0)
+  /// null when the model's pricing is unknown.
+  estimatedCostUsd    Float?
+  createdAt           DateTime       @default(now())
+
+  project     Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  suggestions AiSuggestion[]
+
+  @@index([projectId, stepKey, createdAt])
+}
+
+model AiSuggestion {
+  id               String             @id @default(uuid())
+  aiReviewId       String
+  position         Int                @default(0)
+  targetEntity     String
+  targetId         String?
+  targetField      String
+  /// Value of the target at review time, so the UI can show current vs. proposed.
+  currentValue     String             @default("")
+  proposedValue    String
+  rationale        String             @default("")
+  requirementRef   String?
+  status           AiSuggestionStatus @default(PROPOSED)
+  decidedAt        DateTime?
+  /// Where the accepted value was written (e.g. "fact/<id>", "draft-version/<id>").
+  appliedReference String?
+  createdAt        DateTime           @default(now())
+
+  review AiReview @relation(fields: [aiReviewId], references: [id], onDelete: Cascade)
+
+  @@index([aiReviewId])
 }

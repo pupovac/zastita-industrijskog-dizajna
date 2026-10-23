@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { AiConfig } from '../ai/ai-config';
 import { researchDocsStatus } from '../research/research-docs-dir';
 
 /**
@@ -13,9 +14,14 @@ import { researchDocsStatus } from '../research/research-docs-dir';
  * (`docs/`, see RESEARCH_DOCS_DIR) are present in this deployment, so a build
  * that forgot them is visible right after deploy instead of on the first
  * click. It is informational: a missing directory does not fail the probe.
+ *
+ * `ai` says whether the AI review has a key (`configured` | `not_configured`);
+ * the key itself is never returned.
  */
 @Controller()
 export class HealthController {
+  constructor(private readonly ai: AiConfig) {}
+
   @Get('healthz')
   healthz() {
     const docs = researchDocsStatus();
@@ -23,6 +29,7 @@ export class HealthController {
       status: 'ok',
       researchDocs: docs.status,
       ...(docs.missing.length > 0 ? { researchDocsMissing: docs.missing } : {}),
+      ai: this.ai.configured ? 'configured' : 'not_configured',
     };
   }
 }

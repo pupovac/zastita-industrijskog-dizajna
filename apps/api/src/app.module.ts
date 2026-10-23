@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AiModule } from './ai/ai.module';
 import { HealthController } from './health/health.controller';
 import { CollectionsModule } from './collections/collections.module';
 import { D1Module } from './d1/d1.module';
@@ -35,6 +36,7 @@ import { StrategyModule } from './strategy/strategy.module';
     ReviewModule,
     D1Module,
     PackageModule,
+    AiModule,
   ],
   controllers: [HealthController],
 })

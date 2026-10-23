@@ -148,5 +148,5 @@ export class StrategyController {
   }
 }
 
-@Module({ controllers: [StrategyController], providers: [StrategyService] })
+@Module({ controllers: [StrategyController], providers: [StrategyService], exports: [StrategyService] })
 export class StrategyModule {}

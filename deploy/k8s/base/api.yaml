@@ -43,6 +43,14 @@ spec:
               value: file:/data/db/app.db
             - name: UPLOAD_DIR
               value: /data/uploads
+          # AI review (Claude API). The secret holds ANTHROPIC_API_KEY (and optionally
+          # ANTHROPIC_MODEL, AI_MAX_CALLS_PER_PROJECT_PER_DAY). It is optional: without it
+          # the feature is switched off and the api still starts. Created by hand on the
+          # cluster — see deploy/README.md; the key is never committed.
+          envFrom:
+            - secretRef:
+                name: patent-api-secrets
+                optional: true
           readinessProbe:
             httpGet:
               path: /api/healthz

@@ -62,6 +62,32 @@ U ovoj fazi nema autentifikacije. Pozivalac se deklariše zaglavljem `X-Actor-Ty
 eksplicitnog `USER` tretira se kao `AGENT` (najmanje privilegija). Web UI uvek šalje `USER`. Pre produkcije ovo
 treba zameniti pravom autentifikacijom.
 
+## AI provera koraka (Claude API)
+
+U svakom koraku kartica „AI provera koraka" ima dugme **Proveri sa AI**. Backend (`apps/api/src/ai/`) pročita stanje
+koraka (opis i kriterijum zatvaranja koraka, entitete koraka, potvrđene činjenice, relevantne zahteve iz Matrice,
+otvorena pitanja, izvučeni tekst dokumenata gde ima smisla) i preko zvaničnog SDK-a `@anthropic-ai/sdk` traži
+strukturisan odgovor (JSON šema: sažetak, nalazi po ozbiljnosti, predlozi, otvorena pitanja). Model je
+`claude-opus-5-5` (promenljivo kroz `ANTHROPIC_MODEL`), adaptivno razmišljanje, `effort: high`, streaming, server-side
+fallback pri odbijanju, prompt caching (sistemski prompt + Matrica su stabilan, keširan prefiks).
+
+Pravila koja backend sprovodi:
+
+- Sve što model vrati je **AI ZAKLJUČAK** (`sourceType: AGENT_INFERENCE`, `ai-review:<id>`). Nikada ne menja status
+  koraka i nikada ne postaje činjenica sam od sebe.
+- Predlog prihvata ili odbija **samo korisnik** (`POST /api/ai-suggestions/:id/accept|reject`, `X-Actor-Type: USER`; agent
+  dobija 403). Prihvaćena vrednost se upisuje u ciljni entitet kao **unos korisnika** (`sourceType: USER`,
+  `sourceReference: ai-suggestion:<id>`, `kind: USER_STATEMENT`) i ostaje `verified: false` — „POTVRDI" je i dalje
+  poseban korak. Svaka odluka se beleži kao `Decision`.
+- Svaki poziv se čuva (`AiReview`: model, status OK/REFUSED/ERROR, tokeni, keš, procenjena cena); dnevni limit po projektu
+  (`AI_MAX_CALLS_PER_PROJECT_PER_DAY`, podrazumevano 50); jedan poziv po koraku istovremeno; prevelik kontekst se odbija sa
+  objašnjenjem, nikada se ne seče tiho.
+- Bez `ANTHROPIC_API_KEY` funkcija je isključena: dugme je onemogućeno („AI provera nije konfigurisana"),
+  `GET /api/healthz` vraća `"ai": "not_configured"`. Ključ se ne loguje i ne šalje frontendu.
+
+Stvaran poziv nad demo projektom, sa ključem u `apps/api/.env`: `npm run ai:smoke --workspace apps/api -- VISUAL_ANALYSIS`
+(ispisuje tokene, keš i procenjenu cenu; drugi uzastopni poziv treba da pokaže `cache_read > 0`).
+
 ## Prelazak na PostgreSQL
 
 Šema koristi samo prenosive tipove (`String`, `Int`, `Float`, `Boolean`, `DateTime`) i Prisma enume, bez

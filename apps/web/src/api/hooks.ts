@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiGet, apiSend, apiUpload } from './client';
 import type {
+  AiReview,
+  AiStatus,
+  AiUsage,
   ApplicationSectionRecord,
   D1Field,
   Decision,
@@ -47,6 +50,8 @@ export const keys = {
   signoffs: (id: string) => ['projects', id, 'signoffs'] as const,
   openQuestions: (id: string, stepKey: string) => ['projects', id, 'open-questions', stepKey] as const,
   decisions: (id: string) => ['projects', id, 'decisions'] as const,
+  aiReviews: (id: string, stepKey: string) => ['projects', id, 'ai-reviews', stepKey] as const,
+  aiUsage: (id: string) => ['projects', id, 'ai-usage'] as const,
 };
 
 export const useProjects = () => useQuery({ queryKey: keys.projects, queryFn: () => apiGet<Project[]>('/projects') });
@@ -458,5 +463,48 @@ export function useReplaceFile(projectId: string) {
       return apiUpload<UploadedFile>(`/files/${fileId}/replace`, form);
     },
     onSuccess: () => void invalidate(),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// AI review of a step (FUZZ-134)
+// ---------------------------------------------------------------------------
+
+export const useAiStatus = () =>
+  useQuery({ queryKey: ['ai-status'], queryFn: () => apiGet<AiStatus>('/ai/status'), staleTime: 5 * 60 * 1000 });
+
+export const useAiReviews = (projectId: string, stepKey: string) =>
+  useQuery({
+    queryKey: keys.aiReviews(projectId, stepKey),
+    queryFn: () => apiGet<AiReview[]>(`/projects/${projectId}/steps/${stepKey}/ai-reviews`),
+  });
+
+export const useAiUsage = (projectId: string) =>
+  useQuery({ queryKey: keys.aiUsage(projectId), queryFn: () => apiGet<AiUsage>(`/projects/${projectId}/ai-usage`) });
+
+/** „Proveri sa AI". The request runs for as long as the model needs; the page stays usable meanwhile. */
+export function useRunAiReview(projectId: string, stepKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => apiSend<AiReview>('POST', `/projects/${projectId}/steps/${stepKey}/ai-reviews`),
+    onSuccess: (review) => {
+      qc.setQueryData<AiReview[]>(keys.aiReviews(projectId, stepKey), (old) => [review, ...(old ?? [])]);
+      void qc.invalidateQueries({ queryKey: keys.aiUsage(projectId) });
+    },
+    onError: () => void qc.invalidateQueries({ queryKey: keys.aiReviews(projectId, stepKey) }),
+  });
+}
+
+/** Prihvati / Odbij. Accepting writes the value into its target, so every view of the project is refreshed. */
+export function useDecideAiSuggestion(projectId: string, stepKey: string) {
+  const qc = useQueryClient();
+  const invalidate = useInvalidateProject(projectId);
+  return useMutation({
+    mutationFn: ({ id, decision }: { id: string; decision: 'accept' | 'reject' }) =>
+      apiSend<AiReview>('POST', `/ai-suggestions/${id}/${decision}`),
+    onSuccess: (review) => {
+      qc.setQueryData<AiReview[]>(keys.aiReviews(projectId, stepKey), (old) => (old ?? []).map((r) => (r.id === review.id ? review : r)));
+      void invalidate();
+    },
   });
 }

@@ -1,5 +1,8 @@
 import type {
   ActorType,
+  AiReviewStatus,
+  AiSeverity,
+  AiSuggestionStatus,
   ExtractionStatus,
   FeatureCategory,
   GeneratedDocumentType,
@@ -272,4 +275,91 @@ export function formatDateTime(iso: string): string {
 
 export function formatDate(iso: string | null | undefined): string {
   return iso ? new Date(iso).toLocaleDateString('sr-Latn-RS', { dateStyle: 'medium' }) : '—';
+}
+
+// ---------------------------------------------------------------------------
+// AI review (FUZZ-134)
+// ---------------------------------------------------------------------------
+
+export const AI_SEVERITY_ORDER: AiSeverity[] = ['BLOCKER', 'VISOK', 'SREDNJI', 'NIZAK'];
+
+export const AI_SEVERITY_TONE: Record<AiSeverity, BadgeTone> = {
+  BLOCKER: 'danger',
+  VISOK: 'danger',
+  SREDNJI: 'warning',
+  NIZAK: 'muted',
+};
+
+export const AI_REVIEW_STATUS_LABEL: Record<AiReviewStatus, string> = {
+  OK: 'ZAVRŠENO',
+  REFUSED: 'AI NIJE OBRADIO',
+  ERROR: 'GREŠKA',
+};
+
+export const AI_REVIEW_STATUS_TONE: Record<AiReviewStatus, BadgeTone> = { OK: 'success', REFUSED: 'warning', ERROR: 'danger' };
+
+export const AI_SUGGESTION_STATUS_LABEL: Record<AiSuggestionStatus, string> = {
+  PROPOSED: 'PREDLOG',
+  ACCEPTED: 'PRIHVAĆENO',
+  REJECTED: 'ODBIJENO',
+};
+
+export const AI_SUGGESTION_STATUS_TONE: Record<AiSuggestionStatus, BadgeTone> = {
+  PROPOSED: 'warning',
+  ACCEPTED: 'success',
+  REJECTED: 'muted',
+};
+
+/** Human names of the entities/fields an AI suggestion may target. */
+const AI_ENTITY_LABEL: Record<string, string> = {
+  Project: 'Projekat',
+  Fact: 'Izjava / činjenica',
+  DesignFeature: 'Vizuelna karakteristika',
+  PriorDesign: 'Pronađeni dizajn',
+  Representation: 'Prikaz',
+  ApplicationSection: 'Sekcija opisa',
+  D1FieldValue: 'Polje D-1',
+  ProtectionStrategyItem: 'Strategija zaštite',
+  OpenQuestion: 'Otvoreno pitanje',
+};
+
+const AI_FIELD_LABEL: Record<string, string> = {
+  productName: 'naziv proizvoda',
+  productSummary: 'opis proizvoda',
+  applicantName: 'podnosilac',
+  applicantAddress: 'adresa podnosioca',
+  designerName: 'autor',
+  representativeName: 'zastupnik',
+  statement: 'izjava',
+  value: 'vrednost',
+  name: 'naziv',
+  description: 'opis',
+  category: 'kategorija',
+  categoryRationale: 'obrazloženje kategorije',
+  functionalityRisk: 'rizik tehničke funkcije',
+  riskRationale: 'obrazloženje rizika',
+  similarFeatures: 'sličnosti',
+  differingFeatures: 'razlike',
+  similarityNotes: 'napomene o sličnosti',
+  searchResult: 'rezultat pretrage',
+  viewName: 'naziv prikaza',
+  purpose: 'svrha',
+  featureShown: 'karakteristika koju pokazuje',
+  notes: 'napomene',
+  mediumRationale: 'obrazloženje medijuma',
+  assessmentNote: 'napomena ocene',
+  content: 'tekst sekcije',
+  text: 'tekst pitanja',
+};
+
+export function aiTargetLabel(target: { entity: string; id: string | null; field: string }): string {
+  const entity = AI_ENTITY_LABEL[target.entity] ?? target.entity;
+  const field = AI_FIELD_LABEL[target.field] ?? target.field;
+  const record = target.id ? '' : target.entity === 'Project' || target.entity === 'D1FieldValue' || target.entity === 'ProtectionStrategyItem' ? '' : ' (nov zapis)';
+  return `${entity} · ${field}${record}`;
+}
+
+export function formatUsd(value: number | null | undefined): string {
+  if (value === null || value === undefined) return 'nepoznato';
+  return `$${value.toFixed(value < 0.01 ? 4 : 3)}`;
 }

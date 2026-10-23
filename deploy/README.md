@@ -106,5 +106,32 @@ The two cluster secrets the manifests reference are provided by the infra repo
 
 - `harbor-pull` (docker-registry pull secret) — `infra/apps/patent/harbor-pull-externalsecret.yaml`.
 
+## AI review (Claude API) — `patent-api-secrets`
+
+The api Deployment loads an **optional** secret `patent-api-secrets` through
+`envFrom`. Without it the api starts normally and the „Proveri sa AI" button is
+disabled with „AI provera nije konfigurisana"; `GET /api/healthz` reports
+`"ai": "not_configured"`. The key never goes into git, Multica comments or the
+web bundle; the applicant creates the secret directly on the cluster:
+
+```sh
+kubectl -n patent create secret generic patent-api-secrets \
+  --from-literal=ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Optional keys in the same secret (defaults in parentheses):
+
+| Key                                | Default            | Meaning                                              |
+| ---------------------------------- | ------------------ | ---------------------------------------------------- |
+| `ANTHROPIC_MODEL`                  | `claude-opus-5-5`  | Model used for the review                            |
+| `AI_MAX_CALLS_PER_PROJECT_PER_DAY` | `50`               | Daily cap of reviews per project                     |
+| `AI_MAX_CONTEXT_CHARS`             | `300000`           | Max size of one step's context (otherwise refused)   |
+
+To rotate or add keys, recreate the secret and restart the api
+(`kubectl -n patent rollout restart deployment/patent-api`) — the value is read
+once at start. `kubectl -n patent get secret patent-api-secrets` shows whether it
+exists; `curl -s https://patent.drowranger.com/api/healthz` shows whether the api
+picked it up.
+
 The Argo CD `Application` that syncs this overlay lives in the infra repo at
 `apps/patent/application.yaml`.
