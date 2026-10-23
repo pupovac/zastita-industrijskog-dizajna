@@ -10,6 +10,7 @@ import type {
   MatrixRequirement,
   OpenQuestion,
   PackageStatus,
+  ResearchImportStatus,
   ResearchImportSummary,
   ResearchReportSection,
   ReviewCheck,
@@ -38,6 +39,7 @@ export const keys = {
   collection: (id: string, path: string) => ['projects', id, 'collection', path] as const,
   requirements: (id: string, filter: string) => ['projects', id, 'requirements', filter] as const,
   report: (id: string) => ['projects', id, 'research-report'] as const,
+  importStatus: (id: string) => ['projects', id, 'research', 'import-status'] as const,
   strategy: (id: string) => ['projects', id, 'strategy'] as const,
   sections: (id: string) => ['projects', id, 'application-sections'] as const,
   d1: (id: string) => ['projects', id, 'd1'] as const,
@@ -247,6 +249,12 @@ export const useRequirements = (projectId: string) =>
 
 export const useResearchReport = (projectId: string) =>
   useQuery({ queryKey: keys.report(projectId), queryFn: () => apiGet<ResearchReportSection[]>(`/projects/${projectId}/research-report`) });
+
+export const useResearchImportStatus = (projectId: string) =>
+  useQuery({
+    queryKey: keys.importStatus(projectId),
+    queryFn: () => apiGet<ResearchImportStatus>(`/projects/${projectId}/research/import-status`),
+  });
 
 export function useImportResearch(projectId: string) {
   const invalidate = useInvalidateProject(projectId);

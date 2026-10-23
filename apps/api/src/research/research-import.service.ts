@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { existsSync, readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 import { DomainError } from '../domain/domain-error';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
@@ -15,13 +15,11 @@ import {
   RequirementsMatrix,
   SourceRecord,
 } from './research-docs';
+import { researchDocsDir } from './research-docs-dir';
+
+export { researchDocsDir } from './research-docs-dir';
 
 export const INITIAL_RESEARCH_REPORT = 'INITIAL_RESEARCH';
-
-/** Repository `docs/` directory. Overridable with RESEARCH_DOCS_DIR. */
-export function researchDocsDir(): string {
-  return resolve(process.env.RESEARCH_DOCS_DIR ?? join(__dirname, '..', '..', '..', '..', 'docs'));
-}
 
 export interface ResearchImportSummary {
   sources: number;

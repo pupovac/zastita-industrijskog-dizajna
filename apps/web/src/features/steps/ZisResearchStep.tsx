@@ -28,6 +28,7 @@ export function ZisResearchStep({ projectId }: { projectId: string }) {
 
   return (
     <div className="flex flex-col gap-4">
+      <ImportResearchCard projectId={projectId} />
       <p className="text-sm text-muted-foreground">
         Izvori su poređani po prioritetu: zvanični sajt ZIS-a, zakoni i podzakonski akti, WIPO, EUIPO, ostalo.
         Evidentirano izvora: {sources.data.length}.

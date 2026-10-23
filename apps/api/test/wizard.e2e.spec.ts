@@ -68,9 +68,23 @@ describe('Wizard API — all 14 steps (e2e)', () => {
     });
 
     it('imports sources, the matrix and the report, and is idempotent', async () => {
+      const before = await http().get(`/api/projects/${projectId}/research/import-status`).expect(200);
+      expect(before.body).toEqual({ imported: false, importedAt: null, sources: 0, requirements: 0, findings: 0, reportSections: 0 });
+
       const first = await http().post(`/api/projects/${projectId}/research/import`).set(asAgent).expect(201);
       expect(first.body).toMatchObject({ sources: 16, requirements: 128, sourceDocuments: 16 });
       expect(first.body.reportSections).toBeGreaterThanOrEqual(24);
+
+      // Both steps show that the import is done (when, how many records) instead of offering it again.
+      const after = await http().get(`/api/projects/${projectId}/research/import-status`).expect(200);
+      expect(after.body).toMatchObject({
+        imported: true,
+        sources: 16,
+        requirements: 128,
+        findings: first.body.findings,
+        reportSections: first.body.reportSections,
+      });
+      expect(new Date(after.body.importedAt).getTime()).toBeGreaterThan(Date.now() - 60_000);
 
       // A user confirmation must survive a re-import.
       const req = await prisma.sourceRequirement.findFirstOrThrow({ where: { projectId, code: 'MZ-001' } });

@@ -4,7 +4,7 @@ Two images, built from the root `Dockerfile` (`--target api|web`):
 
 | Image          | Port | Contents                                                              |
 | -------------- | ---- | --------------------------------------------------------------------- |
-| `patent-api`   | 3000 | NestJS backend + Prisma (SQLite). Runs `prisma migrate deploy` at start, serves `/api`, health at `GET /api/healthz`. |
+| `patent-api`   | 3000 | NestJS backend + Prisma (SQLite). Runs `prisma migrate deploy` at start, serves `/api`, health at `GET /api/healthz`. Ships the research documents (`docs/` → `/app/docs`, `RESEARCH_DOCS_DIR`). |
 | `patent-web`   | 8080 | Vite/React SPA on nginx-unprivileged. Serves the bundle and reverse-proxies `/api` to the api Service. Health at `GET /healthz`. |
 
 Build one locally:
@@ -12,6 +12,28 @@ Build one locally:
 ```sh
 docker build --target api -t patent-api .
 docker build --target web -t patent-web .
+```
+
+## Research documents in the api image
+
+The research import (`POST /api/projects/:id/research/import`, the „Uvezi
+rezultate istraživanja" button in steps 2 and 3) and the local copies of the
+sources (`GET /api/sources/:id/local-copies/:n`) are read from the repository
+`docs/` directory at runtime. Production has no repo checkout, so the api image
+**copies `docs/` to `/app/docs`** and sets `RESEARCH_DOCS_DIR=/app/docs`
+(`Dockerfile`, target `api`). Do not exclude `docs/` in `.dockerignore`; no PVC
+or manual copy is involved — a new build is what updates the documents.
+
+`GET /api/healthz` returns `{"status":"ok","researchDocs":"ok"}`; `"missing"`
+(plus `researchDocsMissing: [...]`) means the image was built without them.
+The pipeline runs `deploy/docker/api-smoke-test.sh` against the freshly built
+api image before pushing it: health probe, a research import into an empty
+project (16 sources, 128 requirements, ≥ 24 report sections) and one local
+copy download. Run it locally with:
+
+```sh
+docker build --target api -t patent-api .
+deploy/docker/api-smoke-test.sh patent-api
 ```
 
 ## Single host
@@ -26,8 +48,8 @@ in-cluster. No CORS, no API subdomain.
 `.github/workflows/images.yml`:
 
 1. **Pull requests** that touch the image build (`Dockerfile`, `.dockerignore`,
-   `deploy/docker/`, `package-lock.json`, the workflow) build both images without
-   pushing.
+   `deploy/docker/`, `docs/`, `package-lock.json`, the workflow) build both images
+   without pushing; the api image is smoke-tested.
 2. **Pushes to `main`** build and push `<registry>/<project>/patent-{api,web}`
    tagged with the full commit SHA and `latest`.
 3. If `ARGOCD_GITOPS_BUMP` is `true`, the `bump-deploy` job runs

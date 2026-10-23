@@ -358,6 +358,16 @@ export interface ResearchImportSummary {
   reportSections: number;
 }
 
+/** Whether the phase 1–2 results are in the project, when they were last imported and how many records there are. */
+export interface ResearchImportStatus {
+  imported: boolean;
+  importedAt: string | null;
+  sources: number;
+  requirements: number;
+  findings: number;
+  reportSections: number;
+}
+
 export interface InterviewGroup {
   key: string;
   title: string;

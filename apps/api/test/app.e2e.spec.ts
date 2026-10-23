@@ -39,6 +39,11 @@ describe('API (e2e)', () => {
     await app.close();
   });
 
+  it('answers the health probe and reports that the research documents are present', async () => {
+    const res = await request(app.getHttpServer()).get('/api/healthz').expect(200);
+    expect(res.body).toEqual({ status: 'ok', researchDocs: 'ok' });
+  });
+
   it('creates a project with 14 steps, all not started', async () => {
     const res = await request(app.getHttpServer()).get(`/api/projects/${projectId}/steps`).expect(200);
     expect(res.body).toHaveLength(14);

@@ -1,12 +1,21 @@
 import { Controller, Get, Injectable, Module, Param, ParseIntPipe, Post, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { existsSync } from 'node:fs';
-import { dirname, resolve, sep } from 'node:path';
 import { orNotFound } from '../common/not-found';
 import { DomainError } from '../domain/domain-error';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
-import { INITIAL_RESEARCH_REPORT, ResearchImportService, researchDocsDir } from './research-import.service';
+import { resolveLocalCopy } from './research-docs-dir';
+import { INITIAL_RESEARCH_REPORT, ResearchImportService } from './research-import.service';
+
+export interface ResearchImportStatus {
+  imported: boolean;
+  importedAt: string | null;
+  sources: number;
+  requirements: number;
+  findings: number;
+  reportSections: number;
+}
 
 export interface RequirementFilter {
   area?: string;
@@ -55,15 +64,39 @@ export class ResearchService {
     });
   }
 
-  /** Absolute path of a local copy of a source, restricted to the repository `docs/` directory. */
+  /**
+   * Whether the phase 1–2 results have been imported into the project, when, and how many
+   * records there are. `importedAt` is the time of the last (re-)import: an import updates
+   * every imported source in place.
+   */
+  async importStatus(projectId: string): Promise<ResearchImportStatus> {
+    await this.projects.assertExists(projectId);
+    const imported = { projectId, code: { startsWith: 'Z-' } };
+    const sources = await this.prisma.source.count({ where: imported });
+    const requirements = await this.prisma.sourceRequirement.count({ where: { projectId } });
+    const findings = await this.prisma.researchFinding.count({ where: { projectId, code: { not: null } } });
+    const reportSections = await this.prisma.researchReportSection.count({
+      where: { projectId, reportKey: INITIAL_RESEARCH_REPORT },
+    });
+    const latest = await this.prisma.source.aggregate({ where: imported, _max: { updatedAt: true } });
+    return {
+      imported: sources > 0 && reportSections > 0,
+      importedAt: latest._max.updatedAt?.toISOString() ?? null,
+      sources,
+      requirements,
+      findings,
+      reportSections,
+    };
+  }
+
+  /** Absolute path of a local copy of a source, restricted to the research docs directory. */
   async localCopyPath(sourceId: string, index: number): Promise<string> {
     const source = orNotFound(await this.prisma.source.findUnique({ where: { id: sourceId } }), 'Izvor');
     const copies = JSON.parse(source.localCopiesJson) as string[];
     const relative = copies[index];
     if (!relative) throw new DomainError('LOCAL_COPY_NOT_FOUND', 'Lokalna kopija ne postoji.', 'NOT_FOUND');
-    const docs = researchDocsDir();
-    const full = resolve(dirname(docs), relative);
-    if (!full.startsWith(docs + sep) || !existsSync(full)) {
+    const full = resolveLocalCopy(relative);
+    if (!full || !existsSync(full)) {
       throw new DomainError('LOCAL_COPY_NOT_FOUND', 'Lokalna kopija nije dostupna.', 'NOT_FOUND');
     }
     return full;
@@ -81,6 +114,11 @@ export class ResearchController {
   @Post('projects/:projectId/research/import')
   import(@Param('projectId') projectId: string) {
     return this.importer.importInto(projectId);
+  }
+
+  @Get('projects/:projectId/research/import-status')
+  importStatus(@Param('projectId') projectId: string) {
+    return this.research.importStatus(projectId);
   }
 
   @Get('projects/:projectId/requirements')
