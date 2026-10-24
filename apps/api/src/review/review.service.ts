@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ActorType, ReviewIssue, Severity } from '@prisma/client';
+import { ActorType, ReviewIssue } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DomainError } from '../domain/domain-error';
 import { assertMockAllowed } from '../domain/mock-data';
-import { planFindingStatusChange } from '../domain/review-rules';
+import { assertFindingUpdateAllowed, planFindingStatusChange, SEVERITY_RANK } from '../domain/review-rules';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { CreateFindingDto, FindingStatusDto, UpdateFindingDto } from './review.dto';
 
-const SEVERITY_RANK: Record<Severity, number> = { BLOCKER: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
 const include = { fileA: true, fileB: true, chosenFile: true } as const;
 
 /** Findings of the independent review (step 11), risks and document conflicts. */
@@ -36,11 +35,9 @@ export class ReviewService {
     return this.prisma.reviewIssue.create({ data: { ...dto, projectId, createdByActor: actor }, include });
   }
 
-  async update(issueId: string, dto: UpdateFindingDto) {
+  async update(issueId: string, dto: UpdateFindingDto, actor: ActorType) {
     const issue = await this.get(issueId);
-    if (issue.type === 'CONFLICT') {
-      throw new DomainError('CONFLICT_NOT_EDITABLE', 'Neslaganje između dokumenata se ne menja ovde.', 'CONFLICT');
-    }
+    assertFindingUpdateAllowed(issue, dto, actor);
     return this.prisma.reviewIssue.update({ where: { id: issueId }, data: dto, include });
   }
 

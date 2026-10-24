@@ -37,8 +37,12 @@ export class ReviewController {
   }
 
   @Patch('review-issues/:issueId')
-  update(@Param('issueId') issueId: string, @Body(new ZodValidationPipe(updateFindingSchema)) dto: UpdateFindingDto) {
-    return this.review.update(issueId, dto);
+  update(
+    @Param('issueId') issueId: string,
+    @Body(new ZodValidationPipe(updateFindingSchema)) dto: UpdateFindingDto,
+    @Actor() actor: ActorType,
+  ) {
+    return this.review.update(issueId, dto, actor);
   }
 
   @Post('review-issues/:issueId/status')
