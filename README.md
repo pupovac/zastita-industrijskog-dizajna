@@ -204,7 +204,9 @@ curl $H -X PUT $API/projects/$P/d1/PRODUCT_TITLE -d '{"value":"Fasadni panel","s
 # Faza 9 — nalaz nezavisne provere i njegovo rešavanje
 curl $H -X POST $API/projects/$P/review-issues -d '{"severity":"BLOCKER","title":"Opis i prikazi se ne slažu",
   "stepKey":"DESCRIPTION_DRAFTING","checkKey":"DESCRIPTION_MATCHES_REPRESENTATIONS"}'
-curl $H -X POST $API/review-issues/<id>/status -d '{"status":"RESOLVED","note":"Opis ispravljen u verziji 3."}'
+# rešavanje (RESOLVED), odbacivanje (DISMISSED) i smanjenje ozbiljnosti sme samo korisnik — agent dobija 403
+curl -H Content-Type:application/json -H X-Actor-Type:USER -X POST $API/review-issues/<id>/status \
+  -d '{"status":"RESOLVED","note":"Opis ispravljen u verziji 3."}'
 
 # Faza 10 — finalni paket (odbija se dok postoji nerešen BLOCKER ili patentna terminologija u opisu)
 curl $H -X POST $API/projects/$P/package/generate
@@ -214,6 +216,9 @@ curl $H -X POST $API/projects/$P/package/generate
 
 - Korak 13 „Finalni paket prijave" ne može da započne, ode na pregled niti bude odobren dok postoji nerešen nalaz
   BLOCKER (`FINAL_PACKAGE_BLOCKED_BY_BLOCKER`); isto pravilo važi i za generisanje paketa.
+- Nalaz zatvara samo korisnik: `RESOLVED` i `DISMISSED` od agenta se odbijaju (`RESOLVE_REQUIRES_USER`,
+  `DISMISS_REQUIRES_USER`), kao i smanjenje ozbiljnosti (`SEVERITY_DOWNGRADE_REQUIRES_USER`). Agent može da otvori
+  nalaz, da ga ponovo otvori, da mu podigne ozbiljnost i da menja tekst — ništa od toga ne skida blokadu.
 - Paket se generiše kao NACRT dok nisu ispunjene sve kontrolne tačke iz §16, potvrđene obavezne sekcije opisa i
   popunjena sva polja D-1; tek tada je FINALNA VERZIJA. Svaka generacija dodaje novu verziju svih 9 dokumenata.
 - Svaki generisani dokument nosi napomenu da sistem ne garantuje prihvatanje prijave i da je ne podnosi automatski.

@@ -516,7 +516,7 @@ export class DemoSeedService {
           title: mock('Opis je pominjao unutrašnji preklop koji se ne vidi na prikazima'),
           description: mock('Rečenica je uklonjena u verziji 2 opisa.'),
           resolutionNote: mock('Ispravljeno u verziji 2.'),
-          resolvedBy: 'AGENT',
+          resolvedBy: 'USER',
           resolvedAt: now,
           createdByActor: 'AGENT',
           sourceReference: M,

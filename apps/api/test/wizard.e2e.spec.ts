@@ -380,9 +380,46 @@ describe('Wizard API — all 14 steps (e2e)', () => {
       expect(pkg.body.checklist.find((i: { key: string }) => i.key === 'NO_BLOCKERS').done).toBe(false);
     });
 
-    it('lets only the user dismiss a BLOCKER; resolving it reopens step 13', async () => {
-      await http().post(`/api/review-issues/${blockerId}/status`).set(asAgent).send({ status: 'DISMISSED', note: 'x' }).expect(403);
-      await http().post(`/api/review-issues/${blockerId}/status`).set(asAgent).send({ status: 'RESOLVED', note: 'Opis ispravljen' }).expect(201);
+    it('refuses agent attempts to resolve, dismiss or downgrade a BLOCKER; the gate stays closed', async () => {
+      const dismissed = await http().post(`/api/review-issues/${blockerId}/status`).set(asAgent).send({ status: 'DISMISSED', note: 'x' }).expect(403);
+      expect(dismissed.body.code).toBe('DISMISS_REQUIRES_USER');
+      const resolved = await http()
+        .post(`/api/review-issues/${blockerId}/status`)
+        .set(asAgent)
+        .send({ status: 'RESOLVED', note: 'agent sam sebi resio' })
+        .expect(403);
+      expect(resolved.body.code).toBe('RESOLVE_REQUIRES_USER');
+      const lowered = await http().patch(`/api/review-issues/${blockerId}`).set(asAgent).send({ severity: 'LOW' }).expect(403);
+      expect(lowered.body.code).toBe('SEVERITY_DOWNGRADE_REQUIRES_USER');
+      // Without an actor header the caller is an agent as well.
+      await http().patch(`/api/review-issues/${blockerId}`).send({ severity: 'MEDIUM' }).expect(403);
+
+      const finding = await http().get(`/api/projects/${projectId}/review-issues`).expect(200);
+      expect(finding.body.find((f: { id: string }) => f.id === blockerId)).toMatchObject({ status: 'OPEN', severity: 'BLOCKER' });
+      const pkg = await http().get(`/api/projects/${projectId}/package`).expect(200);
+      expect(pkg.body.openBlockers).toBe(1);
+      await move(projectId, 'FINAL_PACKAGE', 'IN_PROGRESS', 409);
+    });
+
+    it('lets an agent edit the text or raise severity without touching the gate', async () => {
+      await http().patch(`/api/review-issues/${blockerId}`).set(asAgent).send({ description: 'Prikaz 3 ne odgovara opisu.' }).expect(200);
+      const other = await http()
+        .post(`/api/projects/${projectId}/review-issues`)
+        .set(asAgent)
+        .send({ severity: 'LOW', title: 'Nedostaje prikaz odozdo' })
+        .expect(201);
+      const raised = await http().patch(`/api/review-issues/${other.body.id}`).set(asAgent).send({ severity: 'HIGH' }).expect(200);
+      expect(raised.body.severity).toBe('HIGH');
+      await http().patch(`/api/review-issues/${other.body.id}`).set(asUser).send({ severity: 'LOW' }).expect(200);
+    });
+
+    it('lets the user resolve the BLOCKER, which reopens step 13', async () => {
+      const res = await http()
+        .post(`/api/review-issues/${blockerId}/status`)
+        .set(asUser)
+        .send({ status: 'RESOLVED', note: 'Opis ispravljen' })
+        .expect(201);
+      expect(res.body).toMatchObject({ status: 'RESOLVED', resolvedBy: 'USER' });
       await move(projectId, 'FINAL_PACKAGE', 'IN_PROGRESS');
     });
 
