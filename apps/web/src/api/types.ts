@@ -556,3 +556,83 @@ export interface AgentTask {
   resultSummary: string;
   createdAt: string;
 }
+
+// ---------------------------------------------------------------------------
+// FUZZ-134: AI review of a step (Claude API)
+// ---------------------------------------------------------------------------
+
+export type AiReviewStatus = 'OK' | 'REFUSED' | 'ERROR';
+export type AiSuggestionStatus = 'PROPOSED' | 'ACCEPTED' | 'REJECTED';
+export type AiSeverity = 'BLOCKER' | 'VISOK' | 'SREDNJI' | 'NIZAK';
+
+export interface AiStatus {
+  configured: boolean;
+  model: string;
+  maxCallsPerProjectPerDay: number;
+  notConfiguredMessage: string | null;
+}
+
+/** A matrix row the AI referred to; resolved by the backend for „Prikaži izvor". */
+export interface AiRequirementRef {
+  code: string;
+  text: string;
+  status: 'CONFIRMED' | 'UNVERIFIED';
+  url: string | null;
+  sourceReference: string;
+}
+
+export interface AiFinding {
+  severity: AiSeverity;
+  title: string;
+  detail: string;
+  relatedRequirement: string | null;
+  relatedField: string | null;
+  requirement: AiRequirementRef | null;
+}
+
+export interface AiSuggestion {
+  id: string;
+  position: number;
+  target: { entity: string; id: string | null; field: string };
+  currentValue: string;
+  proposedValue: string;
+  rationale: string;
+  requirementRef: string | null;
+  requirement: AiRequirementRef | null;
+  status: AiSuggestionStatus;
+  decidedAt: string | null;
+  appliedReference: string | null;
+}
+
+export interface AiReview {
+  id: string;
+  projectId: string;
+  stepKey: string;
+  model: string;
+  status: AiReviewStatus;
+  requestSummary: string;
+  errorMessage: string | null;
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheCreationTokens: number;
+  estimatedCostUsd: number | null;
+  createdAt: string;
+  summary: string;
+  findings: AiFinding[];
+  openQuestions: string[];
+  suggestions: AiSuggestion[];
+  terminologyIssues: PatentTermMatch[];
+  disclaimer: string;
+}
+
+export interface AiUsage {
+  calls: number;
+  callsToday: number;
+  maxCallsPerDay: number;
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheCreationTokens: number;
+  estimatedCostUsd: number;
+}

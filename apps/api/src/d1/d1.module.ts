@@ -109,5 +109,5 @@ export class D1Controller {
   }
 }
 
-@Module({ controllers: [D1Controller], providers: [D1Service] })
+@Module({ controllers: [D1Controller], providers: [D1Service], exports: [D1Service] })
 export class D1Module {}

@@ -17,6 +17,7 @@ import { RepresentationPlanStep } from '../steps/RepresentationPlanStep';
 import { RequirementsSummaryStep } from '../steps/RequirementsSummaryStep';
 import { VisualAnalysisStep } from '../steps/VisualAnalysisStep';
 import { ZisResearchStep } from '../steps/ZisResearchStep';
+import { AiReviewCard } from './AiReviewCard';
 import { StepStatusCard } from './StepStatusCard';
 
 export function StepPage() {
@@ -47,6 +48,7 @@ export function StepPage() {
         {step.phase === 'FILING' && <p className="mt-1 text-sm text-muted-foreground">{FILING_PHASE_NOTE}</p>}
       </div>
       <StepStatusCard key={step.stepKey} projectId={projectId} step={step} steps={steps.data} />
+      <AiReviewCard key={`ai-${projectId}-${step.stepKey}`} projectId={projectId} stepKey={step.stepKey} />
       <StepBody key={`${projectId}-${step.stepKey}`} projectId={projectId} stepKey={step.stepKey} />
     </div>
   );
