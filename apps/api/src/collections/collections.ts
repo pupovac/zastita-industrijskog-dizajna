@@ -341,8 +341,19 @@ export const COLLECTIONS: CollectionConfig[] = [
     hasProjectId: true,
     references: [{ field: 'uploadedFileId', model: 'uploadedFile', label: 'Dokument' }],
     provenance: true,
-    // The assessment of a delivered image does not change the confirmed plan item itself.
-    contentFields: ['viewName', 'purpose', 'featureShown', 'requirement', 'medium'],
+    // The delivered image and its assessment are part of what the user confirmed: the
+    // assessment feeds the "Prikazi su finalizovani" checkpoint, so an agent must not
+    // change it on a confirmed view, and a new image needs the user's confirmation again.
+    contentFields: [
+      'viewName',
+      'purpose',
+      'featureShown',
+      'requirement',
+      'medium',
+      'uploadedFileId',
+      'assessment',
+      'assessmentNote',
+    ],
     deletable: true,
     orderBy: { position: 'asc' },
     include: { uploadedFile: true },

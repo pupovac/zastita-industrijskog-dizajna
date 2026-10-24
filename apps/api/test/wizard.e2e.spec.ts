@@ -189,6 +189,50 @@ describe('Wizard API — all 14 steps (e2e)', () => {
       await http().put(`/api/design-features/${feature.body.id}/function-analysis/9`).set(asAgent).send({ answer: 'x' }).expect(404);
     });
 
+    it('locks the assessment and image of a confirmed representation against agents', async () => {
+      const projectId = await createProject('Plan prikaza');
+      const view = await http()
+        .post(`/api/projects/${projectId}/representations`)
+        .set(asAgent)
+        .send({ viewName: 'Perspektivni prikaz', requirement: 'MANDATORY', medium: 'RENDER', sourceType: 'AGENT_INFERENCE' })
+        .expect(201);
+      await http()
+        .patch(`/api/representations/${view.body.id}`)
+        .set(asAgent)
+        .send({ assessment: 'NEEDS_REWORK', assessmentNote: 'Ukloniti kote.' })
+        .expect(200);
+      await http().post(`/api/representations/${view.body.id}/confirm`).set(asUser).send({ explicitUserConfirmation: true }).expect(201);
+      const file = await http().post(`/api/projects/${projectId}/files`).set(asUser).field('role', 'RENDER').attach('file', SVG, 'render.svg').expect(201);
+
+      for (const patch of [
+        { assessment: 'ACCEPTABLE', assessmentNote: 'agent menja ocenu' },
+        { assessment: 'UNSUITABLE' },
+        { assessmentNote: 'agent menja razlog' },
+        { uploadedFileId: file.body.id },
+      ]) {
+        const denied = await http().patch(`/api/representations/${view.body.id}`).set(asAgent).send(patch).expect(403);
+        expect(denied.body.code).toBe('CONFIRMED_VALUE_LOCKED');
+      }
+      const unchanged = await http().get(`/api/projects/${projectId}/representations`).expect(200);
+      expect(unchanged.body.find((v: { id: string }) => v.id === view.body.id)).toMatchObject({
+        verified: true,
+        assessment: 'NEEDS_REWORK',
+        assessmentNote: 'Ukloniti kote.',
+      });
+      // Re-sending the same assessment is not a content change and keeps the confirmation.
+      const same = await http().patch(`/api/representations/${view.body.id}`).set(asAgent).send({ assessment: 'NEEDS_REWORK' }).expect(200);
+      expect(same.body.verified).toBe(true);
+
+      // The user may change the assessment, but the changed view must be confirmed again.
+      const edited = await http().patch(`/api/representations/${view.body.id}`).set(asUser).send({ assessment: 'ACCEPTABLE' }).expect(200);
+      expect(edited.body).toMatchObject({ verified: false, assessment: 'ACCEPTABLE' });
+
+      // A new image on a confirmed view also drops the confirmation.
+      await http().post(`/api/representations/${view.body.id}/confirm`).set(asUser).send({ explicitUserConfirmation: true }).expect(201);
+      const attached = await http().patch(`/api/representations/${view.body.id}`).set(asUser).send({ uploadedFileId: file.body.id }).expect(200);
+      expect(attached.body).toMatchObject({ verified: false, uploadedFileId: file.body.id });
+    });
+
     it('records the search coverage, including what blocked access', async () => {
       await http()
         .post(`/api/projects/${projectId}/search-coverage`)
