@@ -19,7 +19,7 @@ izdvojeni zahtevi:
   - ČINJENICA (ZIS): uslovi su novost i individualni karakter.
   - AI ZAKLJUČAK: zastupnik nije obavezan za domaćeg podnosioca.
 značaj za naš projekat: Glavni zvanični ulaz.
-lokalna kopija: docs/izvori/web-snimci/zis-prava-dizajn.html ; tekst: docs/izvori/tekst/a.txt
+lokalna kopija: docs/izvori/web-snimci/zis-prava-dizajn.html ; tekst: docs/izvori/tekst/a.txt; preuzeti fajlovi u docs/izvori/dokumenti/
 \`\`\`
 
 ## Z-04 — Obrazac D-1
@@ -46,6 +46,14 @@ describe('source records parser', () => {
       'značaj za naš projekat': 'Glavni zvanični ulaz.',
     });
     expect(records[0].localCopies).toEqual(['docs/izvori/web-snimci/zis-prava-dizajn.html', 'docs/izvori/tekst/a.txt']);
+  });
+
+  it('lists only files as local copies, never directory references', () => {
+    const [record] = parseSourceRecords(
+      '## Z-02 — Uputstva\n\n```\nURL: https://www.zis.gov.rs/uputstva-i-obrasci/?cat=dizajn\n' +
+        'lokalna kopija: docs/izvori/web-snimci/zis-uputstva.html; preuzeti fajlovi u docs/izvori/dokumenti/ ; tekst: docs/izvori/tekst/\n```\n',
+    );
+    expect(record.localCopies).toEqual(['docs/izvori/web-snimci/zis-uputstva.html']);
   });
 
   it('keeps the origin label of every extracted item', () => {

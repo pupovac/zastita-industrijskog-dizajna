@@ -78,7 +78,11 @@ export function parseSourceRecords(markdown: string): SourceRecord[] {
       }
     }
 
-    const localCopies = [...(fields['lokalna kopija'] ?? '').matchAll(/docs\/[^\s;,)]+/g)].map((m) => m[0]);
+    // Only files: the field also mentions directories ("preuzeti fajlovi u docs/izvori/dokumenti/"),
+    // which are not openable copies and would show as dead links in step 2.
+    const localCopies = [...(fields['lokalna kopija'] ?? '').matchAll(/docs\/[^\s;,)]+/g)]
+      .map((m) => m[0])
+      .filter((path) => !path.endsWith('/'));
     records.push({ code, heading: headingLine.replace(/^Z-\d{2}\s*[—-]\s*/, '').trim(), fields, items, localCopies });
   }
   return records;
