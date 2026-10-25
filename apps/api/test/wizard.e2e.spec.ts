@@ -460,6 +460,49 @@ describe('Wizard API — all 14 steps (e2e)', () => {
       expect(pkg.body.gate).toMatchObject({ canGenerate: true, isFinal: false });
       expect(pkg.body.documents.every((d: { versions: unknown[] }) => d.versions.length === 1)).toBe(true);
     });
+
+    it('locks a confirmed section against agents and refuses empty versions', async () => {
+      const sections = await http().get(`/api/projects/${projectId}/application-sections`).expect(200);
+      const description = sections.body.find((s: { key: string }) => s.key === 'DESCRIPTION');
+      await http().post(`/api/application-sections/${description.id}/confirm`).set(asUser).send({ explicitUserConfirmation: true }).expect(201);
+
+      // The agent can neither add a version nor autosave over the confirmed text.
+      const added = await http().post(`/api/application-sections/${description.id}/versions`).set(asAgent).send({ content: 'Agent nova verzija posle potvrde' }).expect(403);
+      expect(added.body.code).toBe('CONFIRMED_VALUE_LOCKED');
+      const drafted = await http().put(`/api/application-sections/${description.id}/working-draft`).set(asAgent).send({ content: 'Agent autosave posle potvrde' }).expect(403);
+      expect(drafted.body.code).toBe('CONFIRMED_VALUE_LOCKED');
+      // Without an actor header the caller is an agent as well.
+      await http().post(`/api/application-sections/${description.id}/versions`).send({ content: 'Bez zaglavlja' }).expect(403);
+
+      let section = (await http().get(`/api/projects/${projectId}/application-sections`).expect(200)).body.find((s: { key: string }) => s.key === 'DESCRIPTION');
+      expect(section.confirmed).toBe(true);
+      expect(section.versions).toHaveLength(2);
+      expect(section.versions[0]).toMatchObject({ versionNumber: 2, createdByActor: 'USER', verified: true, content: 'Panel pravougaonog oblika sa stepenastim ivicama.' });
+      const status = await http().get(`/api/projects/${projectId}/package`).expect(200);
+      expect(status.body.gate.missing).not.toContain(`Sekcija opisa nije potvrđena: ${description.title}`);
+
+      // A version without text is refused for everyone, in both endpoints.
+      for (const content of ['', '   \n']) {
+        const empty = await http().post(`/api/application-sections/${description.id}/versions`).set(asUser).send({ content }).expect(422);
+        expect(empty.body.code).toBe('DRAFT_CONTENT_EMPTY');
+        await http().put(`/api/application-sections/${description.id}/working-draft`).set(asUser).send({ content }).expect(422);
+      }
+      await http().post(`/api/application-sections/${description.id}/versions`).set(asAgent).send({ content: '' }).expect(422);
+
+      // Only the user's own new version drops the confirmation; the agent may draft again afterwards.
+      const mine = await http().post(`/api/application-sections/${description.id}/versions`).set(asUser).send({ content: 'Panel pravougaonog oblika sa stepenastim ivicama i zaobljenim uglovima.' }).expect(201);
+      expect(mine.body).toMatchObject({ versionNumber: 3, createdByActor: 'USER', verified: false });
+      section = (await http().get(`/api/projects/${projectId}/application-sections`).expect(200)).body.find((s: { key: string }) => s.key === 'DESCRIPTION');
+      expect(section.confirmed).toBe(false);
+      expect(section.versions.map((v: { versionNumber: number; verified: boolean }) => [v.versionNumber, v.verified])).toEqual([
+        [3, false],
+        [2, true],
+        [1, false],
+      ]);
+      const again = await http().post(`/api/application-sections/${description.id}/versions`).set(asAgent).send({ content: 'Predlog agenta posle izmene korisnika.' }).expect(201);
+      expect(again.body).toMatchObject({ versionNumber: 4, createdByActor: 'AGENT' });
+      expect((await http().get(`/api/projects/${projectId}/package`).expect(200)).body.gate.missing).toContain(`Sekcija opisa nije potvrđena: ${description.title}`);
+    });
   });
 
   describe('the whole demo flow through the API', () => {

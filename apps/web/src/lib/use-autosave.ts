@@ -49,6 +49,14 @@ export function useAutosave<T>(
     [delayMs, flush],
   );
 
+  /** Drops whatever is waiting to be saved (e.g. text the user cleared again). */
+  const cancel = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = null;
+    pending.current = null;
+    setState('idle');
+  }, []);
+
   useEffect(
     () => () => {
       void flush();
@@ -56,7 +64,7 @@ export function useAutosave<T>(
     [flush],
   );
 
-  return { schedule, flush, state, error };
+  return { schedule, flush, cancel, state, error };
 }
 
 export const SAVE_STATE_LABEL: Record<SaveState, string> = {

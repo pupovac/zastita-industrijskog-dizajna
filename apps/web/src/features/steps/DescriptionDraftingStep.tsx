@@ -84,7 +84,9 @@ function SectionEditor({ projectId, section }: { projectId: string; section: App
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
-            autosave.schedule(e.target.value);
+            // Empty text is never stored as a version (the API refuses it); the last version stays.
+            if (e.target.value.trim()) autosave.schedule(e.target.value);
+            else autosave.cancel();
           }}
           onBlur={() => void autosave.flush()}
         />
@@ -97,6 +99,12 @@ function SectionEditor({ projectId, section }: { projectId: string; section: App
               </Badge>
             ))}
           </div>
+        )}
+        {section.confirmed && (
+          <p className="text-xs text-muted-foreground">
+            Potvrđen tekst agent ne može da menja. Vaša izmena pravi novu verziju i poništava potvrdu — tekst zatim treba
+            ponovo potvrditi.
+          </p>
         )}
         <div className="flex flex-wrap gap-2">
           <Button
