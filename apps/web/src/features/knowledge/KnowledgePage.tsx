@@ -77,8 +77,29 @@ export function KnowledgePage() {
               </a>
               <Badge variant="muted">{FILE_ROLE_LABEL[d.role]}</Badge>
               <Badge variant="outline">{EXTRACTION_STATUS_LABEL[d.extractionStatus]}</Badge>
+              {d.previousVersions.length > 0 && (
+                <Badge variant="muted">
+                  {d.previousVersions.length === 1
+                    ? 'Postoji prethodna verzija'
+                    : `Postoje prethodne verzije (${d.previousVersions.length})`}
+                </Badge>
+              )}
             </div>
             <div className="text-sm text-muted-foreground">{d.summary}</div>
+            {d.previousVersions.length > 0 && (
+              <div className="text-xs text-muted-foreground">
+                Zamenjeno:{' '}
+                {d.previousVersions.map((v, i) => (
+                  <span key={v.id}>
+                    {i > 0 && ', '}
+                    <a href={fileContentUrl(v.id)} target="_blank" rel="noreferrer" className="hover:underline">
+                      {v.originalName}
+                    </a>{' '}
+                    ({formatDateTime(v.createdAt)})
+                  </span>
+                ))}
+              </div>
+            )}
           </Item>
         ))}
       </Section>

@@ -67,6 +67,18 @@ export interface UploadedFile {
   createdAt: string;
 }
 
+/** A previous version of a document, kept after the user replaced it. */
+export interface FilePreviousVersion {
+  id: string;
+  originalName: string;
+  createdAt: string;
+}
+
+/** A current document in "Znanje o projektu", with the versions it replaced (oldest first). */
+export interface KnowledgeDocument extends UploadedFile {
+  previousVersions: FilePreviousVersion[];
+}
+
 export interface UserAnswer {
   id: string;
   value: string;
@@ -232,7 +244,7 @@ export interface Knowledge {
     visualFeatures: { features: DesignFeature[]; facts: Fact[] };
     applicant: { name: string; address: string; representative: string; facts: Fact[] };
     designer: { name: string; facts: Fact[] };
-    documents: UploadedFile[];
+    documents: KnowledgeDocument[];
     zisRules: SourceRequirement[];
     priorDesigns: PriorDesign[];
     decisions: Decision[];
