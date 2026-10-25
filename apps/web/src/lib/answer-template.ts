@@ -4,7 +4,8 @@
  * own data. Pure functions (no React) so the rules are unit-tested. The backend uses
  * the same marker pattern to refuse fact confirmation while markers remain.
  */
-export const PLACEHOLDER_PATTERN = /\[[^\[\]\n]{1,200}\]/g;
+/** Up to 300 characters: some bank templates offer a whole alternative sentence inside one marker. */
+export const PLACEHOLDER_PATTERN = /\[[^\[\]\n]{1,300}\]/g;
 
 export function countPlaceholders(text: string): number {
   return (text.match(PLACEHOLDER_PATTERN) ?? []).length;
