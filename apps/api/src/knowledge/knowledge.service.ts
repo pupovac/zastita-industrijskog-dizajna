@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { isConfirmedUserFact } from '../domain/fact-rules';
+import { groupFileVersions } from '../domain/file-versions';
 import { computeMissingInfo } from '../domain/missing-info';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
@@ -18,7 +19,7 @@ export class KnowledgeService {
   async get(projectId: string) {
     const project = await this.projects.get(projectId);
     const where = { projectId };
-    const [facts, features, files, requirements, priorDesigns, decisions, openQuestions, reviewIssues, sections, questions] =
+    const [facts, features, allFiles, requirements, priorDesigns, decisions, openQuestions, reviewIssues, sections, questions] =
       await Promise.all([
         this.prisma.fact.findMany({ where, orderBy: { createdAt: 'asc' } }),
         this.prisma.designFeature.findMany({ where, orderBy: { createdAt: 'asc' }, include: { variant: true } }),
@@ -44,6 +45,9 @@ export class KnowledgeService {
         this.prisma.question.findMany({ where, include: { answers: { where } } }),
       ]);
 
+    // Only current versions count as delivered documents; a replaced original is kept
+    // as the previous version of its replacement, matching the list in step 5.
+    const files = groupFileVersions(allFiles);
     const factViews = facts.map((f) => ({ ...f, confirmedUserFact: isConfirmedUserFact(f) }));
     const byCategory = (category: string) => factViews.filter((f) => f.category === category);
 

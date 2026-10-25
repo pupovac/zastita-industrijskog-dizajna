@@ -298,6 +298,11 @@ describe('Wizard API — all 14 steps (e2e)', () => {
       expect(current.body.map((f: { id: string }) => f.id)).toEqual([replaced.body.id]);
       const all = await http().get(`/api/projects/${projectId}/files?includeReplaced=true`).expect(200);
       expect(all.body).toHaveLength(2);
+      // "Znanje o projektu" lists the same current documents as step 5, with the replaced original as a previous version.
+      const knowledge = await http().get(`/api/projects/${projectId}/knowledge`).expect(200);
+      const documents = knowledge.body.sections.documents as { id: string; previousVersions: { id: string; originalName: string }[] }[];
+      expect(documents.map((d) => d.id)).toEqual([replaced.body.id]);
+      expect(documents[0].previousVersions).toEqual([expect.objectContaining({ id: file.body.id, originalName: 'v1.svg' })]);
 
       await http().delete(`/api/files/${replaced.body.id}`).set(asAgent).expect(403);
       await http().delete(`/api/files/${replaced.body.id}`).set(asUser).expect(200);
