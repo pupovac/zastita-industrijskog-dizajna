@@ -157,6 +157,44 @@ describe('planStepTransition', () => {
     );
   });
 
+  it('does not allow approval while blocking items are open (added after the step went to review)', () => {
+    expectError(
+      () =>
+        planStepTransition({
+          ...base,
+          openBlockingItems: 1,
+          steps: steps({ PROJECT_SETUP: 'READY_FOR_REVIEW' }),
+          stepKey: 'PROJECT_SETUP',
+          to: 'APPROVED',
+        }),
+      'STEP_HAS_OPEN_BLOCKING_ITEMS',
+    );
+  });
+
+  it('still lets a step with open blocking items go back to work or be blocked', () => {
+    const s = steps({ PROJECT_SETUP: 'READY_FOR_REVIEW' });
+    expect(
+      planStepTransition({ ...base, openBlockingItems: 1, steps: s, stepKey: 'PROJECT_SETUP', to: 'IN_PROGRESS' })[0].to,
+    ).toBe('IN_PROGRESS');
+    expect(
+      planStepTransition({
+        ...base,
+        openBlockingItems: 1,
+        steps: steps({ PROJECT_SETUP: 'IN_PROGRESS' }),
+        stepKey: 'PROJECT_SETUP',
+        to: 'BLOCKED',
+        reason: 'Čeka se dokument',
+      })[0].to,
+    ).toBe('BLOCKED');
+  });
+
+  it('approves once the blocking items are resolved', () => {
+    const s = steps({ PROJECT_SETUP: 'READY_FOR_REVIEW' });
+    expect(planStepTransition({ ...base, openBlockingItems: 0, steps: s, stepKey: 'PROJECT_SETUP', to: 'APPROVED' })[0].to).toBe(
+      'APPROVED',
+    );
+  });
+
   it('only lets the user approve', () => {
     const s = steps({ PROJECT_SETUP: 'READY_FOR_REVIEW' });
     expectError(
