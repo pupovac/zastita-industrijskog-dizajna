@@ -1,4 +1,4 @@
-import { AI_DRAFT_JSON_SCHEMA, parseAiDraftResponse } from './ai-draft.schema';
+import { AI_DRAFT_JSON_SCHEMA, AI_DRAFT_SECTION_JSON_SCHEMA, parseAiDraftResponse, parseAiDraftSectionResponse } from './ai-draft.schema';
 
 describe('AI draft response schema', () => {
   it('accepts a complete answer', () => {
@@ -30,5 +30,16 @@ describe('AI draft response schema', () => {
     expect(AI_DRAFT_JSON_SCHEMA.required).toEqual(['sections', 'notes']);
     expect(AI_DRAFT_JSON_SCHEMA.properties.sections.items.required).toEqual(['key', 'content', 'placeholders']);
     expect(AI_DRAFT_JSON_SCHEMA.additionalProperties).toBe(false);
+  });
+});
+
+describe('AI draft section call schema (one section per call, FUZZ-145)', () => {
+  it('accepts the text of one section with notes and rejects a missing field', () => {
+    const ok = parseAiDraftSectionResponse(JSON.stringify({ content: 'Panel (1) je pravougaon.', placeholders: 0, notes: [] }));
+    expect(ok).toMatchObject({ ok: true, response: { content: 'Panel (1) je pravougaon.', notes: [] } });
+    expect(parseAiDraftSectionResponse(JSON.stringify({ content: 'x' })).ok).toBe(false);
+    expect(parseAiDraftSectionResponse('{"content": "x', ).ok).toBe(false);
+    expect(AI_DRAFT_SECTION_JSON_SCHEMA.required).toEqual(['content', 'placeholders', 'notes']);
+    expect(Object.keys(AI_DRAFT_SECTION_JSON_SCHEMA.properties)).toEqual(['content', 'placeholders', 'notes']);
   });
 });

@@ -9,6 +9,8 @@ export class DomainError extends Error {
     readonly code: string,
     message: string,
     readonly kind: DomainErrorKind = 'INVALID',
+    /** Extra fields for the client (e.g. the id of the record that is in the way); serialised next to `code`. */
+    readonly details: Record<string, unknown> = {},
   ) {
     super(message);
     this.name = 'DomainError';

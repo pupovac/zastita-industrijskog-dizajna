@@ -128,6 +128,7 @@ Optional keys in the same secret (defaults in parentheses):
 | `AI_MAX_CONTEXT_CHARS`             | `300000`           | Max size of one step's context (otherwise refused)   |
 | `AI_DRAFT_TARGET_PAGES`            | `5`                | Default „Ciljna dužina opisa" (pages) of the AI description draft, when the project has no setting |
 | `AI_DRAFT_MAX_IMAGES`              | `12`               | Max images (representations, photos, renders) sent with one AI draft request |
+| `AI_DRAFT_EFFORT`                  | `medium`           | `output_config.effort` of the draft's section calls (`low`…`max`); the step review stays on `high` |
 
 To rotate or add keys, recreate the secret and restart the api
 (`kubectl -n patent rollout restart deployment/patent-api`) — the value is read

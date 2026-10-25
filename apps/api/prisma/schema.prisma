@@ -213,6 +213,29 @@ enum AiDraftMode {
   EXPAND
 }
 
+/// Lifecycle of one AI draft job (FUZZ-145): it runs in the background, one model call per
+/// section. PARTIAL: some sections were written before a failure, a cut-off or a cancellation.
+enum AiDraftStatus {
+  QUEUED
+  RUNNING
+  DONE
+  PARTIAL
+  FAILED
+  REFUSED
+}
+
+/// Progress of one section inside an AI draft job. TRUNCATED: the model hit max_tokens and
+/// the text that arrived was kept with a visible marker; SKIPPED: never started (cancelled
+/// or an earlier section failed).
+enum AiDraftSectionGeneration {
+  PENDING
+  WRITING
+  DONE
+  TRUNCATED
+  FAILED
+  SKIPPED
+}
+
 /// What happened to one section of an AI draft. HELD: the section was confirmed by the
 /// user, so the text was kept aside and not written as a version until the user decides.
 enum AiDraftSectionStatus {
@@ -995,27 +1018,36 @@ model AiSuggestion {
 // ---------------------------------------------------------------------------
 
 model AiDraft {
-  id                  String         @id @default(uuid())
+  id                  String        @id @default(uuid())
   projectId           String
   mode                AiDraftMode
   /// Model that actually served the response (may be a server-side fallback).
   model               String
-  status              AiReviewStatus
+  status              AiDraftStatus
   /// Pages the prompt aimed at (~500 words per page).
   targetPages         Int
   /// Number of images (representations, photos, renders) sent to the model.
-  imageCount          Int            @default(0)
-  requestSummary      String         @default("")
-  /// JSON text: the validated structured response (sections, notes).
-  responseJson        String         @default("")
+  imageCount          Int           @default(0)
+  requestSummary      String        @default("")
+  /// JSON text: the validated structured response of the old single-call draft (before FUZZ-145).
+  responseJson        String        @default("")
+  /// JSON array of the model's notes for the user, collected over all section calls.
+  notesJson           String        @default("[]")
+  /// `output_config.effort` used for the section calls (AI_DRAFT_EFFORT).
+  effort              String        @default("medium")
   errorMessage        String?
-  inputTokens         Int            @default(0)
-  outputTokens        Int            @default(0)
-  cacheReadTokens     Int            @default(0)
-  cacheCreationTokens Int            @default(0)
+  /// Set by „Prekini"; the job stops after the section it is writing.
+  cancelRequested     Boolean       @default(false)
+  /// Cumulative over all section calls so far.
+  inputTokens         Int           @default(0)
+  outputTokens        Int           @default(0)
+  cacheReadTokens     Int           @default(0)
+  cacheCreationTokens Int           @default(0)
   estimatedCostUsd    Float?
-  durationMs          Int            @default(0)
-  createdAt           DateTime       @default(now())
+  durationMs          Int           @default(0)
+  startedAt           DateTime?
+  finishedAt          DateTime?
+  createdAt           DateTime      @default(now())
 
   project  Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   sections AiDraftSection[]
@@ -1028,12 +1060,26 @@ model AiDraftSection {
   aiDraftId            String
   applicationSectionId String
   sectionKey           String
-  position             Int                  @default(0)
+  position             Int                      @default(0)
+  /// Empty until the section's model call finished.
   content              String
   /// Number of „[POTREBNA DOPUNA: …]" markers, counted by the server.
-  placeholders         Int                  @default(0)
-  wordCount            Int                  @default(0)
-  status               AiDraftSectionStatus @default(PROPOSED)
+  placeholders         Int                      @default(0)
+  wordCount            Int                      @default(0)
+  /// Progress of the generation; `status` below is the user's decision about the text.
+  generation           AiDraftSectionGeneration @default(DONE)
+  /// Words the prompt asked for in this section (share of the draft's target length).
+  targetWords          Int                      @default(0)
+  errorMessage         String?
+  inputTokens          Int                      @default(0)
+  outputTokens         Int                      @default(0)
+  cacheReadTokens      Int                      @default(0)
+  cacheCreationTokens  Int                      @default(0)
+  estimatedCostUsd     Float?
+  durationMs           Int                      @default(0)
+  startedAt            DateTime?
+  finishedAt           DateTime?
+  status               AiDraftSectionStatus     @default(PROPOSED)
   /// The section was confirmed by the user when the draft was made (so the text was HELD).
   sectionWasConfirmed  Boolean              @default(false)
   /// The version written for this section (null while HELD or when rejected before writing).
