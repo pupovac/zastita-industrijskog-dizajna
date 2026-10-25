@@ -58,6 +58,14 @@ export class MockModelClient implements AiModelClient {
     this.queue.push(() => Promise.reject(error));
   }
 
+  /** Queues an answer that arrives only when the returned function is called (step-by-step jobs). */
+  answerLater(): (message: Message) => void {
+    let resolve!: (message: Message) => void;
+    const promise = new Promise<Message>((r) => (resolve = r));
+    this.queue.push(() => promise);
+    return resolve;
+  }
+
   async complete(request: AiCompletionRequest): Promise<Message> {
     this.requests.push(request);
     const next = this.queue.shift();

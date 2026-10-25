@@ -601,6 +601,8 @@ export interface AiStatus {
   maxCallsPerProjectPerDay: number;
   /** Server default of „Ciljna dužina opisa" (AI_DRAFT_TARGET_PAGES). */
   draftTargetPages: number;
+  /** `output_config.effort` of the draft's section calls (AI_DRAFT_EFFORT). */
+  draftEffort: string;
   notConfiguredMessage: string | null;
 }
 
@@ -676,6 +678,10 @@ export interface AiUsage {
 // ---------------------------------------------------------------------------
 
 export type AiDraftMode = 'GENERATE' | 'EXPAND';
+/** Lifecycle of the background job (FUZZ-145). PARTIAL: some sections were written before a failure, a cut-off or a cancellation. */
+export type AiDraftStatus = 'QUEUED' | 'RUNNING' | 'DONE' | 'PARTIAL' | 'FAILED' | 'REFUSED';
+/** Progress of one section's model call. TRUNCATED: cut at max_tokens, the text that arrived was kept with a marker. */
+export type AiDraftSectionGeneration = 'PENDING' | 'WRITING' | 'DONE' | 'TRUNCATED' | 'FAILED' | 'SKIPPED';
 /** HELD: the section was confirmed when the draft was made; accepting needs an explicit replacement. */
 export type AiDraftSectionStatus = 'PROPOSED' | 'HELD' | 'ACCEPTED' | 'REJECTED';
 
@@ -685,6 +691,9 @@ export interface AiDraftSection {
   key: string;
   title: string;
   position: number;
+  generation: AiDraftSectionGeneration;
+  targetWords: number;
+  errorMessage: string | null;
   status: AiDraftSectionStatus;
   content: string;
   placeholders: number;
@@ -696,6 +705,14 @@ export interface AiDraftSection {
   previousContent: string;
   sectionConfirmedAtDraft: boolean;
   terminologyIssues: PatentTermMatch[];
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheCreationTokens: number;
+  estimatedCostUsd: number | null;
+  durationMs: number;
+  startedAt: string | null;
+  finishedAt: string | null;
   decidedAt: string | null;
 }
 
@@ -704,7 +721,11 @@ export interface AiDraft {
   projectId: string;
   mode: AiDraftMode;
   model: string;
-  status: AiReviewStatus;
+  effort: string;
+  status: AiDraftStatus;
+  /** Still queued or writing; the client polls. */
+  active: boolean;
+  cancelRequested: boolean;
   targetPages: number;
   imageCount: number;
   requestSummary: string;
@@ -715,9 +736,30 @@ export interface AiDraft {
   cacheCreationTokens: number;
   estimatedCostUsd: number | null;
   durationMs: number;
+  startedAt: string | null;
+  finishedAt: string | null;
   createdAt: string;
   notes: string[];
+  progress: { total: number; written: number; current: string | null };
   sections: AiDraftSection[];
   totals: { words: number; pages: number; placeholders: number };
   disclaimer: string;
+}
+
+/** „Procena pre pokretanja" (GET /projects/:id/ai-drafts/estimate). */
+export interface AiDraftEstimate {
+  calls: number;
+  inputTokensPerCall: number;
+  outputTokens: number;
+  durationSeconds: { min: number; max: number };
+  estimatedCostUsd: number | null;
+  largeContext: boolean;
+  model: string;
+  effort: string;
+  targetPages: number;
+  contextChars: number;
+  imageCount: number;
+  skippedImages: string[];
+  sections: { key: string; title: string; targetWords: number }[];
+  warnings: string[];
 }

@@ -12,6 +12,15 @@ export const generateDraftSchema = z
   .strict();
 export type GenerateDraftDto = z.infer<typeof generateDraftSchema>;
 
+/** Query of „Procena pre pokretanja" (GET): same choices as the start, values arrive as strings. */
+export const estimateDraftSchema = z
+  .object({
+    mode: z.nativeEnum(AiDraftMode).default('GENERATE'),
+    targetPages: z.coerce.number().int().min(1).max(30).optional(),
+  })
+  .strict();
+export type EstimateDraftDto = z.infer<typeof estimateDraftSchema>;
+
 export const decideDraftSectionSchema = z
   .object({
     /** Required to accept a HELD section (the section was confirmed when the draft was made). */

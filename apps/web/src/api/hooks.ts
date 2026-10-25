@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { apiGet, apiSend, apiUpload } from './client';
 import type {
   AiDraft,
+  AiDraftEstimate,
   AiDraftMode,
   AiReview,
   AiStatus,
@@ -56,6 +58,7 @@ export const keys = {
   aiReviews: (id: string, stepKey: string) => ['projects', id, 'ai-reviews', stepKey] as const,
   aiUsage: (id: string) => ['projects', id, 'ai-usage'] as const,
   aiDrafts: (id: string) => ['projects', id, 'ai-drafts'] as const,
+  aiDraftEstimate: (id: string, mode: AiDraftMode, targetPages: number) => ['projects', id, 'ai-drafts', 'estimate', mode, targetPages] as const,
 };
 
 export const useProjects = () => useQuery({ queryKey: keys.projects, queryFn: () => apiGet<Project[]>('/projects') });
@@ -84,7 +87,7 @@ export const useKnowledge = (id: string) =>
 /** Anything that changes project memory invalidates every view of this project. */
 function useInvalidateProject(projectId: string) {
   const qc = useQueryClient();
-  return () => qc.invalidateQueries({ queryKey: keys.project(projectId) });
+  return useCallback(() => qc.invalidateQueries({ queryKey: keys.project(projectId) }), [qc, projectId]);
 }
 
 export function useCreateProject() {
@@ -526,22 +529,56 @@ export function useDecideAiSuggestion(projectId: string, stepKey: string) {
 // AI draft of the description (step 10, FUZZ-142)
 // ---------------------------------------------------------------------------
 
-export const useAiDrafts = (projectId: string) =>
-  useQuery({ queryKey: keys.aiDrafts(projectId), queryFn: () => apiGet<AiDraft[]>(`/projects/${projectId}/ai-drafts`) });
+/** Poll interval while a draft job is queued or writing (FUZZ-145). */
+export const AI_DRAFT_POLL_MS = 4000;
 
-/** „Generiši nacrt opisa" / „Proširi i doteraj". Writes a new version of every section, so the whole project view is refreshed. */
+/** The drafts of a project; polls every few seconds while the latest one is still running. */
+export const useAiDrafts = (projectId: string) =>
+  useQuery({
+    queryKey: keys.aiDrafts(projectId),
+    queryFn: () => apiGet<AiDraft[]>(`/projects/${projectId}/ai-drafts`),
+    refetchInterval: (query) => (query.state.data?.some((d) => d.active) ? AI_DRAFT_POLL_MS : false),
+  });
+
+/** „Procena pre pokretanja": calls, duration, cost and context size for the chosen target length. */
+export const useAiDraftEstimate = (projectId: string, mode: AiDraftMode, targetPages: number, enabled: boolean) =>
+  useQuery({
+    queryKey: keys.aiDraftEstimate(projectId, mode, targetPages),
+    queryFn: () => apiGet<AiDraftEstimate>(`/projects/${projectId}/ai-drafts/estimate?mode=${mode}&targetPages=${targetPages}`),
+    enabled,
+    staleTime: 60_000,
+  });
+
+/**
+ * „Generiši nacrt opisa" / „Proširi i doteraj". The server answers 202 with the queued job;
+ * the sections are written in the background and `useAiDrafts` polls until the job ends.
+ */
 export function useGenerateAiDraft(projectId: string) {
   const qc = useQueryClient();
-  const invalidate = useInvalidateProject(projectId);
   return useMutation({
     mutationFn: (dto: { mode: AiDraftMode; targetPages?: number; replaceConfirmed?: boolean }) =>
       apiSend<AiDraft>('POST', `/projects/${projectId}/ai-drafts`, dto),
     onSuccess: (draft) => {
-      qc.setQueryData<AiDraft[]>(keys.aiDrafts(projectId), (old) => [draft, ...(old ?? [])]);
-      void invalidate();
+      qc.setQueryData<AiDraft[]>(keys.aiDrafts(projectId), (old) => [draft, ...(old ?? []).filter((d) => d.id !== draft.id)]);
     },
     onError: () => void qc.invalidateQueries({ queryKey: keys.aiDrafts(projectId) }),
   });
+}
+
+/** „Prekini": the job stops after the section it is writing; finished sections stay. */
+export function useCancelAiDraft(projectId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (draftId: string) => apiSend<AiDraft>('POST', `/ai-drafts/${draftId}/cancel`),
+    onSuccess: (draft) => {
+      qc.setQueryData<AiDraft[]>(keys.aiDrafts(projectId), (old) => (old ?? []).map((d) => (d.id === draft.id ? draft : d)));
+    },
+  });
+}
+
+/** Refreshes the project (sections, versions) — called by the card whenever a running draft wrote another section. */
+export function useRefreshProjectAfterDraft(projectId: string) {
+  return useInvalidateProject(projectId);
 }
 
 /** Prihvati kao radnu verziju / Odbaci for one section of a draft. */

@@ -6,6 +6,13 @@ export const DEFAULT_MAX_CONTEXT_CHARS = 300_000;
 export const DEFAULT_DRAFT_TARGET_PAGES = 5;
 /** Images (representations, photos, renders) sent with one draft request. */
 export const DEFAULT_DRAFT_MAX_IMAGES = 12;
+/** `output_config.effort` of the draft's section calls (FUZZ-145): writing to a well-defined template needs no deep thinking. */
+export const DEFAULT_DRAFT_EFFORT: AiEffort = 'medium';
+/** `output_config.effort` of the step review: a check that has to find what is wrong. */
+export const REVIEW_EFFORT: AiEffort = 'high';
+
+export const AI_EFFORTS = ['low', 'medium', 'high', 'xhigh', 'max'] as const;
+export type AiEffort = (typeof AI_EFFORTS)[number];
 
 /**
  * Configuration of the AI review, read from the environment once. The API key stays
@@ -19,6 +26,7 @@ export class AiConfig {
   readonly maxContextChars: number;
   readonly draftTargetPages: number;
   readonly draftMaxImages: number;
+  readonly draftEffort: AiEffort;
 
   constructor(env: NodeJS.ProcessEnv = process.env) {
     this.apiKey = env.ANTHROPIC_API_KEY?.trim() || null;
@@ -27,6 +35,7 @@ export class AiConfig {
     this.maxContextChars = positiveInt(env.AI_MAX_CONTEXT_CHARS, DEFAULT_MAX_CONTEXT_CHARS);
     this.draftTargetPages = positiveInt(env.AI_DRAFT_TARGET_PAGES, DEFAULT_DRAFT_TARGET_PAGES);
     this.draftMaxImages = positiveInt(env.AI_DRAFT_MAX_IMAGES, DEFAULT_DRAFT_MAX_IMAGES);
+    this.draftEffort = effort(env.AI_DRAFT_EFFORT, DEFAULT_DRAFT_EFFORT);
   }
 
   get configured(): boolean {
@@ -40,6 +49,7 @@ export class AiConfig {
       model: this.model,
       maxCallsPerProjectPerDay: this.maxCallsPerProjectPerDay,
       draftTargetPages: this.draftTargetPages,
+      draftEffort: this.draftEffort,
       notConfiguredMessage: this.configured ? null : 'AI provera nije konfigurisana.',
     };
   }
@@ -47,6 +57,11 @@ export class AiConfig {
   toJSON() {
     return this.publicStatus();
   }
+}
+
+function effort(value: string | undefined, fallback: AiEffort): AiEffort {
+  const v = value?.trim().toLowerCase();
+  return (AI_EFFORTS as readonly string[]).includes(v ?? '') ? (v as AiEffort) : fallback;
 }
 
 function positiveInt(value: string | undefined, fallback: number): number {

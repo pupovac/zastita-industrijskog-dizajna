@@ -1,5 +1,7 @@
 import type {
   ActorType,
+  AiDraftSectionGeneration,
+  AiDraftStatus,
   AiReviewStatus,
   AiSeverity,
   AiSuggestionStatus,
@@ -315,6 +317,42 @@ export const AI_SUGGESTION_STATUS_TONE: Record<AiSuggestionStatus, BadgeTone> = 
 export const AI_DRAFT_MODE_LABEL: Record<AiDraftMode, string> = {
   GENERATE: 'Generisan iz podataka',
   EXPAND: 'Proširen postojeći tekst',
+};
+
+export const AI_DRAFT_STATUS_LABEL: Record<AiDraftStatus, string> = {
+  QUEUED: 'U REDU',
+  RUNNING: 'U TOKU',
+  DONE: 'ZAVRŠENO',
+  PARTIAL: 'DELIMIČNO',
+  FAILED: 'GREŠKA',
+  REFUSED: 'AI NIJE OBRADIO',
+};
+
+export const AI_DRAFT_STATUS_TONE: Record<AiDraftStatus, BadgeTone> = {
+  QUEUED: 'info',
+  RUNNING: 'info',
+  DONE: 'success',
+  PARTIAL: 'warning',
+  FAILED: 'danger',
+  REFUSED: 'warning',
+};
+
+export const AI_DRAFT_GENERATION_LABEL: Record<AiDraftSectionGeneration, string> = {
+  PENDING: 'ČEKA',
+  WRITING: 'PIŠE SE',
+  DONE: 'NAPISANO',
+  TRUNCATED: 'PREKINUT TEKST',
+  FAILED: 'GREŠKA',
+  SKIPPED: 'PRESKOČENO',
+};
+
+export const AI_DRAFT_GENERATION_TONE: Record<AiDraftSectionGeneration, BadgeTone> = {
+  PENDING: 'muted',
+  WRITING: 'info',
+  DONE: 'success',
+  TRUNCATED: 'warning',
+  FAILED: 'danger',
+  SKIPPED: 'muted',
 };
 
 export const AI_DRAFT_SECTION_STATUS_LABEL: Record<AiDraftSectionStatus, string> = {

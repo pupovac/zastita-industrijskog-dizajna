@@ -90,7 +90,7 @@ Pravila koja backend sprovodi:
 Stvaran poziv nad demo projektom, sa ključem u `apps/api/.env`: `npm run ai:smoke --workspace apps/api -- VISUAL_ANALYSIS`
 (ispisuje tokene, keš i procenjenu cenu; drugi uzastopni poziv treba da pokaže `cache_read > 0`).
 
-## AI nacrt opisa (korak 10, FUZZ-142)
+## AI nacrt opisa (korak 10, FUZZ-142; u pozadini, po sekcijama — FUZZ-145)
 
 Kartica „AI nacrt opisa" u koraku 10 ima dugmad **Generiši nacrt opisa** (sve sekcije iz početka, iz podataka) i
 **Proširi i doteraj postojeći tekst** (zadržava svaku činjenicu koju je korisnik napisao). Backend
@@ -98,8 +98,33 @@ Kartica „AI nacrt opisa" u koraku 10 ima dugmad **Generiši nacrt opisa** (sve
 (ČINJENICA / IZJAVA KORISNIKA / AI ZAKLJUČAK): činjenice, intervju A–G, mapu vizuelnih karakteristika sa rizikom
 funkcionalnosti, varijante i strategiju, plan prikaza, **slike prikaza i otpremljene fotografije/rendere kao image
 blokove** (PNG/JPG, do `AI_DRAFT_MAX_IMAGES`, API ih sam umanjuje), izvučeni tekst dokumenata, Matricu zahteva i zvanični
-primer ZIS-a (BOCA) kao uzor strukture. Isti SDK klijent kao za proveru: strukturisan izlaz `{ sections[], notes[] }`,
-`max_tokens` 24 000, keširan prefiks (sistemski prompt + Matrica + primer BOCE).
+primer ZIS-a (BOCA) kao uzor strukture.
+
+Generisanje je **posao u pozadini, po jedan poziv modela po sekciji** (FUZZ-145; ranije jedan sinhroni poziv za sve
+sekcije, koji je Cloudflare prekidao posle 100 s i koji je sa `max_tokens` 24 000 bio prekratak za 5 strana):
+
+- `POST /api/projects/:id/ai-drafts` odmah vraća **202** sa zapisom `AiDraft` (`QUEUED`), a posao se izvršava u procesu
+  API-ja (in-process, jedan posao po projektu; drugi `POST` dobija 409 `AI_DRAFT_IN_PROGRESS` sa `draftId`). Nijedan HTTP
+  zahtev ne traje duže od nekoliko sekundi. `GET /api/ai-drafts/:id` vraća status `QUEUED | RUNNING | DONE | PARTIAL |
+  FAILED | REFUSED`, napredak po sekciji (`generation`: `PENDING | WRITING | DONE | TRUNCATED | FAILED | SKIPPED`, broj
+  reči) i tokene/cenu do sada; UI poll-uje na 4 s, korisnik može da napusti stranicu i vrati se.
+- Redosled poziva (`domain/draft-plan.ts`, sa unit testovima): naziv → karakteristični vizuelni elementi → opis → namena
+  → spisak prikaza → spisak priloga. Ciljna dužina se deli po sekcijama (opis 70 %, karakteristični elementi 15 %, ostalo
+  po 5 %; naziv ~12 reči), svaki poziv dobija ciljni broj reči za svoju sekciju i **već napisane sekcije kao kontekst**.
+  `max_tokens`: 32 000 za opis, 12 000 za ostale (streaming). Prefiks (sistemski prompt + Matrica + primer BOCE) i stanje
+  projekta sa slikama nose po jedan `cache_control` breakpoint, pa svih šest poziva deli isti keš.
+- `output_config.effort` za nacrt je `AI_DRAFT_EFFORT` (podrazumevano `medium`); provera koraka ostaje na `high`.
+- **Ništa plaćeno se ne baca**: svaka završena sekcija se **odmah** upisuje kao `DraftVersion` pre nego što počne
+  sledeća; tokeni i cena se beleže po sekciji i kumulativno. Ako sekcija udari `max_tokens`, sačuvan je tekst koji je
+  stigao sa oznakom `[TEKST PREKINUT — pokrenite „Proširi i doteraj" za ovu sekciju]` (`generation: TRUNCATED`), a posao
+  nastavlja. Odbijanje modela ili greška API-ja zaustavljaju posao: napisane sekcije ostaju, status je `PARTIAL`
+  (ili `REFUSED`/`FAILED` ako ništa nije napisano).
+- **Prekini** (`POST /api/ai-drafts/:id/cancel`) postavlja `cancelRequested`; posao staje posle tekuće sekcije, ostale
+  dobijaju `SKIPPED`. Ako API restartuje usred posla (deploy), pri startu se posao zatvara kao `PARTIAL`/`FAILED`
+  („prekinuto restartom servera"), uz sačuvane gotove sekcije.
+- **Procena pre pokretanja** (`GET /api/projects/:id/ai-drafts/estimate?targetPages=N`, `domain/draft-estimate.ts`):
+  broj poziva, očekivano trajanje, orijentaciona cena i veličina konteksta po pozivu; iznad ~80 000 ulaznih tokena UI
+  savetuje da se smanji broj priloženih dokumenata.
 
 Pravila koja backend sprovodi:
 
@@ -111,9 +136,10 @@ Pravila koja backend sprovodi:
   markerom se **ne može potvrditi** (`SECTION_HAS_PLACEHOLDERS`), ni kroz UI ni kroz API.
 - Generisanje i odluke o sekcijama pokreće **samo korisnik** (`X-Actor-Type: USER`; agent dobija 403). Odluke se beleže kao
   `Decision`. Odbačen nacrt ostaje u istoriji verzija; prethodni tekst se vraća kao nova verzija ako je postojao.
-- Zapis `AiDraft` (režim, model, ciljna dužina, broj slika, tokeni, cena, trajanje, status OK/REFUSED/ERROR); jedno
-  generisanje po projektu istovremeno; dnevni limit `AI_MAX_CALLS_PER_PROJECT_PER_DAY` se **deli** sa proverama koraka;
-  prevelik kontekst → 422, ništa se ne seče tiho.
+- Zapis `AiDraft` (režim, model, effort, ciljna dužina, broj slika, tokeni, cena, trajanje, status) sa po jednim
+  `AiDraftSection` po sekciji (napredak, tekst, tokeni i cena te sekcije, odluka korisnika); jedno generisanje po projektu
+  istovremeno; dnevni limit `AI_MAX_CALLS_PER_PROJECT_PER_DAY` se **deli** sa proverama koraka (jedan nacrt = jedan
+  poziv u limitu, iako ga čini šest poziva modela); prevelik kontekst → 422, ništa se ne seče tiho.
 - **Ciljna dužina opisa** (strane, ~500 reči po strani) je podešavanje projekta u koraku 1 (`targetDescriptionPages`;
   prazno = `AI_DRAFT_TARGET_PAGES`, podrazumevano 5) i može se promeniti pri svakom generisanju. AI joj teži kroz
   iscrpnost, ne ponavljanje; nije strogo pravilo.
@@ -122,7 +148,7 @@ Pravila koja backend sprovodi:
   prijave. Podnaslovi (`## …`) i liste u tekstu sekcija se renderuju u Markdown, DOCX i PDF paketa.
 
 Stvaran poziv nad demo projektom, sa ključem u `apps/api/.env`: `npm run ai:draft-smoke --workspace apps/api -- GENERATE 5`
-(ispisuje reči, strane, markere, tokene, trajanje i procenjenu cenu).
+(ispisuje procenu, pa po sekciji trajanje, tokene, keš, cenu i reči; `AI_DRAFT_SMOKE_PROJECT="<naziv>"` bira drugi projekat).
 
 ## Prelazak na PostgreSQL
 

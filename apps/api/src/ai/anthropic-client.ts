@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { Injectable } from '@nestjs/common';
-import { AiConfig } from './ai-config';
+import { AiConfig, AiEffort, REVIEW_EFFORT } from './ai-config';
 
 /** Injection token for the model client, so tests can replace the network with a mock. */
 export const AI_MODEL_CLIENT = Symbol('AI_MODEL_CLIENT');
@@ -18,6 +18,8 @@ export interface AiCompletionRequest {
   /** JSON schema for structured output. */
   schema: Record<string, unknown>;
   maxTokens: number;
+  /** `output_config.effort`; the review's `high` when omitted. */
+  effort?: AiEffort;
 }
 
 export interface AiModelClient {
@@ -26,8 +28,9 @@ export interface AiModelClient {
 
 /**
  * Official SDK client. Streams (the input can be long) and returns the final message.
- * Adaptive thinking, explicit high effort, structured JSON output, prompt caching and the
- * server-side refusal fallback are all set here, in one place.
+ * Adaptive thinking, explicit effort (high for reviews, AI_DRAFT_EFFORT for drafts),
+ * structured JSON output, prompt caching and the server-side refusal fallback are all set
+ * here, in one place.
  */
 @Injectable()
 export class AnthropicModelClient implements AiModelClient {
@@ -48,7 +51,7 @@ export class AnthropicModelClient implements AiModelClient {
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default',
       thinking: { type: 'adaptive' },
-      output_config: { effort: 'high', format: { type: 'json_schema', schema: request.schema } },
+      output_config: { effort: request.effort ?? REVIEW_EFFORT, format: { type: 'json_schema', schema: request.schema } },
       system: request.system,
       messages: [{ role: 'user', content: request.userContent ?? request.userText }],
     });

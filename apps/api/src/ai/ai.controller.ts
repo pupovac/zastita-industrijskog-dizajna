@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
 import { Actor } from '../common/actor.decorator';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
-import { DecideDraftSectionDto, decideDraftSectionSchema, GenerateDraftDto, generateDraftSchema } from './ai-draft.dto';
+import { DecideDraftSectionDto, decideDraftSectionSchema, EstimateDraftDto, estimateDraftSchema, GenerateDraftDto, generateDraftSchema } from './ai-draft.dto';
 import { AiDraftService } from './ai-draft.service';
 import { AiReviewService } from './ai-review.service';
 import { AiSuggestionsService } from './ai-suggestions.service';
@@ -49,22 +49,39 @@ export class AiController {
     return this.suggestions.reject(id, actor);
   }
 
-  // --- AI draft of the description (step 10, FUZZ-142) ---------------------------------
+  // --- AI draft of the description (step 10, FUZZ-142; background job, FUZZ-145) -------
 
   @Get('projects/:projectId/ai-drafts')
   listDrafts(@Param('projectId') projectId: string) {
     return this.drafts.list(projectId);
   }
 
-  /** „Generiši nacrt opisa" / „Proširi i doteraj". User only. Synchronous: the response is the stored draft. */
+  /** „Procena pre pokretanja": calls, duration, cost and context size for a target length. */
+  @Get('projects/:projectId/ai-drafts/estimate')
+  estimateDraft(@Param('projectId') projectId: string, @Query(new ZodValidationPipe(estimateDraftSchema)) dto: EstimateDraftDto) {
+    return this.drafts.estimate(projectId, dto);
+  }
+
+  /**
+   * „Generiši nacrt opisa" / „Proširi i doteraj". User only. Returns 202 with the queued
+   * draft; the sections are written in the background and the client polls `GET /ai-drafts/:id`.
+   * 409 `AI_DRAFT_IN_PROGRESS` (with `draftId`) while one runs for the project.
+   */
   @Post('projects/:projectId/ai-drafts')
+  @HttpCode(202)
   generateDraft(@Param('projectId') projectId: string, @Body(new ZodValidationPipe(generateDraftSchema)) dto: GenerateDraftDto, @Actor() actor: ActorType) {
-    return this.drafts.generate(projectId, dto, actor);
+    return this.drafts.start(projectId, dto, actor);
   }
 
   @Get('ai-drafts/:draftId')
   draft(@Param('draftId') draftId: string) {
     return this.drafts.get(draftId);
+  }
+
+  /** „Prekini". User only. The job stops after the section it is writing; finished sections stay. */
+  @Post('ai-drafts/:draftId/cancel')
+  cancelDraft(@Param('draftId') draftId: string, @Actor() actor: ActorType) {
+    return this.drafts.cancel(draftId, actor);
   }
 
   /** „Prihvati kao radnu verziju". User only; `replaceConfirmed: true` for a section confirmed at draft time. */
