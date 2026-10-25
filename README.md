@@ -198,6 +198,8 @@ curl $H -X POST $API/projects/$P/representations -d '{"viewName":"Perspektivni p
 curl $H -X PATCH $API/representations/<id> -d '{"assessment":"NEEDS_REWORK","assessmentNote":"Ukloniti kote."}'
 
 # Faza 8 — nacrt opisa (svaka verzija se čuva i proverava na patentnu terminologiju) i D-1
+# Potvrđenu sekciju agent ne može da menja (403 CONFIRMED_VALUE_LOCKED) — predlaže izmenu kao otvoreno
+# pitanje ili nalaz; nova verzija korisnika poništava potvrdu. Prazan tekst se ne čuva (422 DRAFT_CONTENT_EMPTY).
 curl $H -X POST $API/application-sections/<sectionId>/versions -d '{"content":"…","sourceType":"AGENT_INFERENCE"}'
 curl $H -X PUT $API/projects/$P/d1/PRODUCT_TITLE -d '{"value":"Fasadni panel","sourceType":"AGENT_INFERENCE"}'
 

@@ -3,6 +3,7 @@ import { ActorType, DraftVersion, Prisma } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DEFAULT_APPLICATION_SECTIONS } from '../domain/application-sections';
 import { DomainError } from '../domain/domain-error';
+import { planDraftVersion } from '../domain/draft-rules';
 import { assertMockAllowed } from '../domain/mock-data';
 import { findPatentTerms } from '../domain/patent-terms';
 import { PrismaService } from '../prisma/prisma.service';
@@ -16,8 +17,10 @@ function withTerminology(version: DraftVersion) {
 }
 
 /**
- * Description sections (step 10) with full version history. Every version is kept;
- * a new version always drops the user's confirmation of the section.
+ * Description sections (step 10) with full version history. Every version is kept.
+ * A confirmed section is locked against agents (CONFIRMED_VALUE_LOCKED); a new version
+ * by the user drops the confirmation, so the changed text has to be confirmed again.
+ * Rules: `domain/draft-rules.ts`.
  */
 @Injectable()
 export class DraftingService {
@@ -70,7 +73,7 @@ export class DraftingService {
     return versions.map(withTerminology);
   }
 
-  /** Always creates a new version. */
+  /** Always creates a new version (refused for an agent while the section is confirmed). */
   async addVersion(sectionId: string, dto: DraftContentDto, actor: ActorType) {
     return this.prisma.$transaction(async (db) => this.createVersion(db, sectionId, dto, actor));
   }
@@ -78,6 +81,7 @@ export class DraftingService {
   /**
    * Autosave. Updates the actor's own latest version while it is the newest and not
    * confirmed; otherwise starts a new version, so nobody overwrites someone else's text.
+   * Empty text is never saved, and an agent cannot touch a confirmed section.
    */
   async saveWorkingDraft(sectionId: string, dto: DraftContentDto, actor: ActorType) {
     return this.prisma.$transaction(async (db) => {
@@ -89,6 +93,7 @@ export class DraftingService {
       if (!latest || latest.createdByActor !== actor || latest.verified || section.confirmed) {
         return this.createVersion(db, sectionId, dto, actor);
       }
+      planDraftVersion(section, actor, dto.content);
       if (latest.content === dto.content) return withTerminology(latest);
       const updated = await db.draftVersion.update({ where: { id: latest.id }, data: { content: dto.content } });
       return withTerminology(updated);
@@ -120,6 +125,7 @@ export class DraftingService {
 
   private async createVersion(db: Db, sectionId: string, dto: DraftContentDto, actor: ActorType) {
     const section = await this.section(sectionId, db);
+    const plan = planDraftVersion(section, actor, dto.content);
     const project = await db.project.findUniqueOrThrow({ where: { id: section.projectId } });
     assertMockAllowed(project, dto.sourceReference);
     const latest = await db.draftVersion.findFirst({
@@ -137,7 +143,7 @@ export class DraftingService {
         confidence: dto.confidence ?? null,
       },
     });
-    await db.applicationSection.update({ where: { id: sectionId }, data: { confirmed: false, verified: false } });
+    await db.applicationSection.update({ where: { id: sectionId }, data: plan });
     return withTerminology(version);
   }
 
