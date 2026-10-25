@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ActorType, Fact } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
+import { assertAnswerHasNoPlaceholders } from '../domain/answer-placeholders';
 import { DomainError } from '../domain/domain-error';
 import { assertValidNewFact, isConfirmedUserFact, planConfirmation, planContentChange } from '../domain/fact-rules';
 import { assertMockAllowed } from '../domain/mock-data';
@@ -71,6 +72,11 @@ export class FactsService {
 
   async confirm(factId: string, dto: ConfirmFactDto, actor: ActorType): Promise<FactView> {
     const fact = orNotFound(await this.prisma.fact.findUnique({ where: { id: factId } }), 'Podatak');
+    if (fact.userAnswerId) {
+      // An answer that still carries template markers is not the user's statement yet.
+      const answer = await this.prisma.userAnswer.findUnique({ where: { id: fact.userAnswerId }, select: { value: true } });
+      if (answer) assertAnswerHasNoPlaceholders(answer.value);
+    }
     const next = planConfirmation(fact, {
       actor,
       explicitUserConfirmation: dto.explicitUserConfirmation,

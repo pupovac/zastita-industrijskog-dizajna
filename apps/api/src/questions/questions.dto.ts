@@ -8,7 +8,11 @@ export const createQuestionSchema = z.object({
   stepKey,
   text: z.string().trim().min(1).max(2000),
   whyNeeded: z.string().trim().max(2000).default(''),
-  exampleAnswer: z.string().trim().max(2000).default(''),
+  exampleAnswer: z.string().trim().max(4000).default(''),
+  /** "Obavezno pomenite" / "Ne pišite" lists shown with the example answer. */
+  includeHints: z.array(z.string().trim().min(1).max(500)).max(20).default([]),
+  avoidHints: z.array(z.string().trim().min(1).max(500)).max(20).default([]),
+  highPriority: z.boolean().default(false),
   required: z.boolean().default(false),
   deferredToFiling: z.boolean().default(false),
   allowsAttachment: z.boolean().default(true),

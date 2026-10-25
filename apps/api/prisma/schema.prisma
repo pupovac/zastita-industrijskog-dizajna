@@ -303,6 +303,15 @@ model Question {
   allowsAttachment Boolean   @default(true)
   /// Interview group A–G (§4), so questions are shown in small groups.
   interviewGroup   String?
+  /// Stable key of a question from the default bank (`default-questions.json`), so
+  /// "refresh-defaults" can update its guidance on existing projects without touching answers.
+  defaultKey       String?
+  /// JSON string[]: what the answer must mention ("Obavezno pomenite").
+  includeHintsJson String    @default("[]")
+  /// JSON string[]: what not to write because it does not belong in a design description ("Ne pišite").
+  avoidHintsJson   String    @default("[]")
+  /// Shown as VISOK PRIORITET (group G: prior public disclosure).
+  highPriority     Boolean   @default(false)
   createdByActor   ActorType @default(SYSTEM)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
@@ -311,6 +320,7 @@ model Question {
   answers UserAnswer[]
 
   @@index([projectId, stepKey, position])
+  @@index([projectId, defaultKey])
 }
 
 model UserAnswer {

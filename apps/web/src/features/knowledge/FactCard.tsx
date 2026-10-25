@@ -14,7 +14,16 @@ type Mode = 'view' | 'edit' | 'detail';
  * One piece of information with its provenance. POTVRDI is the only way an item
  * becomes "POTVRĐENA ČINJENICA KORISNIKA"; the backend enforces the same rule.
  */
-export function FactCard({ projectId, fact }: { projectId: string; fact: Fact }) {
+export function FactCard({
+  projectId,
+  fact,
+  confirmBlockedReason = null,
+}: {
+  projectId: string;
+  fact: Fact;
+  /** Why POTVRDI is not available right now (e.g. the answer still has template markers); the backend enforces the same rule. */
+  confirmBlockedReason?: string | null;
+}) {
   const confirm = useConfirmFact(projectId);
   const update = useUpdateFact(projectId);
   const [mode, setMode] = useState<Mode>('view');
@@ -83,7 +92,12 @@ export function FactCard({ projectId, fact }: { projectId: string; fact: Fact })
       {mode === 'view' && (
         <div className="flex flex-wrap gap-2">
           {canConfirm && (
-            <Button size="sm" onClick={() => confirm.mutate(fact.id)} disabled={confirm.isPending}>
+            <Button
+              size="sm"
+              onClick={() => confirm.mutate(fact.id)}
+              disabled={confirm.isPending || confirmBlockedReason !== null}
+              title={confirmBlockedReason ?? undefined}
+            >
               POTVRDI
             </Button>
           )}
@@ -109,6 +123,7 @@ export function FactCard({ projectId, fact }: { projectId: string; fact: Fact })
           </Button>
         </div>
       )}
+      {canConfirm && confirmBlockedReason && <p className="text-xs text-amber-700">{confirmBlockedReason}</p>}
       <ErrorText error={confirm.error ?? update.error} />
     </div>
   );

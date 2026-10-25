@@ -3,7 +3,7 @@ import { orNotFound } from '../common/not-found';
 import { STEP_DEFINITIONS } from '../domain/steps';
 import { progressPercent } from '../domain/step-status';
 import { PrismaService } from '../prisma/prisma.service';
-import { DEFAULT_QUESTIONS } from './default-questions';
+import { DEFAULT_QUESTIONS, defaultQuestionData } from './default-questions';
 import { CreateProjectDto, UpdateProjectDto } from './projects.dto';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class ProjectsService {
           create: STEP_DEFINITIONS.map((s, i) => ({ stepKey: s.key, position: i + 1 })),
         },
         questions: {
-          create: DEFAULT_QUESTIONS.map((q, i) => ({ ...q, position: i + 1, createdByActor: 'SYSTEM' })),
+          create: DEFAULT_QUESTIONS.map((q, i) => ({ ...defaultQuestionData(q), position: i + 1, createdByActor: 'SYSTEM' })),
         },
       },
     });

@@ -1,0 +1,168 @@
+{
+  "$comment": "Banka podrazumevanih pitanja koraka 4 (Intervju). Privremeni sadržaj dok ne stigne banka A–G iz FUZZ-143: 6 proširenih pitanja + 1 pitanje grupe G. Uzorni odgovori su šabloni sa [oznakama] za popunjavanje, ne tvrdnje o proizvodu. Zahtevi ZIS-a navedeni su oznakama iz Matrice zahteva (MZ-xxx).",
+  "version": "2026-10-25-interim",
+  "questions": [
+    {
+      "defaultKey": "product-name",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "C",
+      "text": "Kako se proizvod zove i kako biste ga ukratko opisali?",
+      "legacyTexts": ["Kako se proizvod zove i kako biste ga ukratko opisali?"],
+      "whyNeeded": "Naziv i kratak opis su polazna tačka za sve dalje korake; naziv proizvoda ulazi u opis i mora da bude usklađen sa prikazima (MZ-043, MZ-048).",
+      "exampleAnswer": "Proizvod je termoizolacioni fasadni panel sa profilisanim spojem i integrisanim završnim slojem. Panel je [pravougaona] ploča sa ravnom prednjom površinom na koju je već u proizvodnji nanet završni fasadni sloj [opisno: npr. zrnasta mineralna tekstura u svetlosivoj nijansi]. Duže ivice imaju [stepenasti] profil, a kraće ivice su [ravne]. Posmatran spolja, montiran na fasadi, panel deluje kao [jedna celina ujednačene boje, sa naglašenom linijom spoja između susednih panela]. Naziv koji želimo da stoji u prijavi: [naziv proizvoda].",
+      "includeHints": [
+        "Naziv proizvoda kakav treba da stoji u prijavi",
+        "Osnovni oblik ploče (pravougaona, kvadratna…) i kako stoji na fasadi",
+        "Da je završni sloj sastavni deo panela, a ne naknadno nanet",
+        "Šta se vidi kada je panel montiran: prednja površina i linija spoja",
+        "Jedna rečenica o ukupnom utisku (ravno, mirno, naglašeni spojevi…)"
+      ],
+      "avoidHints": [
+        "Termoizolaciona svojstva, toplotnu provodljivost i uštede energije (MZ-042)",
+        "Način montaže, lepljenje ili ankerisanje panela",
+        "Prednosti u odnosu na druge proizvode",
+        "Patentnu terminologiju (pronalazak, tehnički problem, tehnički efekat) — ne spada u opis dizajna"
+      ],
+      "required": true,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "front-surface",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "D",
+      "text": "Kako izgleda vidljiva prednja površina panela (tekstura, završna obrada, boja)?",
+      "legacyTexts": ["Kako izgleda vidljiva prednja površina panela (tekstura, završna obrada, boja)?"],
+      "whyNeeded": "Opis se odnosi samo na spoljni izgled; prednja površina je ono što se vidi stalno i mora biti opisana tako da odgovara prikazima (MZ-041, MZ-047).",
+      "exampleAnswer": "Prednja površina je ravna, bez reljefnih motiva, i u celini je prekrivena završnim slojem [vrsta: npr. mineralni zrnasti malter]. Tekstura je [zrnasta / zaribana / glatka], krupnoće zrna oko [1,5–2 mm], ujednačena po celoj površini i ista do same ivice panela. Sjaj je [mat], bez vidljivog odsjaja pod svetlom. Boja je [opisno: svetlosiva, ujednačena, bez dezena]. Na prednjoj površini nema otvora, žlebova ni oznaka; prelaz završnog sloja ka ivici panela je [oštar / blago zaobljen].",
+      "includeHints": [
+        "Vrsta teksture i njena krupnoća (zrno u mm ili opisno)",
+        "Sjaj: mat, polumat ili sjajan",
+        "Ujednačenost teksture i boje po celoj površini",
+        "Boja opisno (nijansa), ne samo kataloška oznaka",
+        "Da li tekstura ide do same ivice ili postoji okvir",
+        "Vidljivi reljefni motiv, fuge ili dezen ako postoje"
+      ],
+      "avoidHints": [
+        "Sastav i svojstva završnog sloja (vodoodbojnost, paropropusnost) (MZ-042)",
+        "Način nanošenja sloja u proizvodnji",
+        "Zaštitnu ulogu sloja (npr. zaštita od UV zračenja)",
+        "Trgovačke oznake boja ako nisu deo izgleda (MZ-049)"
+      ],
+      "required": true,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "edges-joints",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "E",
+      "text": "Kako izgledaju ivice i spojevi panela posmatrano spolja?",
+      "legacyTexts": ["Kako izgledaju ivice i spojevi panela posmatrano spolja?"],
+      "whyNeeded": "Oblik ivica je vidljiva karakteristika koja se opisuje geometrijski, posle oblika u celini (MZ-047); kasnije se posebno proverava da li je diktiran samo funkcijom.",
+      "exampleAnswer": "Duže ivice panela su profilisane [stepenasto], sa [dva] stepenika: gornji stepenik je uvučen za oko [polovinu debljine], a donji izlazi za istu meru, tako da se susedni paneli vizuelno preklapaju. Kraće ivice su [ravne, pod pravim uglom]. Posmatrano spolja, između montiranih panela vidi se [uska senka / linija širine oko X mm] koja prati dužu ivicu; kraći spojevi su [gotovo nevidljivi]. Završni sloj se završava [tačno na gornjoj ivici stepenika / prelazi preko stepenika], tako da se u spoju [ne vidi / vidi] traka osnovnog materijala. Uglovi panela su [oštri / blago oboreni].",
+      "includeHints": [
+        "Oblik profila na dužim i na kraćim ivicama (stepenast, ravan, pero i žleb…)",
+        "Broj i proporcije stepenika u odnosu na debljinu panela",
+        "Kako spoj izgleda spolja posle montaže: linija, senka, fuga i njena širina",
+        "Gde se završava završni sloj u odnosu na profil ivice",
+        "Izgled uglova panela"
+      ],
+      "avoidHints": [
+        "Svrhu profila (sprečavanje toplotnih mostova, zaptivanje) (MZ-042)",
+        "Tolerancije i način proizvodnje profila",
+        "Tvrdnje da je oblik ivice jedino moguće rešenje",
+        "Patentnu terminologiju (tehnički problem, tehnički efekat, inventivni nivo)"
+      ],
+      "required": true,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "dimensions",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "D",
+      "text": "Koje dimenzije i proporcije panel ima?",
+      "legacyTexts": ["Koje dimenzije i proporcije panel ima?"],
+      "whyNeeded": "Proporcije određuju ukupan izgled i moraju se slagati sa prikazima; opis se oslanja na prikaz, ne obrnuto (MZ-041).",
+      "exampleAnswer": "Osnovni format panela je [1000] × [500] mm, debljine [100] mm, tako da je odnos dužine i širine [2 : 1]. Debljina završnog sloja je na ivici vizuelno [zanemarljiva / vidljiva kao tanka traka od oko X mm]. Stepenik na dužoj ivici zauzima oko [polovinu] debljine panela. Pored osnovnog formata postoje i formati [navesti ili „ne postoje“]. Proporcije koje treba da se prepoznaju na prikazima: [izduženi pravougaonik sa naglašenom debljinom].",
+      "includeHints": [
+        "Dužina, širina i debljina osnovnog formata (ili odnos ako su mere poverljive)",
+        "Odnos dužine i širine (proporcija)",
+        "Vizuelna debljina završnog sloja na ivici",
+        "Udeo stepenika u debljini",
+        "Drugi formati ako postoje"
+      ],
+      "avoidHints": [
+        "Dimenzije kao tehnički uslov (tolerancije, standardi)",
+        "Težinu, gustinu i klasu materijala (MZ-042)",
+        "Pakovanje i transport"
+      ],
+      "required": false,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "variants",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "F",
+      "text": "Da li postoji više varijanti izgleda (boje, teksture, dimenzije)?",
+      "legacyTexts": ["Da li postoji više varijanti izgleda (boje, teksture, dimenzije)?"],
+      "whyNeeded": "Varijante se beleže odvojeno: ako prijava obuhvata više predmeta zaštite, za svaki se podnosi poseban opis (MZ-045).",
+      "exampleAnswer": "Postoje [tri] varijante koje se razlikuju samo po boji završnog sloja: [bela], [svetlosiva] i [antracit]; tekstura, oblik i profil ivica su u svim varijantama isti. Postoji i varijanta sa [krupnijom teksturom, zrno oko X mm], istog oblika. Varijante dimenzija: [navesti ili „nema“]. Prijavom želimo da obuhvatimo [sve varijante kao više predmeta zaštite / samo osnovnu varijantu].",
+      "includeHints": [
+        "Po čemu se varijante razlikuju (boja, tekstura, format) i po čemu su iste",
+        "Broj varijanti i opis svake",
+        "Da li se varijante razlikuju po obliku ili samo po boji i teksturi",
+        "Koje varijante želite da obuhvatite prijavom"
+      ],
+      "avoidHints": [
+        "Komercijalne nazive serija ako nisu deo izgleda (MZ-049)",
+        "Cenovne i prodajne razlike",
+        "Tehničke klase (otpornost, gorivost)"
+      ],
+      "required": false,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "designer",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "B",
+      "text": "Ko je autor (dizajner) izgleda proizvoda?",
+      "legacyTexts": ["Ko je autor (dizajner) izgleda proizvoda?"],
+      "whyNeeded": "Zahtev za priznanje prava sadrži podatke o autoru ili izjavu autora da ne želi da bude naveden (MZ-060).",
+      "exampleAnswer": "Autor izgleda proizvoda je [ime i prezime], [adresa]. Autor je [zaposlen kod podnosioca / spoljni saradnik / istovremeno podnosilac]; osnov po kom podnosilac ima pravo na prijavu je [ugovor o radu / ugovor o autorskom delu / autor je podnosilac]. Ako je autora više, navedite sve: [ime i prezime, adresa]. Autor [želi / ne želi] da bude naveden u prijavi.",
+      "includeHints": [
+        "Ime, prezime i adresu svakog autora",
+        "Odnos autora i podnosioca (zaposlen, spoljni saradnik, isto lice)",
+        "Osnov po kom podnosilac ima pravo na prijavu",
+        "Da li autor želi da bude naveden"
+      ],
+      "avoidHints": [
+        "Ko je radio tehnički razvoj proizvoda ako nije uticao na izgled",
+        "Lične podatke koji nisu potrebni za prijavu (JMBG, telefon)"
+      ],
+      "required": true,
+      "highPriority": false
+    },
+    {
+      "defaultKey": "prior-disclosure",
+      "stepKey": "PRODUCT_INTERVIEW",
+      "interviewGroup": "G",
+      "text": "Da li je panel, njegova fotografija, render, crtež ili prototip ikada javno prikazan pre podnošenja prijave (sajt, sajam, katalog, društvene mreže, isporuka kupcu)?",
+      "legacyTexts": [],
+      "whyNeeded": "VISOK PRIORITET: podaci o ranijem prikazivanju beleže se tačno i sa datumima jer mogu biti relevantni za procenu novosti; pravnu ocenu daje registrovani zastupnik, ne aplikacija.",
+      "exampleAnswer": "Panel [nije / jeste] javno prikazan pre podnošenja prijave. Ako jeste: prvi put je prikazan [datum] na [sajmu / sajtu / u katalogu / na društvenoj mreži], u obliku [fotografije / rendera / crteža / fizičkog uzorka], i to [tačno ova varijanta izgleda / ranija verzija koja se razlikuje po …]. Uzorci su isporučeni [kupcu, datum] [uz ugovor o poverljivosti / bez ugovora]. Dokaz o datumu koji imamo: [link, katalog, faktura].",
+      "includeHints": [
+        "Jasno DA ili NE",
+        "Datum i mesto ili kanal svakog prikazivanja (sajam, sajt, mreže, katalog, kupac)",
+        "U kom obliku (fotografija, render, crtež, fizički uzorak)",
+        "Da li je prikazana baš ova verzija izgleda ili ranija",
+        "Da li je postojao ugovor o poverljivosti",
+        "Koji dokaz o datumu postoji"
+      ],
+      "avoidHints": [
+        "Pretpostavke umesto podataka: ako niste sigurni, napišite „nisam siguran“ i šta treba proveriti",
+        "Sopstvenu pravnu ocenu da li prikazivanje „škodi“ prijavi — to procenjuje zastupnik"
+      ],
+      "required": true,
+      "highPriority": true
+    }
+  ]
+}

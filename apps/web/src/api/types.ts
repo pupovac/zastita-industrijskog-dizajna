@@ -98,7 +98,21 @@ export interface Question {
   deferredToFiling: boolean;
   allowsAttachment: boolean;
   interviewGroup: string | null;
+  /** Stable key of a default-bank question; null for questions added by agents. */
+  defaultKey: string | null;
+  /** "Obavezno pomenite" — what a complete answer must cover. */
+  includeHints: string[];
+  /** "Ne pišite" — what does not belong in a design description. */
+  avoidHints: string[];
+  highPriority: boolean;
   answer: UserAnswer | null;
+}
+
+export interface DefaultQuestionRefreshResult {
+  bankVersion: string;
+  updated: number;
+  added: number;
+  unchanged: number;
 }
 
 export interface Fact {
