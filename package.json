@@ -19,6 +19,6 @@
     "db:reset": "npm run db:reset --workspace apps/api"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.12"
   }
 }

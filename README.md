@@ -20,7 +20,8 @@ apps/web   React + TypeScript, Vite, React Router, TanStack Query, React Hook Fo
 
 ## Pokretanje lokalno
 
-Potrebno: Node.js 20+.
+Potrebno: Node.js 20.12+ (API pri startu sam učitava `apps/api/.env`, bez dodatnih zavisnosti;
+vrednosti već postavljene u okruženju imaju prednost, pa npr. `PORT=3100 npm run dev:api` radi bez izmene fajla).
 
 ```bash
 npm install
