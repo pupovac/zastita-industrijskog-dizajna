@@ -44,6 +44,9 @@ export const REOPENED_UPSTREAM_REASON = 'Prethodni korak je ponovo otvoren.';
 export const STEP_GATED_BY_BLOCKERS: StepKey = 'FINAL_PACKAGE';
 const BLOCKER_GATED_TARGETS: readonly StepStatus[] = ['IN_PROGRESS', 'READY_FOR_REVIEW', 'APPROVED'];
 
+/** Open blocking questions or conflicts on a step hold it back from review and from approval. */
+const BLOCKING_ITEMS_GATED_TARGETS: readonly StepStatus[] = ['READY_FOR_REVIEW', 'APPROVED'];
+
 /**
  * Decides whether a step may change status and which other steps change with it.
  *
@@ -51,7 +54,9 @@ const BLOCKER_GATED_TARGETS: readonly StepStatus[] = ['IN_PROGRESS', 'READY_FOR_
  * - Phases cannot be skipped: a step can only start (enter IN_PROGRESS from
  *   NOT_STARTED or BLOCKED) when the previous step is APPROVED.
  * - Only the user can approve a step.
- * - A step cannot go to review while it has open blocking questions or conflicts.
+ * - A step cannot go to review or be approved while it has open blocking
+ *   questions or conflicts — items added after the step went to review must
+ *   not be bypassed by approval.
  * - BLOCKED always carries a reason.
  * - Reopening an approved step invalidates every later step that had started:
  *   they become BLOCKED until the reopened step is approved again.
@@ -95,7 +100,7 @@ export function planStepTransition(req: StepTransitionRequest): StepStatusChange
     throw new DomainError('BLOCK_REASON_REQUIRED', 'Za blokiranje koraka potrebno je navesti razlog.');
   }
 
-  if (to === 'READY_FOR_REVIEW' && req.openBlockingItems > 0) {
+  if (BLOCKING_ITEMS_GATED_TARGETS.includes(to) && req.openBlockingItems > 0) {
     throw new DomainError(
       'STEP_HAS_OPEN_BLOCKING_ITEMS',
       'Korak ima otvorena blokirajuća pitanja ili nerešene konflikte.',
