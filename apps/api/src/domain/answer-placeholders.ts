@@ -6,7 +6,8 @@ import { DomainError } from './domain-error';
  * not the user's own statement yet, so no fact may be confirmed from it. The web UI
  * mirrors this pattern (apps/web/src/lib/answer-template.ts) for its counter.
  */
-export const PLACEHOLDER_PATTERN = /\[[^\[\]\n]{1,200}\]/g;
+/** Up to 300 characters: some bank templates offer a whole alternative sentence inside one marker. */
+export const PLACEHOLDER_PATTERN = /\[[^\[\]\n]{1,300}\]/g;
 
 export function listPlaceholders(text: string): string[] {
   return text.match(PLACEHOLDER_PATTERN) ?? [];

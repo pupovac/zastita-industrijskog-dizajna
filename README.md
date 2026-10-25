@@ -17,6 +17,7 @@ apps/web   React + TypeScript, Vite, React Router, TanStack Query, React Hook Fo
 
 - `docs/izvori/` — evidencija zvaničnih izvora (Faza 1)
 - `docs/faza-2/` — Matrica zahteva ZIS-a (MD, JSON, CSV) i „Rezultati inicijalnog istraživanja" A–N (Faza 2)
+- `docs/faza-3/` — Banka pitanja intervjua A–G sa uzornim odgovorima (Faza 3); aplikacija je učitava iz `apps/api/src/projects/default-question-bank.json`
 
 ## Pokretanje lokalno
 
