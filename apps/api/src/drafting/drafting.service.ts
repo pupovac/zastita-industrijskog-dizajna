@@ -3,9 +3,12 @@ import { ActorType, DraftVersion, Prisma } from '@prisma/client';
 import { orNotFound } from '../common/not-found';
 import { DEFAULT_APPLICATION_SECTIONS } from '../domain/application-sections';
 import { DomainError } from '../domain/domain-error';
-import { planDraftVersion } from '../domain/draft-rules';
+import { countPlaceholders, planDraftVersion, planSectionConfirmation } from '../domain/draft-rules';
 import { assertMockAllowed } from '../domain/mock-data';
 import { findPatentTerms } from '../domain/patent-terms';
+import { buildDescriptionDraft, DRAFT_WATERMARK } from '../package/package-content';
+import { loadPackageSnapshot } from '../package/package-snapshot';
+import { renderDocx } from '../package/render-docx';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProjectsService } from '../projects/projects.service';
 import { CreateSectionDto, DraftContentDto, UpdateSectionDto } from './drafting.dto';
@@ -13,7 +16,7 @@ import { CreateSectionDto, DraftContentDto, UpdateSectionDto } from './drafting.
 type Db = Prisma.TransactionClient;
 
 function withTerminology(version: DraftVersion) {
-  return { ...version, terminologyIssues: findPatentTerms(version.content) };
+  return { ...version, terminologyIssues: findPatentTerms(version.content), placeholders: countPlaceholders(version.content) };
 }
 
 /**
@@ -39,6 +42,17 @@ export class DraftingService {
       include: { versions: { orderBy: { versionNumber: 'desc' } } },
     });
     return sections.map(({ versions, ...s }) => ({ ...s, versions: versions.map(withTerminology) }));
+  }
+
+  /** DOCX of the current description (latest version of every section), watermarked „NACRT – nije za podnošenje". */
+  async descriptionDraftDocx(projectId: string): Promise<{ fileName: string; content: Buffer }> {
+    await this.projects.assertExists(projectId);
+    await this.ensureDefaultSections(projectId);
+    const snapshot = await loadPackageSnapshot(this.prisma, projectId);
+    const now = new Date();
+    const content = await renderDocx(buildDescriptionDraft(snapshot, now), { demo: snapshot.project.isDemo, watermark: DRAFT_WATERMARK });
+    const prefix = snapshot.project.isDemo ? 'DEMO-' : '';
+    return { fileName: `${prefix}nacrt-opisa-${now.toISOString().slice(0, 10)}.docx`, content };
   }
 
   async ensureDefaultSections(projectId: string, db: Db = this.prisma) {
@@ -74,8 +88,8 @@ export class DraftingService {
   }
 
   /** Always creates a new version (refused for an agent while the section is confirmed). */
-  async addVersion(sectionId: string, dto: DraftContentDto, actor: ActorType) {
-    return this.prisma.$transaction(async (db) => this.createVersion(db, sectionId, dto, actor));
+  async addVersion(sectionId: string, dto: DraftContentDto, actor: ActorType, options: { explicitUserReplacement?: boolean } = {}) {
+    return this.prisma.$transaction(async (db) => this.createVersion(db, sectionId, dto, actor, options));
   }
 
   /**
@@ -100,32 +114,26 @@ export class DraftingService {
     });
   }
 
-  /** POTVRDI for a section: the user accepts its latest version. */
+  /**
+   * POTVRDI for a section: the user accepts its latest version. Refused while the text
+   * still carries a „[POTREBNA DOPUNA]" marker (rules: `domain/draft-rules.ts`).
+   */
   async confirm(sectionId: string, explicitUserConfirmation: boolean, actor: ActorType) {
-    if (actor !== 'USER') {
-      throw new DomainError('CONFIRMATION_REQUIRES_USER', 'Samo korisnik može da potvrdi tekst.', 'FORBIDDEN');
-    }
-    if (explicitUserConfirmation !== true) {
-      throw new DomainError('CONFIRMATION_NOT_EXPLICIT', 'Potvrda mora biti eksplicitna.');
-    }
     return this.prisma.$transaction(async (db) => {
       const section = await this.section(sectionId, db);
       const latest = await db.draftVersion.findFirst({
         where: { applicationSectionId: sectionId },
         orderBy: { versionNumber: 'desc' },
       });
-      if (!latest?.content.trim()) {
-        throw new DomainError('SECTION_EMPTY', 'Sekcija nema tekst koji bi se mogao potvrditi.', 'CONFLICT');
-      }
-      if (section.confirmed) throw new DomainError('ALREADY_CONFIRMED', 'Sekcija je već potvrđena.', 'CONFLICT');
-      await db.draftVersion.update({ where: { id: latest.id }, data: { verified: true } });
-      return db.applicationSection.update({ where: { id: sectionId }, data: { confirmed: true, verified: true } });
+      const plan = planSectionConfirmation(section, latest?.content, actor, explicitUserConfirmation);
+      await db.draftVersion.update({ where: { id: latest!.id }, data: { verified: true } });
+      return db.applicationSection.update({ where: { id: sectionId }, data: plan });
     });
   }
 
-  private async createVersion(db: Db, sectionId: string, dto: DraftContentDto, actor: ActorType) {
+  private async createVersion(db: Db, sectionId: string, dto: DraftContentDto, actor: ActorType, options: { explicitUserReplacement?: boolean } = {}) {
     const section = await this.section(sectionId, db);
-    const plan = planDraftVersion(section, actor, dto.content);
+    const plan = planDraftVersion(section, actor, dto.content, options);
     const project = await db.project.findUniqueOrThrow({ where: { id: section.projectId } });
     assertMockAllowed(project, dto.sourceReference);
     const latest = await db.draftVersion.findFirst({

@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useProject, useUpdateProject } from '@/api/hooks';
+import { useAiStatus, useProject, useUpdateProject } from '@/api/hooks';
 import type { Project } from '@/api/types';
 import { SaveIndicator } from '@/components/SaveIndicator';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,11 +19,16 @@ const schema = z.object({
   applicantAddress: z.string().trim().max(500),
   designerName: z.string().trim().max(300),
   representativeName: z.string().trim().max(300),
+  /** Empty = the server default; otherwise 1–30 pages. */
+  targetDescriptionPages: z
+    .string()
+    .trim()
+    .refine((v) => v === '' || (/^\d+$/.test(v) && Number(v) >= 1 && Number(v) <= 30), 'Unesite broj strana od 1 do 30, ili ostavite prazno.'),
 });
 type FormValues = z.infer<typeof schema>;
 type Field = keyof FormValues;
 
-const FIELDS: { name: Field; label: string; multiline?: boolean; hint?: string }[] = [
+const FIELDS: { name: Field; label: string; multiline?: boolean; hint?: string; numeric?: boolean }[] = [
   { name: 'name', label: 'Naziv projekta' },
   { name: 'productName', label: 'Naziv proizvoda' },
   { name: 'productSummary', label: 'Kratak opis proizvoda', multiline: true, hint: 'Vašim rečima, šta je proizvod.' },
@@ -31,6 +36,12 @@ const FIELDS: { name: Field; label: string; multiline?: boolean; hint?: string }
   { name: 'applicantAddress', label: 'Adresa podnosioca' },
   { name: 'designerName', label: 'Autor / dizajner' },
   { name: 'representativeName', label: 'Zastupnik (ako postoji)' },
+  {
+    name: 'targetDescriptionPages',
+    label: 'Ciljna dužina opisa (strane)',
+    numeric: true,
+    hint: 'AI teži ovoj dužini kroz iscrpnost, ne kroz ponavljanje. Nije strogo pravilo. Koristi je dugme „Generiši nacrt opisa" u koraku 10; prazno = podrazumevana vrednost servera.',
+  },
 ];
 
 function pick(project: Project): FormValues {
@@ -42,7 +53,14 @@ function pick(project: Project): FormValues {
     applicantAddress: project.applicantAddress,
     designerName: project.designerName,
     representativeName: project.representativeName,
+    targetDescriptionPages: project.targetDescriptionPages === null ? '' : String(project.targetDescriptionPages),
   };
+}
+
+/** Form text → API patch: the page count is a number or null. */
+function toPatch(name: Field, value: string): Partial<Project> {
+  if (name === 'targetDescriptionPages') return { targetDescriptionPages: value === '' ? null : Number(value) };
+  return { [name]: value };
 }
 
 export function ProjectSetupStep({ projectId }: { projectId: string }) {
@@ -52,8 +70,9 @@ export function ProjectSetupStep({ projectId }: { projectId: string }) {
 }
 
 function SetupForm({ projectId, initial }: { projectId: string; initial: FormValues }) {
+  const aiStatus = useAiStatus();
   const update = useUpdateProject(projectId);
-  const autosave = useAutosave((patch: Partial<FormValues>) => update.mutateAsync(patch), {
+  const autosave = useAutosave((patch: Partial<Project>) => update.mutateAsync(patch), {
     merge: (pending, next) => ({ ...pending, ...next }),
   });
   const { schedule } = autosave;
@@ -64,7 +83,7 @@ function SetupForm({ projectId, initial }: { projectId: string; initial: FormVal
     const subscription = form.watch((values, { name }) => {
       if (!name) return;
       const parsed = schema.shape[name].safeParse(values[name]);
-      if (parsed.success) schedule({ [name]: parsed.data });
+      if (parsed.success) schedule(toPatch(name, parsed.data));
     });
     return () => subscription.unsubscribe();
   }, [form, schedule]);
@@ -88,7 +107,14 @@ function SetupForm({ projectId, initial }: { projectId: string; initial: FormVal
                 {field.multiline ? (
                   <Textarea id={field.name} aria-invalid={Boolean(error)} {...form.register(field.name)} />
                 ) : (
-                  <Input id={field.name} aria-invalid={Boolean(error)} {...form.register(field.name)} />
+                  <Input
+                    id={field.name}
+                    aria-invalid={Boolean(error)}
+                    inputMode={field.numeric ? 'numeric' : undefined}
+                    className={field.numeric ? 'w-32' : undefined}
+                    placeholder={field.numeric ? `podrazumevano ${aiStatus.data?.draftTargetPages ?? 5}` : undefined}
+                    {...form.register(field.name)}
+                  />
                 )}
                 {field.hint && <p className="text-xs text-muted-foreground">{field.hint}</p>}
                 {error && <p className="text-xs text-destructive">{error.message}</p>}

@@ -64,18 +64,21 @@ function render(block: Block): (Paragraph | Table)[] {
   }
 }
 
-/** DOCX of a document model. A demo document carries a "DEMO" watermark in the header of every page. */
-export async function renderDocx(doc: DocModel, options: { demo: boolean }): Promise<Buffer> {
-  const header = options.demo
-    ? new Header({
-        children: [
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: 'DEMO', bold: true, size: 120, color: 'D0D0D0' })],
-          }),
-        ],
-      })
-    : undefined;
+export interface RenderOptions {
+  demo: boolean;
+  /** Text repeated in the header of every page (e.g. „NACRT – nije za podnošenje"). */
+  watermark?: string;
+}
+
+/**
+ * DOCX of a document model. A demo document carries a "DEMO" watermark in the header of
+ * every page; a draft carries its own watermark text (smaller, since it is a sentence).
+ */
+export async function renderDocx(doc: DocModel, options: RenderOptions): Promise<Buffer> {
+  const marks: TextRun[] = [];
+  if (options.demo) marks.push(new TextRun({ text: 'DEMO', bold: true, size: 120, color: 'D0D0D0' }));
+  if (options.watermark) marks.push(new TextRun({ text: options.watermark, bold: true, size: 36, color: 'B45309', break: marks.length ? 1 : 0 }));
+  const header = marks.length ? new Header({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: marks })] }) : undefined;
   const document = new Document({
     title: doc.title,
     creator: 'Zaštita industrijskog dizajna',

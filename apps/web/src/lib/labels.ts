@@ -20,6 +20,8 @@ import type {
   SourceType,
   StepPhase,
   StepStatus,
+  AiDraftMode,
+  AiDraftSectionStatus,
 } from '@/api/types';
 
 type BadgeTone = 'success' | 'warning' | 'danger' | 'info' | 'muted' | 'outline' | 'secondary';
@@ -309,6 +311,31 @@ export const AI_SUGGESTION_STATUS_TONE: Record<AiSuggestionStatus, BadgeTone> = 
   ACCEPTED: 'success',
   REJECTED: 'muted',
 };
+
+export const AI_DRAFT_MODE_LABEL: Record<AiDraftMode, string> = {
+  GENERATE: 'Generisan iz podataka',
+  EXPAND: 'Proširen postojeći tekst',
+};
+
+export const AI_DRAFT_SECTION_STATUS_LABEL: Record<AiDraftSectionStatus, string> = {
+  PROPOSED: 'AI NACRT – upisan kao nova verzija',
+  HELD: 'ZADRŽANO – sekcija je bila potvrđena',
+  ACCEPTED: 'PRIHVAĆENO kao radna verzija',
+  REJECTED: 'ODBAČENO',
+};
+
+export const AI_DRAFT_SECTION_STATUS_TONE: Record<AiDraftSectionStatus, BadgeTone> = {
+  PROPOSED: 'warning',
+  HELD: 'info',
+  ACCEPTED: 'success',
+  REJECTED: 'muted',
+};
+
+export function formatDuration(ms: number): string {
+  const seconds = Math.round(ms / 1000);
+  if (seconds < 90) return `${seconds} s`;
+  return `${Math.floor(seconds / 60)} min ${seconds % 60} s`;
+}
 
 /** Human names of the entities/fields an AI suggestion may target. */
 const AI_ENTITY_LABEL: Record<string, string> = {

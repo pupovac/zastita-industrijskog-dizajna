@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAddDraftVersion, useApplicationSections, useConfirmSection, useSaveWorkingDraft } from '@/api/hooks';
 import type { ApplicationSectionRecord, DraftVersion } from '@/api/types';
 import { ErrorText } from '@/components/ErrorText';
@@ -10,9 +10,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { diffWords } from '@/lib/diff';
+import { countWords } from '@/lib/draft-length';
 import { ACTOR_LABEL, formatDateTime } from '@/lib/labels';
 import { useAutosave } from '@/lib/use-autosave';
 import { cn } from '@/lib/utils';
+import { AiDraftCard } from './AiDraftCard';
 
 /** Checked automatically in every saved version (the backend runs the same check before packaging). */
 const PATENT_TERMS = [
@@ -25,12 +27,14 @@ const PATENT_TERMS = [
   'pogrešan naziv postupka (patentiranje umesto prijave za priznanje prava na industrijski dizajn)',
 ];
 
-/** Step 10: the description sections, their version history and comparison of versions. */
+/** Step 10: the AI draft, the description sections, their version history and comparison of versions. */
 export function DescriptionDraftingStep({ projectId }: { projectId: string }) {
   const sections = useApplicationSections(projectId);
   if (sections.error) return <ErrorText error={sections.error} />;
   if (!sections.data) return <p className="text-sm text-muted-foreground">Učitavanje…</p>;
   const withIssues = sections.data.filter((s) => (s.versions[0]?.terminologyIssues.length ?? 0) > 0);
+  const withPlaceholders = sections.data.filter((s) => (s.versions[0]?.placeholders ?? 0) > 0);
+  const totalWords = sections.data.reduce((n, s) => n + countWords(s.versions[0]?.content ?? ''), 0);
 
   return (
     <div className="flex flex-col gap-6">
@@ -38,10 +42,17 @@ export function DescriptionDraftingStep({ projectId }: { projectId: string }) {
         Opis se piše kao prijava industrijskog dizajna: linije, konture, oblik, proporcije, tekstura, boja i ukupan izgled,
         usklađeno sa prikazima. Svaka verzija se automatski proverava na patentnu terminologiju: {PATENT_TERMS.join(', ')}.
       </StepNotice>
+      <AiDraftCard projectId={projectId} totalWords={totalWords} />
       {withIssues.length > 0 && (
         <StepNotice tone="danger">
           Patentna terminologija pronađena u: {withIssues.map((s) => s.title).join(', ')}. Finalni paket se ne generiše dok
           se tekst ne ispravi.
+        </StepNotice>
+      )}
+      {withPlaceholders.length > 0 && (
+        <StepNotice tone="warning">
+          Markeri „[POTREBNA DOPUNA]" u: {withPlaceholders.map((s) => s.title).join(', ')}. Dopunite nedostajuće podatke — sekcija sa
+          markerom ne može da se potvrdi.
         </StepNotice>
       )}
       {sections.data.map((section) => (
@@ -59,6 +70,16 @@ function SectionEditor({ projectId, section }: { projectId: string; section: App
   const [value, setValue] = useState(latest?.content ?? '');
   const [showHistory, setShowHistory] = useState(false);
   const autosave = useAutosave((content: string) => saveDraft.mutateAsync({ sectionId: section.id, content }));
+  const placeholders = latest?.placeholders ?? 0;
+
+  // A version written by the AI draft (or by rejecting one) arrives from outside the editor:
+  // show it. The user's own autosaved versions never reset what is being typed.
+  const latestId = latest?.id ?? null;
+  const latestFromDraft = latest?.sourceReference?.startsWith('ai-draft') ?? false;
+  const latestContent = latest?.content ?? '';
+  useEffect(() => {
+    if (latestId && latestFromDraft) setValue(latestContent);
+  }, [latestId, latestFromDraft, latestContent]);
 
   return (
     <Card className="gap-3 py-4">
@@ -100,6 +121,15 @@ function SectionEditor({ projectId, section }: { projectId: string; section: App
             ))}
           </div>
         )}
+        {placeholders > 0 && (
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <Badge variant="warning">[POTREBNA DOPUNA] × {placeholders}</Badge>
+            <span className="text-amber-900">AI je označio podatke koji nedostaju. Dopunite ih pre potvrde; potvrda je zaključana dok marker postoji.</span>
+          </div>
+        )}
+        {latest?.sourceType === 'AGENT_INFERENCE' && !section.confirmed && (
+          <p className="text-xs text-muted-foreground">AI predlog. Nije pravni savet i ne zamenjuje registrovanog zastupnika. Tekst postaje vaš tek kad ga potvrdite.</p>
+        )}
         {section.confirmed && (
           <p className="text-xs text-muted-foreground">
             Potvrđen tekst agent ne može da menja. Vaša izmena pravi novu verziju i poništava potvrdu — tekst zatim treba
@@ -121,7 +151,8 @@ function SectionEditor({ projectId, section }: { projectId: string; section: App
           {!section.confirmed && latest?.content.trim() && (
             <Button
               size="sm"
-              disabled={confirm.isPending || autosave.state === 'pending' || autosave.state === 'saving'}
+              disabled={confirm.isPending || autosave.state === 'pending' || autosave.state === 'saving' || placeholders > 0}
+              title={placeholders > 0 ? 'Dopunite markere „[POTREBNA DOPUNA]" pre potvrde.' : undefined}
               onClick={() => confirm.mutate(section.id)}
             >
               POTVRDI tekst

@@ -29,6 +29,8 @@ export interface Project {
   currentStepKey: string;
   /** Demo project with invented data ("[DEMO] … – mock podaci"). */
   isDemo: boolean;
+  /** „Ciljna dužina opisa" (pages) for the AI draft; null = server default (AiStatus.draftTargetPages). */
+  targetDescriptionPages: number | null;
   progressPercent: number;
   createdAt: string;
   updatedAt: string;
@@ -489,6 +491,8 @@ export interface DraftVersion {
   verified: boolean;
   createdAt: string;
   terminologyIssues: PatentTermMatch[];
+  /** Number of „[POTREBNA DOPUNA: …]" markers; confirmation is blocked while > 0. */
+  placeholders: number;
 }
 
 export interface ApplicationSectionRecord {
@@ -581,6 +585,8 @@ export interface AiStatus {
   configured: boolean;
   model: string;
   maxCallsPerProjectPerDay: number;
+  /** Server default of „Ciljna dužina opisa" (AI_DRAFT_TARGET_PAGES). */
+  draftTargetPages: number;
   notConfiguredMessage: string | null;
 }
 
@@ -640,6 +646,8 @@ export interface AiReview {
 
 export interface AiUsage {
   calls: number;
+  reviewCalls: number;
+  draftCalls: number;
   callsToday: number;
   maxCallsPerDay: number;
   inputTokens: number;
@@ -647,4 +655,55 @@ export interface AiUsage {
   cacheReadTokens: number;
   cacheCreationTokens: number;
   estimatedCostUsd: number;
+}
+
+// ---------------------------------------------------------------------------
+// AI draft of the description (step 10, FUZZ-142)
+// ---------------------------------------------------------------------------
+
+export type AiDraftMode = 'GENERATE' | 'EXPAND';
+/** HELD: the section was confirmed when the draft was made; accepting needs an explicit replacement. */
+export type AiDraftSectionStatus = 'PROPOSED' | 'HELD' | 'ACCEPTED' | 'REJECTED';
+
+export interface AiDraftSection {
+  id: string;
+  sectionId: string;
+  key: string;
+  title: string;
+  position: number;
+  status: AiDraftSectionStatus;
+  content: string;
+  placeholders: number;
+  wordCount: number;
+  pages: number;
+  draftVersionId: string | null;
+  draftVersionNumber: number | null;
+  previousVersionId: string | null;
+  previousContent: string;
+  sectionConfirmedAtDraft: boolean;
+  terminologyIssues: PatentTermMatch[];
+  decidedAt: string | null;
+}
+
+export interface AiDraft {
+  id: string;
+  projectId: string;
+  mode: AiDraftMode;
+  model: string;
+  status: AiReviewStatus;
+  targetPages: number;
+  imageCount: number;
+  requestSummary: string;
+  errorMessage: string | null;
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheCreationTokens: number;
+  estimatedCostUsd: number | null;
+  durationMs: number;
+  createdAt: string;
+  notes: string[];
+  sections: AiDraftSection[];
+  totals: { words: number; pages: number; placeholders: number };
+  disclaimer: string;
 }

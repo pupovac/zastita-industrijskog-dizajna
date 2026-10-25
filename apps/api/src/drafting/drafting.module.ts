@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Module, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Module, Param, Patch, Post, Put, Res } from '@nestjs/common';
 import { ActorType } from '@prisma/client';
+import { Response } from 'express';
 import { z } from 'zod';
 import { Actor } from '../common/actor.decorator';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
@@ -24,6 +25,16 @@ export class DraftingController {
   @Get('projects/:projectId/application-sections')
   list(@Param('projectId') projectId: string) {
     return this.drafting.list(projectId);
+  }
+
+  /** „Preuzmi nacrt (DOCX)": the description over the latest versions, watermarked as a draft. */
+  @Get('projects/:projectId/description-draft.docx')
+  async descriptionDraft(@Param('projectId') projectId: string, @Res() res: Response) {
+    const { fileName, content } = await this.drafting.descriptionDraftDocx(projectId);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`);
+    res.send(content);
   }
 
   @Post('projects/:projectId/application-sections')

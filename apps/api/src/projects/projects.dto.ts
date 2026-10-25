@@ -20,6 +20,8 @@ export const updateProjectSchema = z
     designerName: text(300),
     representativeName: text(300),
     currentStepKey: z.enum(STEP_KEYS as [string, ...string[]]),
+    /** „Ciljna dužina opisa" (strane) for the AI draft; null = server default. */
+    targetDescriptionPages: z.number().int().min(1).max(30).nullable(),
   })
   .partial();
 export type UpdateProjectDto = z.infer<typeof updateProjectSchema>;

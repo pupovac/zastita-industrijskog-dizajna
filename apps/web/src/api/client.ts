@@ -48,6 +48,11 @@ export function generatedDocumentUrl(documentId: string): string {
   return `/api/generated-documents/${documentId}/content`;
 }
 
+/** „Preuzmi nacrt (DOCX)" in step 10: the description over the latest versions, watermarked as a draft. */
+export function descriptionDraftDocxUrl(projectId: string): string {
+  return `/api/projects/${projectId}/description-draft.docx`;
+}
+
 export function localCopyUrl(sourceId: string, index: number): string {
   return `/api/sources/${sourceId}/local-copies/${index}`;
 }

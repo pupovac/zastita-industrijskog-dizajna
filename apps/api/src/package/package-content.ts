@@ -1,5 +1,6 @@
 import { GeneratedDocumentType } from '@prisma/client';
 import { DEFAULT_APPLICATION_SECTIONS } from '../domain/application-sections';
+import { countPlaceholders } from '../domain/draft-rules';
 import { D1_FIELDS } from '../domain/d1-fields';
 import { ChecklistItem } from '../domain/filing-checklist';
 import { DEMO_BANNER } from '../domain/mock-data';
@@ -60,6 +61,33 @@ function sectionText(ctx: BuildContext, key: string): { text: string; confirmed:
   return { text: section?.latest?.content.trim() ?? '', confirmed: Boolean(section?.confirmed) };
 }
 
+/**
+ * Section text → blocks. Paragraphs are separated by blank lines; a paragraph that starts
+ * with „#", „##" or „###" is a sub-heading inside the section; consecutive lines starting
+ * with „-" or „*" form a list. Numbered paragraphs („1.", „(1)") stay ordinary paragraphs,
+ * so the numbering the author wrote is kept verbatim. A „[POTREBNA DOPUNA: …]" marker is
+ * left in the text on purpose: it marks a declared gap and must stay visible in a draft.
+ */
+export function textToBlocks(text: string): Block[] {
+  const blocks: Block[] = [];
+  for (const chunk of text.split(/\n{2,}/)) {
+    const paragraph = chunk.trim();
+    if (!paragraph) continue;
+    const heading = /^#{1,3}\s+(.+)$/s.exec(paragraph);
+    if (heading && !heading[1].includes('\n')) {
+      blocks.push({ type: 'heading', text: heading[1].trim(), level: 3 });
+      continue;
+    }
+    const lines = paragraph.split('\n');
+    if (lines.length > 0 && lines.every((l) => /^\s*[-*•]\s+/.test(l))) {
+      blocks.push({ type: 'list', items: lines.map((l) => l.replace(/^\s*[-*•]\s+/, '').trim()) });
+      continue;
+    }
+    blocks.push({ type: 'paragraph', text: paragraph });
+  }
+  return blocks;
+}
+
 function sectionBlocks(ctx: BuildContext, key: string, heading: string, required: boolean): Block[] {
   const { text, confirmed } = sectionText(ctx, key);
   if (!text && !required) return [];
@@ -68,9 +96,33 @@ function sectionBlocks(ctx: BuildContext, key: string, heading: string, required
     blocks.push({ type: 'paragraph', text: 'NEDOSTAJE – sekcija još nema tekst.', tone: 'warning' });
     return blocks;
   }
-  blocks.push(...text.split(/\n{2,}/).map((p): Block => ({ type: 'paragraph', text: p })));
+  blocks.push(...textToBlocks(text));
+  const placeholders = countPlaceholders(text);
+  if (placeholders > 0) {
+    blocks.push({ type: 'paragraph', text: `Sekcija sadrži ${placeholders} ${placeholders === 1 ? 'marker' : 'markera'} „[POTREBNA DOPUNA]" – podaci nedostaju.`, tone: 'warning' });
+  }
   if (!confirmed) blocks.push({ type: 'paragraph', text: 'Tekst sekcije nije potvrđen od strane korisnika.', tone: 'warning' });
   return blocks;
+}
+
+export const DRAFT_WATERMARK = 'NACRT – nije za podnošenje';
+
+/**
+ * „Preuzmi nacrt (DOCX)" in step 10: the description over the latest version of every
+ * section (confirmed or not), marked as a draft. Not stored as a package document.
+ */
+export function buildDescriptionDraft(snapshot: PackageSnapshot, generatedAt: Date): DocModel {
+  const ctx: BuildContext = { snapshot, checklist: [], version: 0, isFinal: false, missing: [], generatedAt };
+  const doc = buildDescription(ctx);
+  const unconfirmed = snapshot.sections.filter((s) => s.required && !s.confirmed).map((s) => s.title);
+  return {
+    title: `${doc.title} – NACRT`,
+    blocks: [
+      { type: 'paragraph', text: `${DRAFT_WATERMARK}. Radna verzija opisa nad poslednjim tekstom svake sekcije; AI tekst je AI predlog dok ga korisnik ne potvrdi.`, tone: 'warning' },
+      ...doc.blocks.map((b): Block => (b.type === 'table' ? { ...b, rows: b.rows.map((r) => (r[0] === 'Verzija paketa' ? ['Verzija paketa', 'nacrt (bez verzije paketa)'] : r)) } : b)),
+      ...(unconfirmed.length ? [{ type: 'paragraph', text: `Nepotvrđene obavezne sekcije: ${unconfirmed.join(', ')}.`, tone: 'note' } as Block] : []),
+    ],
+  };
 }
 
 export function buildDescription(ctx: BuildContext): DocModel {
