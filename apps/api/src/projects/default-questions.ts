@@ -1,67 +1,79 @@
-import { InterviewGroupKey } from '../domain/interview-groups';
-import { StepKey } from '../domain/steps';
+import { z } from 'zod';
+import { INTERVIEW_GROUP_KEYS, InterviewGroupKey } from '../domain/interview-groups';
+import { STEP_KEYS, StepKey } from '../domain/steps';
+import bank from './default-question-bank.json';
 
 /**
- * Starter interview questions about the product's appearance. They only collect
- * information from the user; they make no legal claims. Specialized agents can add
- * further questions through the API.
+ * Starter interview questions about the product's appearance, loaded from
+ * `default-question-bank.json` (the question bank written by the interviewer agent, FUZZ-143).
+ * The bank is not named `default-questions.json` on purpose: Jest resolves `.json` before
+ * `.ts`, so `import './default-questions'` would load the JSON instead of this module.
+ * They only collect information from the user; they make no legal claims.
+ * Specialized agents can add further questions through the API.
+ *
+ * Example answers are templates: `[oznaka]` markers show where the user must put
+ * their own data. Nothing in them is a statement about the applicant's product.
  */
 export interface DefaultQuestion {
+  /** Stable identity across releases; refresh-defaults matches existing questions by it. */
+  defaultKey: string;
   stepKey: StepKey;
+  interviewGroup: InterviewGroupKey;
   text: string;
+  /** Earlier wordings of this question, so projects created before `defaultKey` existed can adopt it. */
+  legacyTexts: string[];
   whyNeeded: string;
   exampleAnswer: string;
+  /** "Obavezno pomenite": what a complete answer must cover. */
+  includeHints: string[];
+  /** "Ne pišite": what does not belong in a design description. */
+  avoidHints: string[];
   required: boolean;
-  interviewGroup: InterviewGroupKey;
+  highPriority: boolean;
 }
 
-export const DEFAULT_QUESTIONS: DefaultQuestion[] = [
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Kako se proizvod zove i kako biste ga ukratko opisali?',
-    whyNeeded: 'Naziv i kratak opis koristimo kao polaznu tačku za sve dalje korake i za usklađivanje sa prikazima.',
-    exampleAnswer: 'Fasadni termoizolacioni panel od EPS-a sa nanetim završnim slojem.',
-    required: true,
-    interviewGroup: 'C',
-  },
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Kako izgleda vidljiva prednja površina panela (tekstura, završna obrada, boja)?',
-    whyNeeded: 'Spoljašnji izgled je ono što se beleži; potreban nam je vaš opis onoga što se vidi.',
-    exampleAnswer: 'Fina zrnasta tekstura, mat završni sloj, svetlosiva boja.',
-    required: true,
-    interviewGroup: 'D',
-  },
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Kako izgledaju ivice i spojevi panela posmatrano spolja?',
-    whyNeeded: 'Oblik ivica je vidljiva karakteristika koju treba tačno zabeležiti i kasnije posebno proceniti.',
-    exampleAnswer: 'Stepenasti profil na dužim ivicama, sa ravnim kratkim ivicama.',
-    required: true,
-    interviewGroup: 'E',
-  },
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Koje dimenzije i proporcije panel ima?',
-    whyNeeded: 'Proporcije utiču na ukupan izgled i moraju se slagati sa prikazima.',
-    exampleAnswer: '1000 × 500 mm, debljina 100 mm.',
-    required: false,
-    interviewGroup: 'D',
-  },
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Da li postoji više varijanti izgleda (boje, teksture, dimenzije)?',
-    whyNeeded: 'Varijante se beleže odvojeno kako bi se kasnije odlučilo kako ih obuhvatiti.',
-    exampleAnswer: 'Da, tri boje završnog sloja: bela, svetlosiva, antracit.',
-    required: false,
-    interviewGroup: 'F',
-  },
-  {
-    stepKey: 'PRODUCT_INTERVIEW',
-    text: 'Ko je autor (dizajner) izgleda proizvoda?',
-    whyNeeded: 'Podatak o autoru se beleži kao deo osnovnih podataka projekta.',
-    exampleAnswer: 'Ime i prezime, adresa.',
-    required: true,
-    interviewGroup: 'B',
-  },
-];
+const defaultQuestionSchema = z.object({
+  defaultKey: z.string().trim().min(1).max(100),
+  stepKey: z.enum(STEP_KEYS as [string, ...string[]]),
+  interviewGroup: z.enum(INTERVIEW_GROUP_KEYS),
+  text: z.string().trim().min(1).max(2000),
+  legacyTexts: z.array(z.string().trim().min(1).max(2000)).default([]),
+  whyNeeded: z.string().trim().max(2000).default(''),
+  exampleAnswer: z.string().trim().max(4000).default(''),
+  includeHints: z.array(z.string().trim().min(1).max(500)).default([]),
+  avoidHints: z.array(z.string().trim().min(1).max(500)).default([]),
+  required: z.boolean().default(false),
+  highPriority: z.boolean().default(false),
+});
+
+const bankSchema = z.object({ version: z.string(), questions: z.array(defaultQuestionSchema).min(1) });
+
+function loadBank(): DefaultQuestion[] {
+  const parsed = bankSchema.parse(bank);
+  const keys = new Set<string>();
+  for (const q of parsed.questions) {
+    if (keys.has(q.defaultKey)) throw new Error(`default-question-bank.json: duplicate defaultKey "${q.defaultKey}"`);
+    keys.add(q.defaultKey);
+  }
+  return parsed.questions as DefaultQuestion[];
+}
+
+export const DEFAULT_QUESTIONS: DefaultQuestion[] = loadBank();
+
+export const DEFAULT_QUESTION_BANK_VERSION: string = bank.version;
+
+/** The columns a default question writes when it is created on a project. */
+export function defaultQuestionData(q: DefaultQuestion) {
+  return {
+    defaultKey: q.defaultKey,
+    stepKey: q.stepKey,
+    interviewGroup: q.interviewGroup,
+    text: q.text,
+    whyNeeded: q.whyNeeded,
+    exampleAnswer: q.exampleAnswer,
+    includeHintsJson: JSON.stringify(q.includeHints),
+    avoidHintsJson: JSON.stringify(q.avoidHints),
+    required: q.required,
+    highPriority: q.highPriority,
+  };
+}

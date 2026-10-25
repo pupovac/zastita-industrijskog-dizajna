@@ -30,6 +30,12 @@ export class QuestionsController {
     return this.questions.create(projectId, dto, actor);
   }
 
+  /** "Osveži pitanja i primere" (step 4): guidance only, answers untouched. */
+  @Post('questions/refresh-defaults')
+  refreshDefaults(@Param('projectId') projectId: string, @Actor() actor: ActorType) {
+    return this.questions.refreshDefaults(projectId, actor);
+  }
+
   @Patch('questions/:questionId')
   update(
     @Param('projectId') projectId: string,

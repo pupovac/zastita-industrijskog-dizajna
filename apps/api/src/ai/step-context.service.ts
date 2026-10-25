@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { countPlaceholders } from '../domain/answer-placeholders';
 import { D1_FIELDS } from '../domain/d1-fields';
 import { DomainError } from '../domain/domain-error';
 import { isConfirmedUserFact } from '../domain/fact-rules';
@@ -20,6 +21,15 @@ export interface StepContext extends StepContextSections {
 }
 
 const json = (value: unknown) => JSON.stringify(value, null, 1);
+
+function parseHintList(jsonText: string): string[] {
+  try {
+    const value: unknown = JSON.parse(jsonText);
+    return Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Collects what the model sees for one step: the project, the confirmed facts, the
@@ -192,14 +202,23 @@ export class StepContextService {
           sections.push({
             heading: 'Pitanja i odgovori korisnika',
             body: json(
-              questions.map((q) => ({
-                group: q.interviewGroup,
-                question: q.text,
-                required: q.required,
-                deferredToFiling: q.deferredToFiling,
-                answer: q.answers[0]?.value ?? null,
-                attachmentFileId: q.answers[0]?.attachmentFileId ?? null,
-              })),
+              questions.map((q) => {
+                const answer = q.answers[0]?.value ?? null;
+                return {
+                  group: q.interviewGroup,
+                  question: q.text,
+                  required: q.required,
+                  highPriority: q.highPriority,
+                  deferredToFiling: q.deferredToFiling,
+                  // What a complete answer must cover and the template it was written against:
+                  // a draft marks every element the answer does not cover with [POTREBNA DOPUNA].
+                  mustCover: parseHintList(q.includeHintsJson),
+                  answerTemplate: q.exampleAnswer || null,
+                  unfilledPlaceholders: answer ? countPlaceholders(answer) : 0,
+                  answer,
+                  attachmentFileId: q.answers[0]?.attachmentFileId ?? null,
+                };
+              }),
             ),
           });
           counts.push(`${questions.filter((q) => q.answers[0]?.value?.trim()).length}/${questions.length} odgovorenih pitanja`);

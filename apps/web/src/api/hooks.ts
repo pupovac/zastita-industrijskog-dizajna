@@ -9,6 +9,7 @@ import type {
   ApplicationSectionRecord,
   D1Field,
   Decision,
+  DefaultQuestionRefreshResult,
   Fact,
   FinalSignoff,
   InterviewGroup,
@@ -115,6 +116,15 @@ export function useTransitionStep(projectId: string) {
       qc.setQueryData(keys.steps(projectId), steps);
       void invalidate();
     },
+  });
+}
+
+/** "Osveži pitanja i primere": updates guidance of default questions, never answers. */
+export function useRefreshDefaultQuestions(projectId: string) {
+  const invalidate = useInvalidateProject(projectId);
+  return useMutation({
+    mutationFn: () => apiSend<DefaultQuestionRefreshResult>('POST', `/projects/${projectId}/questions/refresh-defaults`),
+    onSuccess: () => void invalidate(),
   });
 }
 

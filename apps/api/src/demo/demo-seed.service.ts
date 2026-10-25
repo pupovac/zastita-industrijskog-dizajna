@@ -9,7 +9,7 @@ import { DEMO_PROJECT_NAME, MOCK_REFERENCE } from '../domain/mock-data';
 import { STEP_DEFINITIONS, StepKey } from '../domain/steps';
 import { uploadRoot } from '../files/files.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { DEFAULT_QUESTIONS } from '../projects/default-questions';
+import { DEFAULT_QUESTIONS, defaultQuestionData } from '../projects/default-questions';
 import { ResearchImportService } from '../research/research-import.service';
 import { PlaceholderView, placeholderSvg } from './placeholder-views';
 
@@ -97,7 +97,7 @@ export class DemoSeedService {
 
   private async seedInterview(db: Prisma.TransactionClient, projectId: string) {
     const questions = [
-      ...DEFAULT_QUESTIONS.map((q) => ({ ...q, answer: mock('Odgovor na početno pitanje.') })),
+      ...DEFAULT_QUESTIONS.map((q) => ({ ...defaultQuestionData(q), answer: mock('Odgovor na početno pitanje.') })),
       {
         stepKey: 'PRODUCT_INTERVIEW' as const,
         interviewGroup: 'A' as const,
