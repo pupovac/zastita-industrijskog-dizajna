@@ -2,6 +2,10 @@ export const DEFAULT_AI_MODEL = 'claude-opus-5-5';
 export const DEFAULT_MAX_CALLS_PER_PROJECT_PER_DAY = 50;
 /** Upper bound of the variable part of the prompt (step state + document text), in characters. */
 export const DEFAULT_MAX_CONTEXT_CHARS = 300_000;
+/** „Ciljna dužina opisa" when the project has no setting of its own (FUZZ-142). */
+export const DEFAULT_DRAFT_TARGET_PAGES = 5;
+/** Images (representations, photos, renders) sent with one draft request. */
+export const DEFAULT_DRAFT_MAX_IMAGES = 12;
 
 /**
  * Configuration of the AI review, read from the environment once. The API key stays
@@ -13,12 +17,16 @@ export class AiConfig {
   readonly model: string;
   readonly maxCallsPerProjectPerDay: number;
   readonly maxContextChars: number;
+  readonly draftTargetPages: number;
+  readonly draftMaxImages: number;
 
   constructor(env: NodeJS.ProcessEnv = process.env) {
     this.apiKey = env.ANTHROPIC_API_KEY?.trim() || null;
     this.model = env.ANTHROPIC_MODEL?.trim() || DEFAULT_AI_MODEL;
     this.maxCallsPerProjectPerDay = positiveInt(env.AI_MAX_CALLS_PER_PROJECT_PER_DAY, DEFAULT_MAX_CALLS_PER_PROJECT_PER_DAY);
     this.maxContextChars = positiveInt(env.AI_MAX_CONTEXT_CHARS, DEFAULT_MAX_CONTEXT_CHARS);
+    this.draftTargetPages = positiveInt(env.AI_DRAFT_TARGET_PAGES, DEFAULT_DRAFT_TARGET_PAGES);
+    this.draftMaxImages = positiveInt(env.AI_DRAFT_MAX_IMAGES, DEFAULT_DRAFT_MAX_IMAGES);
   }
 
   get configured(): boolean {
@@ -31,6 +39,7 @@ export class AiConfig {
       configured: this.configured,
       model: this.model,
       maxCallsPerProjectPerDay: this.maxCallsPerProjectPerDay,
+      draftTargetPages: this.draftTargetPages,
       notConfiguredMessage: this.configured ? null : 'AI provera nije konfigurisana.',
     };
   }

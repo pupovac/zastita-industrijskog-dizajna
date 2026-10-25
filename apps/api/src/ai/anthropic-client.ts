@@ -10,6 +10,11 @@ export interface AiCompletionRequest {
   /** Stable blocks first; the last stable block carries the cache breakpoint. */
   system: Anthropic.Beta.BetaTextBlockParam[];
   userText: string;
+  /**
+   * Full user message as content blocks (text + images). When set, it is sent instead of
+   * `userText`; `userText` then only documents the text part (logs, tests).
+   */
+  userContent?: Anthropic.Beta.BetaContentBlockParam[];
   /** JSON schema for structured output. */
   schema: Record<string, unknown>;
   maxTokens: number;
@@ -45,7 +50,7 @@ export class AnthropicModelClient implements AiModelClient {
       thinking: { type: 'adaptive' },
       output_config: { effort: 'high', format: { type: 'json_schema', schema: request.schema } },
       system: request.system,
-      messages: [{ role: 'user', content: request.userText }],
+      messages: [{ role: 'user', content: request.userContent ?? request.userText }],
     });
     return stream.finalMessage();
   }

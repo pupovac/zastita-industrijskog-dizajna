@@ -1,88 +1,14 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { INestApplication } from '@nestjs/common';
-import { Test, TestingModuleBuilder } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AiConfig } from '../src/ai/ai-config';
 import { AI_DISCLAIMER } from '../src/ai/ai-prompt';
-import { AI_MODEL_CLIENT, AiCompletionRequest, AiModelClient } from '../src/ai/anthropic-client';
-import { AppModule } from '../src/app.module';
-import { configureApp } from '../src/app.setup';
 import { PrismaService } from '../src/prisma/prisma.service';
+import { createAiTestApp, fakeMessage, Message, MockModelClient } from './ai-mock';
 
 const asUser = { 'X-Actor-Type': 'USER' };
 const asAgent = { 'X-Actor-Type': 'AGENT' };
-
-type Message = Anthropic.Beta.BetaMessage;
-
-function fakeMessage(options: {
-  text?: string;
-  stopReason?: Message['stop_reason'];
-  model?: string;
-  usage?: Partial<{ input: number; output: number; cacheRead: number; cacheCreation: number }>;
-  refusalCategory?: string;
-}): Message {
-  const usage = { input: 1200, output: 300, cacheRead: 0, cacheCreation: 0, ...options.usage };
-  return {
-    id: 'msg_test',
-    type: 'message',
-    role: 'assistant',
-    model: options.model ?? 'claude-opus-5-5',
-    content: options.text === undefined ? [] : [{ type: 'text', text: options.text, citations: null }],
-    stop_reason: options.stopReason ?? 'end_turn',
-    stop_sequence: null,
-    stop_details: options.stopReason === 'refusal' ? ({ type: 'refusal', category: options.refusalCategory ?? 'general_harms' } as never) : null,
-    container: null,
-    context_management: null,
-    usage: {
-      input_tokens: usage.input,
-      output_tokens: usage.output,
-      cache_read_input_tokens: usage.cacheRead,
-      cache_creation_input_tokens: usage.cacheCreation,
-      cache_creation: null,
-      server_tool_use: null,
-      service_tier: null,
-      inference_geo: null,
-      iterations: null,
-      fallback_credit: null,
-      speed: null,
-    } as never,
-  } as unknown as Message;
-}
-
-/** Stands in for the SDK: records every request and answers from a queue. */
-class MockModelClient implements AiModelClient {
-  requests: AiCompletionRequest[] = [];
-  queue: (() => Promise<Message>)[] = [];
-
-  answer(message: Message) {
-    this.queue.push(() => Promise.resolve(message));
-  }
-
-  fail(error: Error) {
-    this.queue.push(() => Promise.reject(error));
-  }
-
-  async complete(request: AiCompletionRequest): Promise<Message> {
-    this.requests.push(request);
-    const next = this.queue.shift();
-    if (!next) throw new Error('MockModelClient: no answer queued');
-    return next();
-  }
-}
-
-async function createApp(config: AiConfig, client: AiModelClient): Promise<INestApplication<App>> {
-  const builder: TestingModuleBuilder = Test.createTestingModule({ imports: [AppModule] })
-    .overrideProvider(AiConfig)
-    .useValue(config)
-    .overrideProvider(AI_MODEL_CLIENT)
-    .useValue(client);
-  const moduleRef = await builder.compile();
-  const app = moduleRef.createNestApplication();
-  configureApp(app);
-  await app.init();
-  return app;
-}
 
 const okResponse = (overrides: Partial<Record<'summary' | 'findings' | 'suggestions' | 'openQuestions', unknown>> = {}) =>
   JSON.stringify({
@@ -112,7 +38,7 @@ describe('AI review of a step (e2e, mocked SDK)', () => {
   }
 
   beforeAll(async () => {
-    app = await createApp(new AiConfig({ ANTHROPIC_API_KEY: 'sk-test', AI_MAX_CALLS_PER_PROJECT_PER_DAY: '50' }), mock);
+    app = await createAiTestApp(new AiConfig({ ANTHROPIC_API_KEY: 'sk-test', AI_MAX_CALLS_PER_PROJECT_PER_DAY: '50' }), mock);
     prisma = app.get(PrismaService);
   });
 
@@ -426,7 +352,7 @@ describe('AI review of a step (e2e, mocked SDK)', () => {
     let offApp: INestApplication<App>;
     const offMock = new MockModelClient();
     beforeAll(async () => {
-      offApp = await createApp(new AiConfig({}), offMock);
+      offApp = await createAiTestApp(new AiConfig({}), offMock);
     });
     afterAll(async () => {
       await offApp.close();
@@ -450,7 +376,7 @@ describe('AI review of a step (e2e, mocked SDK)', () => {
     let limitedApp: INestApplication<App>;
     const limitedMock = new MockModelClient();
     beforeAll(async () => {
-      limitedApp = await createApp(new AiConfig({ ANTHROPIC_API_KEY: 'sk-test', AI_MAX_CALLS_PER_PROJECT_PER_DAY: '1' }), limitedMock);
+      limitedApp = await createAiTestApp(new AiConfig({ ANTHROPIC_API_KEY: 'sk-test', AI_MAX_CALLS_PER_PROJECT_PER_DAY: '1' }), limitedMock);
     });
     afterAll(async () => {
       await limitedApp.close();

@@ -207,25 +207,42 @@ enum AiSuggestionStatus {
   REJECTED
 }
 
+/// How the AI wrote the description draft (FUZZ-142).
+enum AiDraftMode {
+  GENERATE
+  EXPAND
+}
+
+/// What happened to one section of an AI draft. HELD: the section was confirmed by the
+/// user, so the text was kept aside and not written as a version until the user decides.
+enum AiDraftSectionStatus {
+  PROPOSED
+  HELD
+  ACCEPTED
+  REJECTED
+}
+
 // ---------------------------------------------------------------------------
 // Project and wizard progress
 // ---------------------------------------------------------------------------
 
 model Project {
-  id                 String   @id @default(uuid())
-  name               String
-  productName        String   @default("")
-  productSummary     String   @default("")
-  applicantName      String   @default("")
-  applicantAddress   String   @default("")
-  designerName       String   @default("")
-  representativeName String   @default("")
+  id                     String   @id @default(uuid())
+  name                   String
+  productName            String   @default("")
+  productSummary         String   @default("")
+  applicantName          String   @default("")
+  applicantAddress       String   @default("")
+  designerName           String   @default("")
+  representativeName     String   @default("")
   /// Last step the user had open, so the wizard resumes where they left off.
-  currentStepKey     String   @default("PROJECT_SETUP")
+  currentStepKey         String   @default("PROJECT_SETUP")
   /// Demo project with invented data. Mock records never enter a real project.
-  isDemo             Boolean  @default(false)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  isDemo                 Boolean  @default(false)
+  /// „Ciljna dužina opisa" in pages for the AI draft; null = the server default (AI_DRAFT_TARGET_PAGES).
+  targetDescriptionPages Int?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
   steps               ProjectStep[]
   questions           Question[]
@@ -251,6 +268,7 @@ model Project {
   generatedDocuments  GeneratedDocument[]
   signoffs            FinalSignoff[]
   aiReviews           AiReview[]
+  aiDrafts            AiDraft[]
 }
 
 model ProjectStep {
@@ -958,4 +976,65 @@ model AiSuggestion {
   review AiReview @relation(fields: [aiReviewId], references: [id], onDelete: Cascade)
 
   @@index([aiReviewId])
+}
+
+// ---------------------------------------------------------------------------
+// AI draft of the description (FUZZ-142). The model writes every section from
+// the collected project memory; each text lands as a DraftVersion with
+// sourceType AGENT_INFERENCE and is an AI inference until the user confirms it.
+// ---------------------------------------------------------------------------
+
+model AiDraft {
+  id                  String         @id @default(uuid())
+  projectId           String
+  mode                AiDraftMode
+  /// Model that actually served the response (may be a server-side fallback).
+  model               String
+  status              AiReviewStatus
+  /// Pages the prompt aimed at (~500 words per page).
+  targetPages         Int
+  /// Number of images (representations, photos, renders) sent to the model.
+  imageCount          Int            @default(0)
+  requestSummary      String         @default("")
+  /// JSON text: the validated structured response (sections, notes).
+  responseJson        String         @default("")
+  errorMessage        String?
+  inputTokens         Int            @default(0)
+  outputTokens        Int            @default(0)
+  cacheReadTokens     Int            @default(0)
+  cacheCreationTokens Int            @default(0)
+  estimatedCostUsd    Float?
+  durationMs          Int            @default(0)
+  createdAt           DateTime       @default(now())
+
+  project  Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sections AiDraftSection[]
+
+  @@index([projectId, createdAt])
+}
+
+model AiDraftSection {
+  id                   String               @id @default(uuid())
+  aiDraftId            String
+  applicationSectionId String
+  sectionKey           String
+  position             Int                  @default(0)
+  content              String
+  /// Number of „[POTREBNA DOPUNA: …]" markers, counted by the server.
+  placeholders         Int                  @default(0)
+  wordCount            Int                  @default(0)
+  status               AiDraftSectionStatus @default(PROPOSED)
+  /// The section was confirmed by the user when the draft was made (so the text was HELD).
+  sectionWasConfirmed  Boolean              @default(false)
+  /// The version written for this section (null while HELD or when rejected before writing).
+  draftVersionId       String?
+  /// The version that was the latest before the draft, for „prethodna vs. nova" comparison.
+  previousVersionId    String?
+  decidedAt            DateTime?
+  createdAt            DateTime             @default(now())
+
+  draft AiDraft @relation(fields: [aiDraftId], references: [id], onDelete: Cascade)
+
+  @@index([aiDraftId])
+  @@index([draftVersionId])
 }

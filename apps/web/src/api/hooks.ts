@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiGet, apiSend, apiUpload } from './client';
 import type {
+  AiDraft,
+  AiDraftMode,
   AiReview,
   AiStatus,
   AiUsage,
@@ -52,6 +54,7 @@ export const keys = {
   decisions: (id: string) => ['projects', id, 'decisions'] as const,
   aiReviews: (id: string, stepKey: string) => ['projects', id, 'ai-reviews', stepKey] as const,
   aiUsage: (id: string) => ['projects', id, 'ai-usage'] as const,
+  aiDrafts: (id: string) => ['projects', id, 'ai-drafts'] as const,
 };
 
 export const useProjects = () => useQuery({ queryKey: keys.projects, queryFn: () => apiGet<Project[]>('/projects') });
@@ -504,6 +507,42 @@ export function useDecideAiSuggestion(projectId: string, stepKey: string) {
       apiSend<AiReview>('POST', `/ai-suggestions/${id}/${decision}`),
     onSuccess: (review) => {
       qc.setQueryData<AiReview[]>(keys.aiReviews(projectId, stepKey), (old) => (old ?? []).map((r) => (r.id === review.id ? review : r)));
+      void invalidate();
+    },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// AI draft of the description (step 10, FUZZ-142)
+// ---------------------------------------------------------------------------
+
+export const useAiDrafts = (projectId: string) =>
+  useQuery({ queryKey: keys.aiDrafts(projectId), queryFn: () => apiGet<AiDraft[]>(`/projects/${projectId}/ai-drafts`) });
+
+/** „Generiši nacrt opisa" / „Proširi i doteraj". Writes a new version of every section, so the whole project view is refreshed. */
+export function useGenerateAiDraft(projectId: string) {
+  const qc = useQueryClient();
+  const invalidate = useInvalidateProject(projectId);
+  return useMutation({
+    mutationFn: (dto: { mode: AiDraftMode; targetPages?: number; replaceConfirmed?: boolean }) =>
+      apiSend<AiDraft>('POST', `/projects/${projectId}/ai-drafts`, dto),
+    onSuccess: (draft) => {
+      qc.setQueryData<AiDraft[]>(keys.aiDrafts(projectId), (old) => [draft, ...(old ?? [])]);
+      void invalidate();
+    },
+    onError: () => void qc.invalidateQueries({ queryKey: keys.aiDrafts(projectId) }),
+  });
+}
+
+/** Prihvati kao radnu verziju / Odbaci for one section of a draft. */
+export function useDecideAiDraftSection(projectId: string) {
+  const qc = useQueryClient();
+  const invalidate = useInvalidateProject(projectId);
+  return useMutation({
+    mutationFn: ({ draftId, sectionKey, decision, replaceConfirmed }: { draftId: string; sectionKey: string; decision: 'accept' | 'reject'; replaceConfirmed?: boolean }) =>
+      apiSend<AiDraft>('POST', `/ai-drafts/${draftId}/sections/${sectionKey}/${decision}`, decision === 'accept' ? { replaceConfirmed: replaceConfirmed ?? false } : {}),
+    onSuccess: (draft) => {
+      qc.setQueryData<AiDraft[]>(keys.aiDrafts(projectId), (old) => (old ?? []).map((d) => (d.id === draft.id ? draft : d)));
       void invalidate();
     },
   });

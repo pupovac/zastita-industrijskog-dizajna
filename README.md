@@ -89,6 +89,40 @@ Pravila koja backend sprovodi:
 Stvaran poziv nad demo projektom, sa ključem u `apps/api/.env`: `npm run ai:smoke --workspace apps/api -- VISUAL_ANALYSIS`
 (ispisuje tokene, keš i procenjenu cenu; drugi uzastopni poziv treba da pokaže `cache_read > 0`).
 
+## AI nacrt opisa (korak 10, FUZZ-142)
+
+Kartica „AI nacrt opisa" u koraku 10 ima dugmad **Generiši nacrt opisa** (sve sekcije iz početka, iz podataka) i
+**Proširi i doteraj postojeći tekst** (zadržava svaku činjenicu koju je korisnik napisao). Backend
+(`apps/api/src/ai/ai-draft.service.ts`, `draft-context.service.ts`) modelu šalje sve iz koraka 1–9 označeno po poreklu
+(ČINJENICA / IZJAVA KORISNIKA / AI ZAKLJUČAK): činjenice, intervju A–G, mapu vizuelnih karakteristika sa rizikom
+funkcionalnosti, varijante i strategiju, plan prikaza, **slike prikaza i otpremljene fotografije/rendere kao image
+blokove** (PNG/JPG, do `AI_DRAFT_MAX_IMAGES`, API ih sam umanjuje), izvučeni tekst dokumenata, Matricu zahteva i zvanični
+primer ZIS-a (BOCA) kao uzor strukture. Isti SDK klijent kao za proveru: strukturisan izlaz `{ sections[], notes[] }`,
+`max_tokens` 24 000, keširan prefiks (sistemski prompt + Matrica + primer BOCE).
+
+Pravila koja backend sprovodi:
+
+- Svaki tekst se upisuje kao **nova `DraftVersion`** (`sourceType: AGENT_INFERENCE`, `sourceReference: ai-draft:<id>`,
+  `createdByActor: AGENT`), nikada kao potvrđena. Potvrđena sekcija se **ne prepisuje**: njen tekst ostaje zadržan
+  (`HELD`) dok korisnik izričito ne odluči (`replaceConfirmed: true`; UI pita „Sekcija X je potvrđena. Zameniti radnom
+  verzijom?"). Pravilo: `domain/draft-rules.ts`, sa unit testovima.
+- Gde podatak ne postoji, model ostavlja marker **`[POTREBNA DOPUNA: šta nedostaje]`**. Server broji markere; sekcija sa
+  markerom se **ne može potvrditi** (`SECTION_HAS_PLACEHOLDERS`), ni kroz UI ni kroz API.
+- Generisanje i odluke o sekcijama pokreće **samo korisnik** (`X-Actor-Type: USER`; agent dobija 403). Odluke se beleže kao
+  `Decision`. Odbačen nacrt ostaje u istoriji verzija; prethodni tekst se vraća kao nova verzija ako je postojao.
+- Zapis `AiDraft` (režim, model, ciljna dužina, broj slika, tokeni, cena, trajanje, status OK/REFUSED/ERROR); jedno
+  generisanje po projektu istovremeno; dnevni limit `AI_MAX_CALLS_PER_PROJECT_PER_DAY` se **deli** sa proverama koraka;
+  prevelik kontekst → 422, ništa se ne seče tiho.
+- **Ciljna dužina opisa** (strane, ~500 reči po strani) je podešavanje projekta u koraku 1 (`targetDescriptionPages`;
+  prazno = `AI_DRAFT_TARGET_PAGES`, podrazumevano 5) i može se promeniti pri svakom generisanju. AI joj teži kroz
+  iscrpnost, ne ponavljanje; nije strogo pravilo.
+- **Preuzmi nacrt (DOCX)** (`GET /api/projects/:id/description-draft.docx`) renderuje opis nad poslednjim verzijama svih
+  sekcija (ne samo potvrđenim), sa zaglavljem „NACRT – nije za podnošenje" i napomenom da sistem ne garantuje prihvatanje
+  prijave. Podnaslovi (`## …`) i liste u tekstu sekcija se renderuju u Markdown, DOCX i PDF paketa.
+
+Stvaran poziv nad demo projektom, sa ključem u `apps/api/.env`: `npm run ai:draft-smoke --workspace apps/api -- GENERATE 5`
+(ispisuje reči, strane, markere, tokene, trajanje i procenjenu cenu).
+
 ## Prelazak na PostgreSQL
 
 Šema koristi samo prenosive tipove (`String`, `Int`, `Float`, `Boolean`, `DateTime`) i Prisma enume, bez

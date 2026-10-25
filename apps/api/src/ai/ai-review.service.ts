@@ -12,6 +12,7 @@ import { estimateCostUsd } from './ai-pricing';
 import { AI_DISCLAIMER, renderRequirementsMatrix, renderStepContext, SYSTEM_PROMPT } from './ai-prompt';
 import { AI_REVIEW_JSON_SCHEMA, AiReviewResponse, parseAiReviewResponse } from './ai-review.schema';
 import { AI_MODEL_CLIENT, AiModelClient, describeApiError } from './anthropic-client';
+import { callsToday } from './ai-quota';
 import { StepContextService } from './step-context.service';
 
 /** Room for a long structured answer; streaming means the limit is not a timeout concern. */
@@ -104,23 +105,24 @@ export class AiReviewService {
 
   async usage(projectId: string) {
     await this.projects.assertExists(projectId);
-    const [totals, today] = await Promise.all([
-      this.prisma.aiReview.aggregate({
-        where: { projectId },
-        _count: { _all: true },
-        _sum: { inputTokens: true, outputTokens: true, cacheReadTokens: true, cacheCreationTokens: true, estimatedCostUsd: true },
-      }),
-      this.prisma.aiReview.count({ where: { projectId, createdAt: { gte: startOfTodayUtc() } } }),
+    const sum = { inputTokens: true, outputTokens: true, cacheReadTokens: true, cacheCreationTokens: true, estimatedCostUsd: true } as const;
+    const [reviews, drafts, today] = await Promise.all([
+      this.prisma.aiReview.aggregate({ where: { projectId }, _count: { _all: true }, _sum: sum }),
+      this.prisma.aiDraft.aggregate({ where: { projectId }, _count: { _all: true }, _sum: sum }),
+      callsToday(this.prisma, projectId),
     ]);
+    const both = (field: keyof typeof sum) => (reviews._sum[field] ?? 0) + (drafts._sum[field] ?? 0);
     return {
-      calls: totals._count._all,
+      calls: reviews._count._all + drafts._count._all,
+      reviewCalls: reviews._count._all,
+      draftCalls: drafts._count._all,
       callsToday: today,
       maxCallsPerDay: this.config.maxCallsPerProjectPerDay,
-      inputTokens: totals._sum.inputTokens ?? 0,
-      outputTokens: totals._sum.outputTokens ?? 0,
-      cacheReadTokens: totals._sum.cacheReadTokens ?? 0,
-      cacheCreationTokens: totals._sum.cacheCreationTokens ?? 0,
-      estimatedCostUsd: totals._sum.estimatedCostUsd ?? 0,
+      inputTokens: both('inputTokens'),
+      outputTokens: both('outputTokens'),
+      cacheReadTokens: both('cacheReadTokens'),
+      cacheCreationTokens: both('cacheCreationTokens'),
+      estimatedCostUsd: Math.round(both('estimatedCostUsd') * 1_000_000) / 1_000_000,
     };
   }
 
@@ -135,7 +137,7 @@ export class AiReviewService {
     if (this.inFlight.has(lock)) {
       throw new DomainError('AI_REVIEW_IN_PROGRESS', 'AI provera ovog koraka je već u toku. Sačekajte da se završi.', 'CONFLICT');
     }
-    const today = await this.prisma.aiReview.count({ where: { projectId, createdAt: { gte: startOfTodayUtc() } } });
+    const today = await callsToday(this.prisma, projectId);
     if (today >= this.config.maxCallsPerProjectPerDay) {
       throw new DomainError(
         'AI_DAILY_LIMIT_REACHED',
@@ -327,9 +329,4 @@ export class AiReviewService {
     if (!isStepKey(stepKey)) throw new DomainError('STEP_NOT_FOUND', 'Nepoznat korak.', 'NOT_FOUND');
     return stepKey;
   }
-}
-
-function startOfTodayUtc(): Date {
-  const now = new Date();
-  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 }

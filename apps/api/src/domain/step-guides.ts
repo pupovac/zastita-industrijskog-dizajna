@@ -214,8 +214,9 @@ export const STEP_GUIDES: readonly StepGuide[] = [
   {
     key: 'DESCRIPTION_DRAFTING',
     description:
-      'Izrada opisa industrijskog dizajna po sekcijama (naziv, opis, karakteristični vizuelni elementi, namena, spisak prikaza, spisak priloga) sa istorijom verzija. Tekst piše agent za izradu opisa i korisnik; sistem ga samo čuva, verzionira i proverava terminologiju.',
-    closingCriterion: 'Sve obavezne sekcije imaju tekst bez patentne terminologije, usklađen sa potvrđenim karakteristikama i prikazima; korisnik je potvrdio sekcije.',
+      'Izrada opisa industrijskog dizajna po sekcijama (naziv, opis, karakteristični vizuelni elementi, namena, spisak prikaza, spisak priloga) sa istorijom verzija. Tekst piše agent za izradu opisa, AI nacrt („Generiši nacrt opisa") i korisnik; sistem ga samo čuva, verzionira i proverava terminologiju. AI tekst je AI ZAKLJUČAK dok ga korisnik ne potvrdi; gde podatak nedostaje, AI ostavlja marker „[POTREBNA DOPUNA: …]" umesto pretpostavke.',
+    closingCriterion:
+      'Sve obavezne sekcije imaju tekst bez patentne terminologije i bez markera „[POTREBNA DOPUNA]", usklađen sa potvrđenim karakteristikama i prikazima; korisnik je potvrdio sekcije.',
     areaCodes: ['description', 'representations', 'exclusions'],
     researchPhases: [8],
     factCategory: 'APPLICATION_FIELD',
@@ -233,7 +234,7 @@ export const STEP_GUIDES: readonly StepGuide[] = [
   {
     key: 'INDEPENDENT_REVIEW',
     description:
-      'Nezavisna provera opisa i prikaza po 17 kontrolnih tačaka; nalazi imaju ozbiljnost (BLOCKER/VISOK/SREDNJI/NIZAK) i status rešavanja. Nerešen BLOCKER zatvara finalni paket.',
+      'Nezavisna provera opisa i prikaza po 17 kontrolnih tačaka; nalazi imaju ozbiljnost (BLOCKER/VISOK/SREDNJI/NIZAK) i status rešavanja. Nerešen BLOCKER zatvara finalni paket. Tekst sekcija može biti AI nacrt, zato posebno proveriti: (a) funkcionalni ili patentni jezik (opis funkcije, konstrukcije, montaže, materijala kao tehničke osobine ili prednosti; izrazi koje hvata provera terminologije); (b) preostale markere „[POTREBNA DOPUNA: …]" — svaki je BLOCKER za potvrdu sekcije; (c) nesklad opisa sa Planom prikaza (pozivanje na nepostojeći prikaz, opisan deo koji nijedan prikaz ne pokazuje, suprotna geometrija); (d) tvrdnje o proizvodu, podnosiocu ili autoru koje nemaju izvor u potvrđenim činjenicama ili izjavama korisnika.',
     closingCriterion: 'Svaka kontrolna tačka je razmotrena; nema otvorenih nalaza BLOCKER; ostali nalazi su rešeni ili ih je korisnik svesno prihvatio.',
     areaCodes: ['description', 'representations', 'mandatory_documents', 'exclusions'],
     researchPhases: [9],

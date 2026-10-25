@@ -15,7 +15,8 @@
     "postinstall": "prisma generate",
     "db:seed:demo": "node --env-file=.env -r ts-node/register/transpile-only src/scripts/seed-demo.ts",
     "db:import:research": "node --env-file=.env -r ts-node/register/transpile-only src/scripts/import-research.ts",
-    "ai:smoke": "node --env-file=.env -r ts-node/register/transpile-only src/scripts/ai-smoke.ts"
+    "ai:smoke": "node --env-file=.env -r ts-node/register/transpile-only src/scripts/ai-smoke.ts",
+    "ai:draft-smoke": "node --env-file=.env -r ts-node/register/transpile-only src/scripts/ai-draft-smoke.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.2.0",
