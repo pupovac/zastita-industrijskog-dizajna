@@ -42,3 +42,13 @@ Nova pitanja za ZIS ili registrovanog zastupnika, otvorena pri izradi matrice za
 | P-11 | Da li je fasada od panela „složeni proizvod" (čl. 2 st. 3, čl. 6) i kako se ocenjuju ivice skrivene posle ugradnje | Z-06 čl. 2, 6; Z-08 str. 6, 46–47 | MZ-193 |
 
 Dokumenti koje dostavlja podnosilac (N-01 i N-02 iz faze 1, kao i N-03 do N-09 iz faze 2) objedinjeni su u sekciji N dokumenta `docs/faza-2/rezultati-inicijalnog-istrazivanja.md`.
+
+## Dopuna — ponovna provera pre podnošenja (2026-11-20, FUZZ-360)
+
+Detalji i citati: `docs/izvori/provera-2026-11-20.md`.
+
+| # | Pitanje | Izvor koji smo analizirali | Status |
+|---|---------|----------------------------|--------|
+| P-04 | Kumulacija umanjenja −50 % (fizičko lice) i −25 % (e-Prijava) | Z-16 ZRAT, Tar. br. 107, napomena | **RAZREŠENO** — kumuliraju se za fizičko lice |
+| P-12 | Da li preduzetnik (DEJAN EJIĆ PR STIROLUX) plaća iznos za fizička lica po Tar. br. 107 ili pun iznos; koje poslovno ime (puno iz APR-a ili skraćeno) u D-1 polje 1 i zaglavlje opisa; da li su MB/PIB potrebni | Z-16 ZRAT; Z-17 ZPD čl. 83 i 86; Z-04 D-1 polje 1; Z-08 str. 26, 29 | NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom. (kontakt: 011 20-25-958 / 20-25-957, zis@zis.gov.rs) |
+| P-13 | Da li su brojčane oznake delova (1), (2) sa pokaznim linijama prihvatljive na 3D nacrtu, s obzirom na Uredbu čl. 13 st. 3 tač. 2 (zabrana legendi); 2D primer ŠARA ih koristi, 3D primeri BOCA i KORPA ne | Z-07 čl. 13; Z-05 str. 6, 8, 9; Z-08 str. 31, 34–35 | NEPROVERENO – preporuka: ne koristiti, slediti primer BOCE |

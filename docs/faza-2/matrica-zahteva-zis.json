@@ -1,6 +1,6 @@
 {
   "title": "Matrica zahteva ZIS-a — prijava za priznanje prava na industrijski dizajn (EPS fasadni panel)",
-  "version": "1.0",
+  "version": "1.1",
   "phase": 2,
   "generated": "2026-10-06",
   "access_date_default": "2026-10-06",
@@ -216,6 +216,18 @@
       "document": "ZIS — Obrazac D-2 (razdvajanje višestruke prijave)",
       "url": "https://www.zis.gov.rs/wp-content/uploads/D2-Zahtev-za-razdvajanje-visestruke-prijave-industrijskog-dizajna.pdf",
       "local_copy_index": "docs/izvori/zapisi-izvora.md"
+    },
+    {
+      "id": "Z-16",
+      "document": "Zakon o republičkim administrativnim taksama — Tarifa, Tar. br. 107 sa napomenom",
+      "url": "https://www.paragraf.rs/propisi/zakon_o_republickim_administrativnim_taksama.html",
+      "local_copy_index": "docs/izvori/tekst/zrat-tarifni-broj-107-izvod-2026-11-20.txt"
+    },
+    {
+      "id": "Z-17",
+      "document": "Zakon o privrednim društvima („Sl. glasnik RS“ 36/2011 … 19/2025), čl. 83 i 86",
+      "url": "https://www.paragraf.rs/propisi/zakon_o_privrednim_drustvima.html",
+      "local_copy_index": "docs/izvori/tekst/zpd-cl-83-87-preduzetnik-izvod-2026-11-20.txt"
     }
   ],
   "requirements": [
@@ -234,7 +246,7 @@
           "location": "čl. 18 st. 3"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Tri bitna dela prijave panela; nijedan se ne može izostaviti.",
       "phases": [
@@ -248,7 +260,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-002",
@@ -271,7 +284,7 @@
           "location": "str. 20–21"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Kontrolna lista urednosti za finalni paket; neuredna prijava se poziva na uređenje, a neuređena odbacuje.",
       "phases": [
@@ -285,7 +298,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-003",
@@ -308,7 +322,7 @@
           "location": "„Postupak zaštite\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Minimum za obezbeđivanje datuma podnošenja (od njega zavise pravo prvenstva i računanje 12-mesečnog perioda iz čl. 7 st. 3).",
       "phases": [
@@ -322,7 +336,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-004",
@@ -339,7 +354,7 @@
           "location": "str. 20"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Ako se prijava mora hitno podneti (npr. zbog roka prvenstva), datum se može obezbediti i pre konačnog usklađivanja prikaza — ali prikaz se kasnije ne sme bitno menjati (MZ-031).",
       "phases": [
@@ -353,7 +368,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-005",
@@ -370,7 +386,7 @@
           "location": "„Podnošenje prijave\" / „Koji su delovi prijave\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Spisak delova finalnog paketa prijave panela.",
       "phases": [
@@ -380,7 +396,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-006",
@@ -403,7 +420,7 @@
           "location": "str. 2, tač. 1"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Finalni paket u papirnoj varijanti sadrži dva odštampana i potpisana D-1.",
       "phases": [
@@ -413,7 +430,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-01",
@@ -442,7 +460,7 @@
           "location": "„Postupak zaštite\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Za datum podnošenja merodavan je Zakon. Ipak, prijavu panela treba podneti kompletnu (PREPORUKA), pa razlika praktično ne utiče na paket.",
       "phases": [
@@ -457,7 +475,8 @@
       ],
       "is_discrepancy": true,
       "open_items": [],
-      "precedence": "Zakon (viši pravni akt i noviji od Uputstva iz 2016); ZIS web stranica je usklađena sa Zakonom."
+      "precedence": "Zakon (viši pravni akt i noviji od Uputstva iz 2016); ZIS web stranica je usklađena sa Zakonom.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-02",
@@ -486,7 +505,7 @@
           "location": "zaglavlje propisa"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Svaki zahtev iz Uputstva i Metodologije proverava se prema važećem Zakonu i Uredbi; pre podnošenja potvrditi da nema novijih izmena (P-01).",
       "phases": [
@@ -503,7 +522,8 @@
       "open_items": [
         "P-01"
       ],
-      "precedence": "Važeći tekst Zakona i Uredbe ispred Uputstva i Metodologije."
+      "precedence": "Važeći tekst Zakona i Uredbe ispred Uputstva i Metodologije.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-010",
@@ -520,7 +540,7 @@
           "location": "čl. 18 st. 2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Papirni kanal je zakonski osnovni način podnošenja.",
       "phases": [
@@ -534,7 +554,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-011",
@@ -551,7 +572,7 @@
           "location": "„Podnošenje prijave\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Podnosilac bira između papirnog i elektronskog kanala; faks i e-mail nisu dozvoljeni.",
       "phases": [
@@ -565,7 +586,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-012",
@@ -582,7 +604,7 @@
           "location": "stranica e-Prijava; Korisničko uputstvo 2018, tehnički preduslovi"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Ako se bira e-Prijava, podnosilac ili zastupnik mora imati kvalifikovani sertifikat (pitanje za intervju).",
       "phases": [
@@ -600,7 +622,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-013",
@@ -617,7 +640,7 @@
           "location": "„Kada je prijava podneta Zavodu\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Važno za poslednji dan roka prvenstva ili 12-mesečnog perioda (MZ-161, MZ-162, MZ-174).",
       "phases": [
@@ -631,7 +654,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-014",
@@ -654,7 +678,7 @@
           "location": "str. 2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Podaci za checklistu papirnog podnošenja.",
       "phases": [
@@ -664,7 +688,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-015",
@@ -681,7 +706,7 @@
           "location": "„Kako da znam da li je moja elektronska prijava primljena\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Uputstvo podnosiocu za praćenje posle podnošenja.",
       "phases": [
@@ -691,7 +716,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-03",
@@ -726,7 +752,7 @@
           "location": "Tar. br. 107, napomena o e-podnošenju"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "E-kanal se koristi kao zvanično ponuđen od ZIS-a, ali tehnički format prikaza za e-Prijavu nije poznat (N-01) — to blokira planiranje digitalnih prikaza dok se ne dostavi.",
       "phases": [
@@ -747,7 +773,8 @@
       "open_items": [
         "N-01"
       ],
-      "precedence": "AI ZAKLJUČAK: ZIS kao nadležni organ zvanično nudi e-Prijavu i Tarifa predviđa umanjenje za e-podnošenje, pa se kanal smatra dostupnim; pravni osnov e-podnošenja nije analiziran."
+      "precedence": "AI ZAKLJUČAK: ZIS kao nadležni organ zvanično nudi e-Prijavu i Tarifa predviđa umanjenje za e-podnošenje, pa se kanal smatra dostupnim; pravni osnov e-podnošenja nije analiziran.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-020",
@@ -764,7 +791,7 @@
           "location": "čl. 21 st. 1–2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Svaka karakteristika panela koja se ističe u opisu (npr. ivice, profil, završni sloj) mora biti jasno vidljiva na prikazima.",
       "phases": [
@@ -782,7 +809,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-021",
@@ -799,7 +827,7 @@
           "location": "čl. 21 st. 3"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Izbor medija (fotografija, render, linijski nacrt) donosi se u fazi plana prikaza.",
       "phases": [
@@ -809,7 +837,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-022",
@@ -826,7 +855,7 @@
           "location": "čl. 11 st. 1"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Format papirnog paketa prikaza.",
       "phases": [
@@ -840,7 +869,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-023",
@@ -863,7 +893,7 @@
           "location": "str. 4–5"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "AI ZAKLJUČAK: panel se prikazuje samostalno — bez zgrade, susednih panela, alata ili pribora za montažu.",
       "phases": [
@@ -877,7 +907,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-024",
@@ -894,7 +925,7 @@
           "location": "čl. 11 st. 3"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Granica formata za svaki prikaz.",
       "phases": [
@@ -904,7 +935,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-025",
@@ -921,7 +953,7 @@
           "location": "str. 31"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Navedeno samo u Metodologiji (2012), ne i u Uredbi. Boja je važna ako je boja završnog sloja deo dizajna.",
       "phases": [
@@ -933,7 +965,8 @@
       "is_discrepancy": false,
       "open_items": [
         "N-01"
-      ]
+      ],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-026",
@@ -956,7 +989,7 @@
           "location": "str. 31–32"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Broj pogleda panela određuje se prema tome koje karakteristike treba pokazati (faza 7).",
       "phases": [
@@ -966,7 +999,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-027",
@@ -983,7 +1017,7 @@
           "location": "čl. 11 st. 5–6"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Pravilo numeracije za indeks prikaza i za pozivanje u opisu.",
       "phases": [
@@ -997,7 +1031,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-028",
@@ -1014,7 +1049,7 @@
           "location": "čl. 11 st. 7"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Raspored listova sa prikazima u papirnom paketu.",
       "phases": [
@@ -1028,7 +1063,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-029",
@@ -1051,7 +1087,7 @@
           "location": "str. 4"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "AI ZAKLJUČAK: tekstura završnog sloja mora biti čitljiva bez senki — zahtevno za fotografisanje; razmatra se u fazi 7.",
       "phases": [
@@ -1061,7 +1097,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-030",
@@ -1090,9 +1127,9 @@
           "location": "str. 33"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
-      "impact": "Profil ivica panela ne sme se prikazati presekom, kotama ni legendama; postojeći proizvodni crteži nisu automatski upotrebljivi kao prikaz.",
+      "impact": "Profil ivica panela ne sme se prikazati presekom, kotama ni legendama; postojeći proizvodni crteži nisu automatski upotrebljivi kao prikaz. Ponovna provera 2026-11-20: brojčane oznake delova sa pokaznim linijama koristi samo 2D primer ŠARA (Uputstvo str. 9); 3D primeri (BOCA, KORPA) pozivaju se samo na brojeve prikaza 1.1, 1.2… — preporuka: za panel bez brojeva delova (P-13).",
       "phases": [
         {
           "number": 7,
@@ -1104,7 +1141,10 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [
+        "P-13"
+      ],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-031",
@@ -1127,7 +1167,7 @@
           "location": "FAQ „Da li se može naknadno izmeniti prikaz\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Prikazi i opis panela moraju biti konačni i međusobno usklađeni pre podnošenja.",
       "phases": [
@@ -1145,7 +1185,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-032",
@@ -1162,7 +1203,7 @@
           "location": "str. 6–8 (prikazi na str. 8)"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Polazni šablon za plan prikaza panela, na koji je ZIS izričito uputio u e-mailu.",
       "phases": [
@@ -1172,7 +1213,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-033",
@@ -1189,7 +1231,7 @@
           "location": "str. 34–35"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Drugi zvanični primer skupa pogleda; pokazuje da je dozvoljeno više perspektiva.",
       "phases": [
@@ -1199,7 +1241,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-04",
@@ -1228,7 +1271,7 @@
           "location": "str. 33"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Za panel su verovatno potrebni pogledi na ivice; da li su senčeni ortogonalni pogledi bez kota prihvatljivi kao nacrt — P-05.",
       "phases": [
@@ -1245,7 +1288,8 @@
       "open_items": [
         "P-05"
       ],
-      "precedence": "Uredba je pravno obavezujuća; AI ZAKLJUČAK: zvanični ZIS primer i Metodologija ukazuju da je zabranjen kotirani tehnički crtež i presek, a ne senčeni pogled."
+      "precedence": "Uredba je pravno obavezujuća; AI ZAKLJUČAK: zvanični ZIS primer i Metodologija ukazuju da je zabranjen kotirani tehnički crtež i presek, a ne senčeni pogled. Ponovna provera 2026-11-20: Uputstvo str. 4 u zabrani ne pominje „projekcije“ (samo presek, osne i kotne linije, dimenzije); Metodologija str. 33 „po potrebi u projekcijama“; oba zvanična 3D primera sadrže senčene ortogonalne poglede. Rizik ocenjen kao nizak; i dalje P-05.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-05",
@@ -1268,7 +1312,7 @@
           "location": "Korisničko uputstvo 2018, odeljak o prilozima"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Tehnički format digitalnih prikaza panela (format, rezolucija, veličina) nije poznat — N-01 blokira konačnu pripremu prikaza za e-Prijavu.",
       "phases": [
@@ -1285,7 +1329,8 @@
       "open_items": [
         "N-01"
       ],
-      "precedence": "Uredba; AI ZAKLJUČAK: zahtev za negativ/dijapozitiv je zastareo u odnosu na digitalnu fotografiju, ali ga do potvrde ne treba smatrati ukinutim."
+      "precedence": "Uredba; AI ZAKLJUČAK: zahtev za negativ/dijapozitiv je zastareo u odnosu na digitalnu fotografiju, ali ga do potvrde ne treba smatrati ukinutim.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-040",
@@ -1302,7 +1347,7 @@
           "location": "čl. 20 st. 1"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Opis panela ističe karakteristike koje ga razlikuju, a ne opšti izgled ploče.",
       "phases": [
@@ -1312,7 +1357,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-041",
@@ -1335,7 +1381,7 @@
           "location": "str. 33"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "U opisu se navodi samo ono što se vidi na prikazima; sve oblikovne karakteristike vidljive na prikazima treba opisati.",
       "phases": [
@@ -1349,7 +1395,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-042",
@@ -1378,7 +1425,7 @@
           "location": "str. 30–31"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Ne opisivati spajanje panela, termoizolaciju, lepljenje, montažu, nosivost — ivice se opisuju samo kao vidljiva geometrija.",
       "phases": [
@@ -1392,7 +1439,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-043",
@@ -1415,7 +1463,7 @@
           "location": "str. 30"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Obavezni raspored stranice opisa.",
       "phases": [
@@ -1429,7 +1477,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-044",
@@ -1446,7 +1495,7 @@
           "location": "čl. 10 st. 2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "AI ZAKLJUČAK: primer BOCE nema zasebno označen stav, ali tu ulogu vrše stav o novosti i završni stav; u nacrtu opisa panela predvideti jasno izdvojen stav.",
       "phases": [
@@ -1460,7 +1509,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-045",
@@ -1483,7 +1533,7 @@
           "location": "str. 31"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Svaka varijanta panela u višestrukoj prijavi dobija sopstveni opis.",
       "phases": [
@@ -1497,7 +1547,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-046",
@@ -1514,7 +1565,7 @@
           "location": "str. 5"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Format štampe opisa.",
       "phases": [
@@ -1528,7 +1579,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-047",
@@ -1551,7 +1603,7 @@
           "location": "str. 30–31"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Metod pisanja opisa panela (faza 8).",
       "phases": [
@@ -1561,7 +1613,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-048",
@@ -1578,7 +1631,7 @@
           "location": "str. 6–8, „Primer: BOCA\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Šablon za opis panela (sekcija D Rezultata); ZIS ga je izričito preporučio.",
       "phases": [
@@ -1588,7 +1641,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-049",
@@ -1605,7 +1659,7 @@
           "location": "str. 31 i 50"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Relevantno ako panel nosi logo, utisnut znak ili natpis (pitanje za intervju).",
       "phases": [
@@ -1623,7 +1677,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-06",
@@ -1652,7 +1707,7 @@
           "location": "str. 3, 34"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Ključno za panel od EPS-a sa završnim slojem: kako opisati vidljivu teksturu i boju završnog sloja, a ne navoditi sastav materijala (P-06).",
       "phases": [
@@ -1669,7 +1724,8 @@
       "open_items": [
         "P-06"
       ],
-      "precedence": "Zakon; AI ZAKLJUČAK: vidljivi izgled površine (tekstura, boja, sjaj) opisuje se kao izgled, a vrsta i sastav materijala ne."
+      "precedence": "Zakon; AI ZAKLJUČAK: vidljivi izgled površine (tekstura, boja, sjaj) opisuje se kao izgled, a vrsta i sastav materijala ne.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-07",
@@ -1698,7 +1754,7 @@
           "location": "čl. 10 st. 2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Opis ostaje važan (Uredba, čl. 41 st. 2), ali merilo obima je ukupan utisak, pa prikazi imaju presudnu težinu.",
       "phases": [
@@ -1713,7 +1769,8 @@
       ],
       "is_discrepancy": true,
       "open_items": [],
-      "precedence": "Važeći Zakon (čl. 41 st. 1)."
+      "precedence": "Važeći Zakon (čl. 41 st. 1).",
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-060",
@@ -1730,7 +1787,7 @@
           "location": "čl. 19 st. 1"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Zakonski minimum sadržaja D-1.",
       "phases": [
@@ -1740,7 +1797,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-061",
@@ -1757,7 +1815,7 @@
           "location": "čl. 8 st. 1"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Uredba precizira 11 elemenata — osnova D-1 vodiča po poljima (sekcija E).",
       "phases": [
@@ -1767,7 +1825,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-062",
@@ -1784,7 +1843,7 @@
           "location": "polja 1–10, „Prilozi uz zahtev\""
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Struktura podataka za D-1 (faza 8) i za model podataka web aplikacije.",
       "phases": [
@@ -1798,7 +1857,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-063",
@@ -1827,7 +1887,7 @@
           "location": "str. 27"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Naziv panela bez trgovačkog imena; naziv utiče na Lokarnsku potklasu (MZ-211).",
       "phases": [
@@ -1841,7 +1901,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-064",
@@ -1876,7 +1937,7 @@
           "location": "str. 4, 25, 29"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Moguća opcija za element panela koji je pretežno funkcionalan; element mora biti naveden u opisu. Odluka u fazi 6, uz zastupnika.",
       "phases": [
@@ -1890,7 +1951,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-065",
@@ -1907,7 +1969,7 @@
           "location": "čl. 8 st. 2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Podnosilac čuva vraćeni primerak D-1 kao dokaz datuma.",
       "phases": [
@@ -1917,7 +1979,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "NS-08",
@@ -1952,7 +2015,7 @@
           "location": "str. 29"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "PREPORUKA: ako je podnosilac pravno lice koje koristi pečat, staviti i potpis i pečat dok se ne potvrdi (P-02).",
       "phases": [
@@ -1969,7 +2032,8 @@
       "open_items": [
         "P-02"
       ],
-      "precedence": "Zakon (ne traži pečat); tekst Uredbe posle izmene 44/2018 nije potvrđen iz Službenog glasnika."
+      "precedence": "Zakon (ne traži pečat); tekst Uredbe posle izmene 44/2018 nije potvrđen iz Službenog glasnika.",
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-070",
@@ -2120,7 +2184,7 @@
           "location": "tačka 119), Tar. br. 107 st. 9"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Iznos za uplatu pri podnošenju; važi od 1. 7. 2026.",
       "phases": [
@@ -2134,7 +2198,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-081",
@@ -2151,7 +2216,7 @@
           "location": "Tar. br. 107, napomena"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Ušteda ako se bira e-Prijava.",
       "phases": [
@@ -2165,7 +2230,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-082",
@@ -2186,11 +2252,17 @@
           "document": "Metodologija postupanja ZIS-a u postupku za priznanje prava na industrijski dizajn (2012)",
           "url": "https://www.zis.gov.rs/wp-content/uploads/metodologija-dizajn-2012.pdf",
           "location": "str. 29"
+        },
+        {
+          "id": "Z-16",
+          "document": "Zakon o republičkim administrativnim taksama — Tarifa, Tar. br. 107 sa napomenom",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_republickim_administrativnim_taksama.html",
+          "location": "Tar. br. 107, NAPOMENA; uporedi Tar. br. 2 i 134 (preduzetnik naveden odvojeno)"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
-      "impact": "Iznos zavisi od statusa podnosioca (pitanje A1).",
+      "impact": "Iznos zavisi od statusa podnosioca (pitanje A1). Podnosilac je preduzetnik — da li se tretira kao fizičko lice nije razrešeno izvorima (P-12); ZRAT na drugim mestima razlikuje preduzetnika od fizičkog lica.",
       "phases": [
         {
           "number": 3,
@@ -2202,16 +2274,25 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [
+        "P-12"
+      ],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-083",
       "area": "takse",
       "area_code": "fees",
-      "requirement": "Nije utvrđeno da li se umanjenje za e-podnošenje (−25%) i umanjenje za fizička lica kumuliraju.",
-      "classification": "AI ZAKLJUČAK",
-      "source_type": "AGENT_INFERENCE",
+      "requirement": "Umanjenja se kumuliraju: ako je podnosilac fizičko lice i prijavu podnese elektronski, taksa već umanjena za 50% umanjuje se za još 25% (8.540 → 4.270 → 3.202,50 RSD; tačan iznos daje ZIS kalkulator). Da li preduzetnik ima status „fizičkog lica“ za Tar. br. 107 izvori ne razrešavaju.",
+      "classification": "PRAVNI ZAHTEV",
+      "source_type": "DOCUMENT",
       "sources": [
+        {
+          "id": "Z-16",
+          "document": "Zakon o republičkim administrativnim taksama — Tarifa, Tar. br. 107 sa napomenom",
+          "url": "https://www.paragraf.rs/propisi/zakon_o_republickim_administrativnim_taksama.html",
+          "location": "Tar. br. 107, NAPOMENA (st. 3 i poslednja dva stava)"
+        },
         {
           "id": "Z-09",
           "document": "ZIS — Takse, odeljak Industrijski dizajn",
@@ -2219,9 +2300,9 @@
           "location": "Tar. br. 107, napomena i kolona za fizička lica"
         }
       ],
-      "access_date": "2026-10-06",
-      "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
-      "impact": "Tačan iznos za fizičko lice u e-Prijavi nije poznat (P-04).",
+      "access_date": "2026-11-20",
+      "status": "POTVRĐENO",
+      "impact": "Za fizičko lice u e-Prijavi ≈ 3.202,50 RSD; za preduzetnika iznos zavisi od P-12 (4.270/3.202,50 ili 8.540/6.405). Preporuka: bez potvrde ZIS-a uplatiti pun iznos.",
       "phases": [
         {
           "number": 10,
@@ -2230,8 +2311,9 @@
       ],
       "is_discrepancy": false,
       "open_items": [
-        "P-04"
-      ]
+        "P-12"
+      ],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-084",
@@ -2260,7 +2342,7 @@
           "location": "str. 12"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Trošak svake korekcije posle rezultata ispitivanja.",
       "phases": [
@@ -2270,7 +2352,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-085",
@@ -2287,7 +2370,7 @@
           "location": "čl. 36 st. 1–2"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Drugi obavezan trošak, posle pozitivnog ispitivanja.",
       "phases": [
@@ -2297,7 +2380,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-086",
@@ -2326,7 +2410,7 @@
           "location": "str. 23"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Budžet posle priznanja.",
       "phases": [
@@ -2340,7 +2424,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-087",
@@ -2363,7 +2448,7 @@
           "location": "odeljak Industrijski dizajn"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "NEPROVERENO – potrebno potvrditi sa ZIS-om ili registrovanim zastupnikom.",
       "impact": "Ukupan trošak priznanja ne može se izračunati dok se ne dostavi N-02.",
       "phases": [
@@ -2375,7 +2460,8 @@
       "is_discrepancy": false,
       "open_items": [
         "N-02"
-      ]
+      ],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-088",
@@ -2398,7 +2484,7 @@
           "location": "str. 17"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Trošak ako se traži produženje roka za uređenje ili izjašnjenje.",
       "phases": [
@@ -2408,7 +2494,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-089",
@@ -2431,7 +2518,7 @@
           "location": "tačka 127)"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Dugoročni troškovi održavanja prava.",
       "phases": [
@@ -2445,7 +2532,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-090",
@@ -2462,7 +2550,7 @@
           "location": "uputstvo za uplatu"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Podaci za uplatnicu u finalnom paketu.",
       "phases": [
@@ -2472,7 +2560,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-091",
@@ -2495,7 +2584,7 @@
           "location": "napomena o usklađenim iznosima"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Iznosi u paketu nose datum provere.",
       "phases": [
@@ -2505,7 +2594,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-092",
@@ -2528,7 +2618,7 @@
           "location": "ceo dokument"
         }
       ],
-      "access_date": "2026-10-06",
+      "access_date": "2026-11-20",
       "status": "POTVRĐENO",
       "impact": "Opcioni trošak u fazi pretrage (sekcija L).",
       "phases": [
@@ -2538,7 +2628,8 @@
         }
       ],
       "is_discrepancy": false,
-      "open_items": []
+      "open_items": [],
+      "reverified": "2026-11-20"
     },
     {
       "id": "MZ-100",
@@ -4693,6 +4784,12 @@
       "is_discrepancy": true,
       "open_items": [],
       "precedence": "WIPO (aktuelno izdanje), u skladu sa Metodologijom str. 38."
+    }
+  ],
+  "revisions": [
+    {
+      "date": "2026-11-20",
+      "note": "Ponovna provera izvora pre podnošenja (FUZZ-360): svi izvori u oblastima obavezna dokumentacija / način podnošenja / prikazi / opis / D-1 / takse nepromenjeni; dodati izvori Z-16 (ZRAT Tar. br. 107) i Z-17 (ZPD čl. 83–86); MZ-083 razrešen za fizičko lice; otvoreno P-12 (preduzetnik), P-13 (brojčane oznake delova). Detalji: docs/izvori/provera-2026-11-20.md"
     }
   ]
 }
